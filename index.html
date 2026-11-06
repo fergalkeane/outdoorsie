@@ -440,6 +440,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .mt-map{background:linear-gradient(135deg,transparent 45%,#F6D98C 45% 52%,transparent 52%),linear-gradient(160deg,#EEF0EA 60%,#B9DDF0 60%)}
 .mt-terrain{background:radial-gradient(circle at 35% 40%,#D9C9A3 0 22%,transparent 23%),repeating-radial-gradient(circle at 35% 40%,#C5D8B0 0 3px,#B5CC9C 3px 6px)}
 .mt-satellite{background:radial-gradient(circle at 70% 30%,#5E7A4A 0 25%,transparent 26%),linear-gradient(135deg,#2F4A2C,#3D5C3A 55%,#1F3B52 56%)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) [data-maptype="map"] .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) saturate(.6)}}
+:root[data-theme="dark"] [data-maptype="map"] .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) saturate(.6)}
 .map-fs{position:fixed!important;inset:0!important;z-index:300!important;width:auto!important;height:auto!important;border-radius:0!important;border:0!important}
 body.map-fs-on{overflow:hidden}
 .map-fs .leaflet-top{top:env(safe-area-inset-top,0px)}
@@ -1209,7 +1211,7 @@ function routeSection(e){
 function isDark(){var r=document.documentElement;return r.getAttribute("data-theme")==="dark"||(r.getAttribute("data-theme")!=="light"&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)}
 var OSM_ATTR='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 var MAPTYPES={
-  map:{n:"Map",url:function(d){return "https://{s}.basemaps.cartocdn.com/"+(d?"dark_all":"rastertiles/voyager")+"/{z}/{x}/{y}{r}.png"},o:{subdomains:"abcd",maxZoom:19,attribution:OSM_ATTR+' &copy; <a href="https://carto.com/attributions">CARTO</a>'}},
+  map:{n:"Map",url:function(){return "https://tile.openstreetmap.org/{z}/{x}/{y}.png"},o:{maxZoom:19,attribution:OSM_ATTR}},
   terrain:{n:"Terrain",url:function(){return "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"},o:{subdomains:"abc",maxZoom:17,attribution:OSM_ATTR+', SRTM &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (CC-BY-SA)'}},
   satellite:{n:"Satellite",url:function(){return "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"},o:{maxZoom:19,attribution:'Imagery &copy; Esri, Maxar, Earthstar Geographics'}}
 };

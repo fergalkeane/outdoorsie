@@ -504,6 +504,8 @@ body::before{content:&quot;&quot;;position:fixed;inset:0 0 auto;height:env(safe-
 .mt-map{background:linear-gradient(135deg,transparent 45%,#F6D98C 45% 52%,transparent 52%),linear-gradient(160deg,#EEF0EA 60%,#B9DDF0 60%)}
 .mt-terrain{background:radial-gradient(circle at 35% 40%,#D9C9A3 0 22%,transparent 23%),repeating-radial-gradient(circle at 35% 40%,#C5D8B0 0 3px,#B5CC9C 3px 6px)}
 .mt-satellite{background:radial-gradient(circle at 70% 30%,#5E7A4A 0 25%,transparent 26%),linear-gradient(135deg,#2F4A2C,#3D5C3A 55%,#1F3B52 56%)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=&quot;light&quot;]) [data-maptype=&quot;map&quot;] .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) saturate(.6)}}
+:root[data-theme=&quot;dark&quot;] [data-maptype=&quot;map&quot;] .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) saturate(.6)}
 .map-fs{position:fixed!important;inset:0!important;z-index:300!important;width:auto!important;height:auto!important;border-radius:0!important;border:0!important}
 body.map-fs-on{overflow:hidden}
 .map-fs .leaflet-top{top:env(safe-area-inset-top,0px)}
@@ -1280,7 +1282,7 @@ function routeSection(e){
 function isDark(){var r=document.documentElement;return r.getAttribute(&quot;data-theme&quot;)===&quot;dark&quot;||(r.getAttribute(&quot;data-theme&quot;)!==&quot;light&quot;&amp;&amp;window.matchMedia&amp;&amp;matchMedia(&quot;(prefers-color-scheme: dark)&quot;).matches)}
 var OSM_ATTR=&#x27;&amp;copy; &lt;a href=&quot;https://www.openstreetmap.org/copyright&quot;&gt;OpenStreetMap&lt;/a&gt; contributors&#x27;;
 var MAPTYPES={
-  map:{n:&quot;Map&quot;,url:function(d){return &quot;https://{s}.basemaps.cartocdn.com/&quot;+(d?&quot;dark_all&quot;:&quot;rastertiles/voyager&quot;)+&quot;/{z}/{x}/{y}{r}.png&quot;},o:{subdomains:&quot;abcd&quot;,maxZoom:19,attribution:OSM_ATTR+&#x27; &amp;copy; &lt;a href=&quot;https://carto.com/attributions&quot;&gt;CARTO&lt;/a&gt;&#x27;}},
+  map:{n:&quot;Map&quot;,url:function(){return &quot;https://tile.openstreetmap.org/{z}/{x}/{y}.png&quot;},o:{maxZoom:19,attribution:OSM_ATTR}},
   terrain:{n:&quot;Terrain&quot;,url:function(){return &quot;https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png&quot;},o:{subdomains:&quot;abc&quot;,maxZoom:17,attribution:OSM_ATTR+&#x27;, SRTM &amp;copy; &lt;a href=&quot;https://opentopomap.org&quot;&gt;OpenTopoMap&lt;/a&gt; (CC-BY-SA)&#x27;}},
   satellite:{n:&quot;Satellite&quot;,url:function(){return &quot;https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}&quot;},o:{maxZoom:19,attribution:&#x27;Imagery &amp;copy; Esri, Maxar, Earthstar Geographics&#x27;}}
 };
