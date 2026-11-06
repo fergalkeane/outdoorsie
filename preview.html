@@ -75,6 +75,7 @@ select{height:38px;border:1px solid var(--line);border-radius:8px;background:var
   PHOTOGRAPHY
   Every photo is loaded from img/&lt;name&gt;.jpg. Until a file exists, a tinted
   landscape placeholder shows instead.
+  Until you download them, photos load straight from Unsplash (see UNSPLASH in the script).
   Recommended: 2400px wide for heroes, 1200px for cards. See IMAGES.md.
 --&gt;
 &lt;style&gt;
@@ -858,14 +859,48 @@ function photo(name,g,alt,extra){
   var gs=g?&#x27;--g1:&#x27;+g[0]+&#x27;;--g2:&#x27;+g[1]+&#x27;;&#x27;:&#x27;&#x27;;
   return &#x27;&lt;div class=&quot;ph &#x27;+(extra||&quot;&quot;)+&#x27;&quot; style=&quot;&#x27;+gs+&#x27;&quot; data-img=&quot;&#x27;+name+&#x27;&quot; data-alt=&quot;&#x27;+esc(alt||&quot;&quot;)+&#x27;&quot;&gt;&lt;/div&gt;&#x27;;
 }
+/* ---------------- photography ----------------
+   Each name loads img/&lt;name&gt;.jpg if it exists, otherwise the Unsplash photo below.
+   Once you download a photo into img/ with the same name, the local copy is used. */
+var UNSPLASH={
+  &quot;hero-home&quot;:&quot;photo-1464822759023-fed622ff2c3b&quot;,
+  &quot;guide-band&quot;:&quot;photo-1522163182402-834f871fd851&quot;,
+  &quot;region-sierra&quot;:&quot;photo-1426604966848-d7adac402bff&quot;,
+  &quot;region-tahoe&quot;:&quot;photo-1501785888041-af3ef285b470&quot;,
+  &quot;region-coast&quot;:&quot;photo-1507525428034-b723cf961d3e&quot;,
+  &quot;region-north&quot;:&quot;photo-1441974231531-c6227db76b6e&quot;,
+  &quot;region-south&quot;:&quot;photo-1500530855697-b586d89ba3ee&quot;,
+  &quot;yosemite-hike&quot;:&quot;photo-1551632811-561732d1e306&quot;,
+  &quot;tahoe-climb&quot;:&quot;photo-1522163182402-834f871fd851&quot;,
+  &quot;santa-cruz-surf&quot;:&quot;photo-1502680390469-be75c86b636f&quot;,
+  &quot;american-river-raft&quot;:&quot;photo-1530866495561-507c9faab2ed&quot;,
+  &quot;big-sur-cycle&quot;:&quot;photo-1517649763962-0c623066013b&quot;,
+  &quot;tomales-kayak&quot;:&quot;photo-1472745433479-4556f22e32c2&quot;,
+  &quot;mammoth-ski&quot;:&quot;photo-1551698618-1dfe5d97d256&quot;,
+  &quot;russian-river-canoe&quot;:&quot;photo-1476514525535-07fb3b4ae5f1&quot;,
+  &quot;downieville-mtb&quot;:&quot;photo-1544191696-102dbdaeeaa0&quot;,
+  &quot;joshua-tree-climb&quot;:&quot;photo-1500530855697-b586d89ba3ee&quot;,
+  &quot;marin-run&quot;:&quot;photo-1470071459604-3b5ec3a7fe05&quot;,
+  &quot;wilderness-survival&quot;:&quot;photo-1504280390367-361c6d9f38f4&quot;
+};
+/* gallery photos 2-5 for every experience */
+var GALLERY=[&quot;photo-1506905925346-21bda4d32df4&quot;,&quot;photo-1469474968028-56623f02e42e&quot;,&quot;photo-1447752875215-b2761acb3c5d&quot;,&quot;photo-1519681393784-d120267933ba&quot;];
+function photoURL(name){
+  var id=UNSPLASH[name],m=/^(.+)-([2-5])$/.exec(name);
+  if(!id&amp;&amp;m&amp;&amp;UNSPLASH[m[1]])id=GALLERY[+m[2]-2];
+  if(!id)return &quot;&quot;;
+  var w=/^(hero|guide)/.test(name)?2400:1200;
+  return &quot;https://images.unsplash.com/&quot;+id+&quot;?auto=format&amp;fit=crop&amp;w=&quot;+w+&quot;&amp;q=80&quot;;
+}
 /* turn every .ph[data-img] into an &lt;img&gt; with fallback */
 function hydrate(root){
   $$(&quot;.ph[data-img]&quot;,root).forEach(function(el){
     if(el.dataset.done)return;el.dataset.done=&quot;1&quot;;
-    var name=el.dataset.img,file=&quot;img/&quot;+name+&quot;.jpg&quot;;
+    var name=el.dataset.img,file=&quot;img/&quot;+name+&quot;.jpg&quot;,remote=photoURL(name);
     var img=new Image();img.alt=el.dataset.alt||&quot;&quot;;img.loading=&quot;lazy&quot;;img.decoding=&quot;async&quot;;
     img.onload=function(){el.classList.add(&quot;loaded&quot;)};
-    img.onerror=function(){img.remove()};
+    /* local file first; if it isn&#x27;t there yet, the Unsplash URL; then the placeholder */
+    img.onerror=function(){if(remote&amp;&amp;img.src.indexOf(&quot;unsplash&quot;)&lt;0){img.src=remote}else{img.remove()}};
     img.src=file;el.insertBefore(img,el.firstChild);
   });
 }

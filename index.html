@@ -12,6 +12,7 @@
   PHOTOGRAPHY
   Every photo is loaded from img/<name>.jpg. Until a file exists, a tinted
   landscape placeholder shows instead.
+  Until you download them, photos load straight from Unsplash (see UNSPLASH in the script).
   Recommended: 2400px wide for heroes, 1200px for cards. See IMAGES.md.
 -->
 <style>
@@ -788,14 +789,48 @@ function photo(name,g,alt,extra){
   var gs=g?'--g1:'+g[0]+';--g2:'+g[1]+';':'';
   return '<div class="ph '+(extra||"")+'" style="'+gs+'" data-img="'+name+'" data-alt="'+esc(alt||"")+'"></div>';
 }
+/* ---------------- photography ----------------
+   Each name loads img/<name>.jpg if it exists, otherwise the Unsplash photo below.
+   Once you download a photo into img/ with the same name, the local copy is used. */
+var UNSPLASH={
+  "hero-home":"photo-1464822759023-fed622ff2c3b",
+  "guide-band":"photo-1522163182402-834f871fd851",
+  "region-sierra":"photo-1426604966848-d7adac402bff",
+  "region-tahoe":"photo-1501785888041-af3ef285b470",
+  "region-coast":"photo-1507525428034-b723cf961d3e",
+  "region-north":"photo-1441974231531-c6227db76b6e",
+  "region-south":"photo-1500530855697-b586d89ba3ee",
+  "yosemite-hike":"photo-1551632811-561732d1e306",
+  "tahoe-climb":"photo-1522163182402-834f871fd851",
+  "santa-cruz-surf":"photo-1502680390469-be75c86b636f",
+  "american-river-raft":"photo-1530866495561-507c9faab2ed",
+  "big-sur-cycle":"photo-1517649763962-0c623066013b",
+  "tomales-kayak":"photo-1472745433479-4556f22e32c2",
+  "mammoth-ski":"photo-1551698618-1dfe5d97d256",
+  "russian-river-canoe":"photo-1476514525535-07fb3b4ae5f1",
+  "downieville-mtb":"photo-1544191696-102dbdaeeaa0",
+  "joshua-tree-climb":"photo-1500530855697-b586d89ba3ee",
+  "marin-run":"photo-1470071459604-3b5ec3a7fe05",
+  "wilderness-survival":"photo-1504280390367-361c6d9f38f4"
+};
+/* gallery photos 2-5 for every experience */
+var GALLERY=["photo-1506905925346-21bda4d32df4","photo-1469474968028-56623f02e42e","photo-1447752875215-b2761acb3c5d","photo-1519681393784-d120267933ba"];
+function photoURL(name){
+  var id=UNSPLASH[name],m=/^(.+)-([2-5])$/.exec(name);
+  if(!id&&m&&UNSPLASH[m[1]])id=GALLERY[+m[2]-2];
+  if(!id)return "";
+  var w=/^(hero|guide)/.test(name)?2400:1200;
+  return "https://images.unsplash.com/"+id+"?auto=format&fit=crop&w="+w+"&q=80";
+}
 /* turn every .ph[data-img] into an <img> with fallback */
 function hydrate(root){
   $$(".ph[data-img]",root).forEach(function(el){
     if(el.dataset.done)return;el.dataset.done="1";
-    var name=el.dataset.img,file="img/"+name+".jpg";
+    var name=el.dataset.img,file="img/"+name+".jpg",remote=photoURL(name);
     var img=new Image();img.alt=el.dataset.alt||"";img.loading="lazy";img.decoding="async";
     img.onload=function(){el.classList.add("loaded")};
-    img.onerror=function(){img.remove()};
+    /* local file first; if it isn't there yet, the Unsplash URL; then the placeholder */
+    img.onerror=function(){if(remote&&img.src.indexOf("unsplash")<0){img.src=remote}else{img.remove()}};
     img.src=file;el.insertBefore(img,el.firstChild);
   });
 }
