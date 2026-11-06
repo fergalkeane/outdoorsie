@@ -424,6 +424,25 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .pop-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:4px}
 .pop-foot .btn{padding:0 18px}
 
+/* ---------- experience colour themes ---------- */
+.acc-water{--blue:#1A93D0;--blue-hover:#1380B8;--blue-ink:#0F6E9E;--green:#1A93D0;--green-ink:#0F6E9E;--acc-soft:#E3F2FA}
+.acc-land{--blue:#239A52;--blue-hover:#1C8045;--blue-ink:#1A7A41;--green:#2BAE5F;--green-ink:#1A7A41;--acc-soft:#E4F5EA}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .acc-water{--blue:#3AAAE3;--blue-hover:#5BBAEA;--blue-ink:#7CC8EF;--green:#3AAAE3;--green-ink:#7CC8EF;--acc-soft:#16303D}
+  :root:not([data-theme="light"]) .acc-land{--blue:#2FB566;--blue-hover:#3CC172;--blue-ink:#5BD18C;--green:#3CC172;--green-ink:#5BD18C;--acc-soft:#173326}
+}
+:root[data-theme="dark"] .acc-water{--blue:#3AAAE3;--blue-hover:#5BBAEA;--blue-ink:#7CC8EF;--green:#3AAAE3;--green-ink:#7CC8EF;--acc-soft:#16303D}
+:root[data-theme="dark"] .acc-land{--blue:#2FB566;--blue-hover:#3CC172;--blue-ink:#5BD18C;--green:#3CC172;--green-ink:#5BD18C;--acc-soft:#173326}
+.acc-water .btn-green,.acc-land .btn-green{background:var(--blue)}
+.acc-water .btn-green:hover,.acc-land .btn-green:hover{background:var(--blue-hover)}
+.acc-water .book-head,.acc-land .book-head{border-top:4px solid var(--blue)}
+.card.acc-water,.card.acc-land{border-top:4px solid var(--blue)}
+.card.acc-water .price-tag,.card.acc-land .price-tag{top:0}
+.lpin.acc-water{background:#1A93D0}
+.lpin.acc-land{background:#2BAE5F}
+.lpin.on{background:var(--slate)!important}
+.acc-water .fact svg,.acc-land .fact svg{color:var(--blue)}
+
 /* ---------- map controls ---------- */
 .map-ctl{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
 .map-ctl .leaflet-bar{display:flex;flex-direction:column;background:var(--surface);overflow:hidden}
@@ -448,6 +467,79 @@ body.map-fs-on{overflow:hidden}
 .map-fs .leaflet-bottom{bottom:env(safe-area-inset-bottom,0px)}
 #route-map:fullscreen,#loc-map:fullscreen{width:100%;height:100%;border-radius:0}
 :-webkit-full-screen{width:100%;height:100%}
+
+/* ---------- sign in / profile ---------- */
+.demo-hint{font-size:13px;color:var(--ink-soft);background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:8px 12px;margin:0 0 14px}
+.si-err{color:var(--danger);font-size:14px;margin:-2px 0 12px}
+.pf{padding-top:36px;padding-bottom:64px}
+.pf-head{display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin-bottom:28px}
+.av.xl{width:84px;height:84px;font-size:30px;font-family:var(--display)}
+.pf-head h1{font-size:clamp(28px,3.4vw,40px)}
+.pf-meta{display:flex;align-items:center;gap:6px;color:var(--muted);margin:6px 0 0}
+.pf-meta svg{width:16px;height:16px}
+.pf-stats{display:flex;gap:12px;margin:0 0 0 auto}
+.pf-stats div{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 18px;min-width:96px}
+.pf-stats dt{font-size:13px;color:var(--muted)}
+.pf-stats dd{margin:2px 0 0;font:600 26px/1 var(--display)}
+.ptabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:28px;overflow-x:auto;scrollbar-width:none}
+.ptabs button{border:0;background:none;padding:12px 16px;font-weight:600;font-size:15px;color:var(--muted);border-bottom:3px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.ptabs button:hover{color:var(--ink)}
+.ptabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--blue)}
+.ptabs .n{font-size:12px;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:1px 7px;margin-left:8px;color:var(--muted)}
+.bk-group{margin-bottom:36px}
+.bk-group h2{font-size:22px;margin-bottom:14px}
+.muted{color:var(--muted)}
+.bk{display:grid;grid-template-columns:168px 1fr auto;gap:20px;align-items:center;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:var(--r);padding:12px 18px 12px 12px;margin-bottom:12px}
+.bk>.ph{height:112px;border-radius:var(--r-sm)}
+.bk-top{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.status{display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:999px;font-size:12px;font-weight:700}
+.status.st-ok{background:color-mix(in srgb,var(--blue) 14%,transparent);color:var(--blue-ink)}
+.status.st-done{background:var(--surface-2);color:var(--muted);border:1px solid var(--line)}
+.bk-code{font-size:13px;color:var(--muted)}
+.bk h3{font-size:20px}
+.bk-meta{display:flex;flex-wrap:wrap;gap:4px 16px;color:var(--muted);font-size:14px;margin-top:6px}
+.bk-meta span{display:inline-flex;align-items:center;gap:6px}
+.bk-meta svg{width:15px;height:15px}
+.bk-total{font-size:14px;font-weight:600;margin-top:6px}
+.bk-actions{display:flex;flex-direction:column;gap:8px;min-width:170px}
+.reviewed{display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:13px;color:var(--muted)}
+.reviewed .stars svg{width:13px;height:13px}
+.pf-form{max-width:820px}
+.pf-form h2{font-size:20px;margin-bottom:16px}
+.flabel{display:block;font-size:14px;font-weight:600;margin-bottom:8px}
+.act-pick{display:flex;flex-wrap:wrap;gap:8px}
+.opt{font-weight:400;color:var(--muted)}
+.pf-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
+/* ---------- videos ---------- */
+.videos{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.vid{position:relative;display:block;aspect-ratio:16/9;border-radius:var(--r);overflow:hidden;border:0;padding:0;color:#fff;text-align:left;background:#111;cursor:pointer}
+.vid:hover{text-decoration:none}
+.vid img{width:100%;height:100%;object-fit:cover}
+.vid>.ph{position:absolute;inset:0}
+.vid::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,.05) 40%,rgba(0,0,0,.65))}
+.vid .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;width:68px;height:48px;border-radius:14px;background:#FF0033;display:flex;align-items:center;justify-content:center;transition:transform .15s}
+.vid .play svg{width:26px;height:26px;color:#fff}
+.vid:hover .play{transform:translate(-50%,-50%) scale(1.08)}
+.vid .vt{position:absolute;left:16px;right:16px;bottom:14px;z-index:2;font-weight:600;font-size:17px;line-height:1.3}
+.vid .vt small{display:block;font-weight:400;font-size:13px;opacity:.85;margin-top:2px}
+.vid-search{grid-column:1/-1;aspect-ratio:21/8}
+.video-card{max-width:960px;padding:0;background:#000;overflow:hidden}
+.video-card .icon-btn{top:-48px;right:0;color:#fff}
+.modal[data-modal-box="video"] .modal-card{overflow:visible}
+.video-frame{aspect-ratio:16/9;width:100%}
+.video-frame iframe{display:block;width:100%;height:100%;border:0}
+@media (max-width:680px){
+  .pf-stats{margin:0;width:100%}
+  .pf-stats div{flex:1;min-width:0}
+  .bk{grid-template-columns:1fr;padding:12px}
+  .bk>.ph{height:150px}
+  .bk-actions{flex-direction:row;min-width:0}
+  .bk-actions>*{flex:1}
+  .videos{grid-template-columns:1fr}
+  .vid-search{aspect-ratio:16/9}
+  .modal[data-modal-box="video"]{align-items:center;padding:12px}
+  .video-card{border-radius:var(--r)}
+}
 
 /* ---------- checkout ---------- */
 .co{display:grid;grid-template-columns:1fr 400px;gap:40px;padding:32px 0 64px;align-items:start}
@@ -623,7 +715,8 @@ body.map-fs-on{overflow:hidden}
         <button class="acct-btn" type="button" data-acct-toggle aria-expanded="false" aria-haspopup="true"><span class="av" data-acct-av>G</span><span data-acct-name>Guest</span></button>
         <div class="acct-menu" data-acct-menu hidden>
           <p class="acct-who" data-acct-who>Browsing as a guest</p>
-          <button type="button" data-toast="Your bookings will appear here">My bookings</button>
+          <button type="button" data-go="profile" data-ptab="bookings" data-member-only>My profile</button>
+          <button type="button" data-go="profile" data-ptab="bookings">My bookings</button>
           <button type="button" data-go="saved">Saved experiences</button>
           <button type="button" data-guest-upgrade data-modal="signin">Create an account</button>
           <button type="button" data-signout>Sign out</button>
@@ -776,6 +869,11 @@ body.map-fs-on{overflow:hidden}
   </div>
 </section>
 
+<!-- ======================= PROFILE ======================= -->
+<section class="view" id="v-profile" data-view="profile">
+  <div class="wrap pf" data-profile></div>
+</section>
+
 <!-- ======================= CHECKOUT ======================= -->
 <section class="view" id="v-checkout" data-view="checkout">
   <div class="wrap" data-checkout></div>
@@ -821,8 +919,10 @@ body.map-fs-on{overflow:hidden}
       <button class="btn btn-ghost btn-block" type="button" data-toast="Facebook sign-in isn’t connected in this prototype">Continue with Facebook</button>
     </div>
     <div class="or">or use email</div>
-    <div class="field"><label for="si-email">Email</label><input id="si-email" type="email" autocomplete="email"></div>
+    <p class="demo-hint">Demo account: username <b>seamus</b>, password <b>seamus</b></p>
+    <div class="field"><label for="si-email">Email or username</label><input id="si-email" type="text" autocomplete="username" autocapitalize="none" spellcheck="false"></div>
     <div class="field"><label for="si-pass">Password</label><input id="si-pass" type="password" autocomplete="current-password"></div>
+    <p class="si-err" data-si-err role="alert" hidden></p>
     <button class="btn btn-primary btn-block" type="button" data-signin>Sign in</button>
     <div class="or" style="margin:18px 0 14px">or</div>
     <button class="btn btn-ghost btn-block" type="button" data-guest>Continue as guest</button>
@@ -836,11 +936,17 @@ body.map-fs-on{overflow:hidden}
     <h2 id="acct-title" data-acct-title>Guest</h2>
     <p data-acct-sub>Browsing as a guest</p>
     <div class="social">
-      <button class="btn btn-ghost btn-block" type="button" data-toast="Your bookings will appear here">My bookings</button>
+      <button class="btn btn-ghost btn-block" type="button" data-go="profile" data-ptab="bookings">My bookings</button>
       <button class="btn btn-ghost btn-block" type="button" data-go="saved">Saved experiences</button>
       <button class="btn btn-primary btn-block" type="button" data-modal="signin" data-acct-create>Create an account</button>
       <button class="btn btn-ghost btn-block" type="button" data-signout>Sign out</button>
     </div>
+  </div>
+</div>
+<div class="modal" data-modal-box="video" role="dialog" aria-modal="true" aria-label="Video player">
+  <div class="modal-card video-card">
+    <button class="icon-btn" type="button" data-modal-close aria-label="Close video"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="video-frame" data-video-frame></div>
   </div>
 </div>
 <div class="toast" role="status" aria-live="polite" data-toast-box></div>
@@ -994,7 +1100,7 @@ var S={locActs:[],locMarkers:{},view:"home",id:null,f:{acts:[],regions:[],levels
 /* ---------------- cards ---------------- */
 function card(e){
   var sv=!!S.saved[e.id];
-  return '<article class="card">'+
+  return '<article class="card acc-'+accOf(e)+'">'+
     '<a class="card-media" href="#experience" data-go="experience" data-id="'+e.id+'" tabindex="-1" aria-hidden="true">'+photo(e.id,ACTS[e.a].g,e.t,"card-ph")+'</a>'+
     '<span class="price-tag"><small>from</small><sup>$</sup>'+e.p+'</span>'+
     '<button class="save" type="button" data-save="'+e.id+'" aria-pressed="'+sv+'" aria-label="Save '+esc(e.t)+'">'+IC.heart+'</button>'+
@@ -1101,8 +1207,9 @@ function bookingHTML(e){
   var times="";
   if(B.date){
     times='<h3>Choose a start time</h3><div class="times">'+slots(e,B.date).map(function(s){
-      var full=s.left===0;
-      return '<button class="time" type="button" data-time="'+s.t+'" aria-pressed="'+(B.time===s.t)+'"'+(full?" disabled":"")+'><b>'+s.t+'</b><small'+(s.left&&s.left<=3?' class="low"':"")+'>'+(full?"Full":s.left+" spots left")+'</small></button>'}).join("")+'</div>';
+      var full=s.left===0,short=!full&&s.left<B.guests;
+      var label=full?"Full":short?"Only "+s.left+" left":s.left+(s.left===1?" spot":" spots")+" left";
+      return '<button class="time" type="button" data-time="'+s.t+'" aria-pressed="'+(B.time===s.t)+'"'+(full||short?" disabled":"")+'><b>'+s.t+'</b><small'+(s.left&&s.left<=3?' class="low"':"")+'>'+label+'</small></button>'}).join("")+'</div>';
   }
   var maxG=e.grp,sub=e.p*B.guests;
   return '<div class="book-head"><div><span class="p"><sup>$</sup>'+e.p+'</span><span class="u">per person</span></div>'+
@@ -1122,12 +1229,18 @@ function bookingHTML(e){
       '<p class="book-note">'+IC.shield+'<span>'+(e.inst?"Confirmed instantly. ":"Your guide confirms within 24 hours. ")+'You won’t be charged until confirmed. Free cancellation up to 24 hours before.</span></p>'+
     '</div>';
 }
+/* colour theme per experience type: water sports are blue, everything else green */
+var WATER={surfing:1,paddling:1,rafting:1};
+var ACC_HEX={water:"#1A93D0",land:"#2BAE5F"};
+function accOf(e){return WATER[e.a]?"water":"land"}
+function setAcc(sel,e){var v=$(sel);v.classList.remove("acc-water","acc-land");v.classList.add("acc-"+accOf(e))}
 function renderDetail(){
   var e=byId(S.id),G=GUIDES[e.gd],A=ACTS[e.a],R=REGIONS[e.r];
+  setAcc("#v-experience",e);
   if(S.book.id!==e.id)S.book={id:e.id,date:null,time:null,guests:Math.min(2,e.grp),month:0};
   var desc=e.desc||("Join "+e.gd.split(" ")[0]+" for a "+e.dur+" "+A.n.toLowerCase()+" experience around "+e.place+". Small groups, expert instruction and all the gear you need, so you can focus on the day.");
   var steps=e.h>24?[["Day 1","Hike in and set up camp","Navigation basics, shelter building and water purification."],["Day 2","Fire, food and signalling","Friction fire, foraging awareness and rescue signalling."],["Day 3","Solo challenge and hike out","Put your skills together, then walk out by early afternoon."]]
-    :[["Start","Meet your guide","Check-in, gear fitting and a safety briefing at the meeting point."],["20 min","Skills warm-up","Technique basics matched to your group’s experience."],["45 min",A.n+" in "+e.place.split(" ")[0],"The main event, with regular stops for photos, water and snacks."],[e.dur,"Wrap up","Back at the meeting point with recommendations for your next trip."]];
+    :[["Start","Meet your guide","Check-in, gear fitting and a safety briefing at the meeting point."],["20 min","Skills warm-up","Technique basics matched to your group’s experience."],["45 min",A.n+" in "+e.place.replace(" National Park",""),"The main event, with regular stops for photos, water and snacks."],[e.dur,"Wrap up","Back at the meeting point with recommendations for your next trip."]];
   var html=
     '<nav class="crumbs" aria-label="Breadcrumb"><a href="#home" data-go="home">Home</a><span>/</span><a href="#search" data-go="search" data-region="'+e.r+'">'+R.n+'</a><span>/</span><a href="#search" data-go="search" data-act="'+e.a+'">'+A.n+'</a></nav>'+
     '<div class="gallery">'+photo(e.id,A.g,e.t)+photo(e.id+"-2",A.g,"")+photo(e.id+"-3",A.g,"")+photo(e.id+"-4",A.g,"")+'<div style="position:relative">'+photo(e.id+"-5",A.g,"","g5")+'<button class="btn btn-sm more" type="button" data-toast="Full photo gallery opens in a lightbox">See all photos</button></div></div>'+
@@ -1142,15 +1255,16 @@ function renderDetail(){
           '<div class="fact">'+IC.lang+'<dt>Language</dt><dd>English, Spanish</dd></div>'+
         '</dl>'+
         '<section class="d-sec"><h2>About this experience</h2><p class="big">'+desc+'</p><p>You should be comfortable being active for the full duration. Your guide will adjust the pace to the group. Ages '+(e.lv==="Advanced"?"18":"10")+' and up.</p></section>'+
+        videoSection(e)+
         '<section class="d-sec"><h2>What’s included</h2><ul class="incl">'+INCL[e.a].map(function(t){return '<li class="y">'+IC.check+t+'</li>'}).join("")+NOTINCL.map(function(t){return '<li class="x">'+IC.x+t+'</li>'}).join("")+'</ul></section>'+
         '<section class="d-sec"><h2>Itinerary</h2><ol class="itin">'+steps.map(function(s){return '<li><time>'+s[0]+'</time><div><h3>'+s[1]+'</h3><p>'+s[2]+'</p></div></li>'}).join("")+'</ol></section>'+
         '<section class="d-sec"><h2>Your guide</h2><div class="guide-card"><span class="av lg">'+initials(e.gd)+'</span><div><h3>'+e.gd+'</h3><div class="meta">'+G.yrs+' years guiding · '+G.trips.toLocaleString("en-US")+' trips led</div><p>'+G.bio+'</p><p style="font-size:14px;color:var(--muted)">'+G.cert+'</p><button class="btn btn-ghost btn-sm" type="button" data-toast="Messaging opens after sign-in">Message '+e.gd.split(" ")[0]+'</button></div></div></section>'+
+        routeSection(e)+
         '<section class="d-sec" id="reviews"><h2>Reviews</h2>'+
           '<div class="rev-sum"><div class="rev-score">'+e.rt.toFixed(1)+'<small>'+stars(e.rt)+'<br>'+e.rv+' verified reviews</small></div>'+
           '<div class="bars">'+[["Guide",4.9],["Value",4.6],["Safety",5],["Scenery",4.8]].map(function(b){return '<div class="bar"><span>'+b[0]+'</span><i><b style="width:'+(b[1]/5*100)+'%"></b></i><span>'+b[1].toFixed(1)+'</span></div>'}).join("")+'</div></div>'+
           '<div class="reviews">'+[["Priya N.","October 2026","The pace was perfect for our kids and "+e.gd.split(" ")[0]+" knew every plant and rock. Already planning the next one."],["Daniel K.","September 2026","Well organised from booking to the end. Gear was in great shape and the group felt small."],["Marisol T.","August 2026","Exactly as described. The meeting point was easy to find and the photos afterwards were a lovely touch."],["Ben W.","July 2026","Clear safety briefing, great stories, beautiful spot. Worth every dollar."]].map(function(r){return '<article class="review"><header><span class="av">'+initials(r[0])+'</span><div><b>'+r[0]+'</b>'+r[1]+'</div></header>'+stars(5)+'<p>'+r[2]+'</p></article>'}).join("")+'</div>'+
           '<p style="margin-top:18px"><button class="btn btn-ghost" type="button" data-toast="All reviews open in a full list">Show all '+e.rv+' reviews</button></p></section>'+
-        routeSection(e)+
         '<section class="d-sec"><h2>Cancellation policy</h2><p>Cancel up to 24 hours before the start time for a full refund. If weather makes the trip unsafe, your guide will reschedule or refund you in full.</p></section>'+
       '</div>'+
       '<aside class="book" data-book aria-label="Booking">'+bookingHTML(e)+'</aside>'+
@@ -1188,10 +1302,10 @@ var ROUTES={
   "wilderness-survival":{meet:[37.7320,-119.5580,"Happy Isles trailhead","Meet at the Happy Isles shuttle stop (stop 16) with your pack packed."],kind:"trail",back:true,end:[37.7325,-119.5150,"Little Yosemite Valley camp"],
     path:[[37.7320,-119.5580],[37.7290,-119.5520],[37.7277,-119.5440],[37.7265,-119.5380],[37.7275,-119.5300],[37.7300,-119.5220],[37.7325,-119.5150]]}
 };
-var KIND={trail:{n:"Trail",c:"#2BAE5F"},water:{n:"Paddle route",c:"#1A93D0"},road:{n:"Road route",c:"#E58A2E"},area:{n:"Session area",c:"#2BAE5F"}};
+var KIND={trail:{n:"Trail"},water:{n:"Paddle route"},road:{n:"Road route"},area:{n:"Session area"}};
 function miles(path){var d=0,R=3958.8;for(var i=1;i<path.length;i++){var a=path[i-1],b=path[i],dl=(b[0]-a[0])*Math.PI/180,dn=(b[1]-a[1])*Math.PI/180,x=Math.sin(dl/2)*Math.sin(dl/2)+Math.cos(a[0]*Math.PI/180)*Math.cos(b[0]*Math.PI/180)*Math.sin(dn/2)*Math.sin(dn/2);d+=2*R*Math.atan2(Math.sqrt(x),Math.sqrt(1-x))}return d}
 function routeSection(e){
-  var R=ROUTES[e.id],K=KIND[R.kind],dist="";
+  var R=ROUTES[e.id],K={n:KIND[R.kind].n,c:ACC_HEX[accOf(e)]},dist="";
   if(R.kind==="area")dist="An area about "+Math.round(R.radius*2*3.28/50)*50+" ft across, a short walk from the meeting point";
   else{var m=miles(R.path)*(R.back?2:1);dist=m.toFixed(1)+" mi "+(R.loop?"loop":R.back?"out and back":"one way");}
   var start=R.start?R.start[2]:R.meet[2],end=R.end?R.end[2]:(R.loop?"Back at the meeting point":R.meet[2]);
@@ -1269,7 +1383,7 @@ function setupMap(m,el){
 /* ---------------- locations page ---------------- */
 function locVisible(){return EXP.filter(function(e){return !S.locActs.length||S.locActs.indexOf(e.a)>-1})}
 function locPopup(e){
-  return '<div class="pop">'+
+  return '<div class="pop acc-'+accOf(e)+'">'+
     '<div class="pop-media">'+photo(e.id,ACTS[e.a].g,e.t)+'<span class="price-tag"><small>from</small><sup>$</sup>'+e.p+'</span></div>'+
     '<div class="pop-body"><div class="card-meta"><span>'+IC.pin+esc(e.place)+'</span><span>'+IC.clock+e.dur+'</span></div>'+
     '<h3>'+esc(e.t)+'</h3><div class="rating">'+stars(e.rt)+'<b>'+e.rt.toFixed(1)+'</b><span>('+e.rv+')</span></div>'+
@@ -1296,7 +1410,7 @@ function updateLoc(){
   var vis=locVisible(),pts=[];
   vis.forEach(function(e){
     var R=ROUTES[e.id],ll=[R.meet[0],R.meet[1]];pts.push(ll);
-    var mk=L.marker(ll,{title:e.t,riseOnHover:true,icon:L.divIcon({className:"",html:'<span class="lpin" data-pin="'+e.id+'">'+IC[e.a]+'</span>',iconSize:[38,38],iconAnchor:[19,19],popupAnchor:[0,-16]})});
+    var mk=L.marker(ll,{title:e.t,riseOnHover:true,icon:L.divIcon({className:"",html:'<span class="lpin acc-'+accOf(e)+'" data-pin="'+e.id+'">'+IC[e.a]+'</span>',iconSize:[38,38],iconAnchor:[19,19],popupAnchor:[0,-16]})});
     mk.bindPopup(locPopup(e),{className:"loc-pop",maxWidth:280,minWidth:260,autoPanPaddingTopLeft:[20,80],autoPanPaddingBottomRight:[20,20]});
     mk.on("popupopen",function(ev){hydrate(ev.popup.getElement());setLocActive(e.id)});
     mk.on("popupclose",function(){setLocActive(null)});
@@ -1326,7 +1440,7 @@ function drawRoute(e){
   var el=document.getElementById("route-map");if(!el)return;
   if(!window.L){el.innerHTML='<div class="route-fallback">The map couldn’t load. Meeting point: '+ROUTES[e.id].meet[2]+'.</div>';return}
   el.innerHTML="";
-  var R=ROUTES[e.id],K=KIND[R.kind],root=document.documentElement;
+  var R=ROUTES[e.id],K={n:KIND[R.kind].n,c:ACC_HEX[accOf(e)]},root=document.documentElement;
   var dark=root.getAttribute("data-theme")==="dark"||(root.getAttribute("data-theme")!=="light"&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches);
   var m=L.map(el,{scrollWheelZoom:false,tap:false});S.lmap=m;
   setupMap(m,el);
@@ -1356,6 +1470,7 @@ function rerenderBook(){var e=byId(S.id),b=$("[data-book]");if(b)b.innerHTML=boo
 /* ---------------- checkout ---------------- */
 function renderCheckout(){
   var e=byId(S.book.id||S.id),B=S.book,total=e.p*B.guests;
+  setAcc("#v-checkout",e);
   var fields=function(id,label,type,ac,full,hint){return '<div class="field'+(full?" full":"")+'"><label for="'+id+'">'+label+'</label><input id="'+id+'" type="'+type+'"'+(ac?' autocomplete="'+ac+'"':"")+' data-req><div class="err">Enter your '+label.toLowerCase()+'</div>'+(hint?'<div class="hint">'+hint+'</div>':"")+'</div>'};
   $("[data-checkout]").innerHTML=
     '<nav class="crumbs"><a href="#experience" data-go="experience" data-id="'+e.id+'">Back to experience</a></nav>'+
@@ -1384,18 +1499,24 @@ function renderCheckout(){
       '</div></aside>'+
     '</div>';
   hydrate($("[data-checkout]"));
+  if(S.member){var P=S.member.profile;[["c-first",P.first],["c-last",P.last],["c-email",P.email],["c-phone",P.phone]].forEach(function(x){var i=$("#"+x[0]);if(i)i.value=x[1]})}
 }
 function renderConfirmed(){
-  var e=byId(S.book.id),B=S.book,code="OD-"+(seed(e.id+(B.date?B.date.toDateString():""))%90000+10000);
+  var e=byId(S.book.id),B=S.book;setAcc("#v-confirmed",e);var code="OD-"+(seed(e.id+(B.date?B.date.toDateString():""))%90000+10000);
   $("[data-confirmed]").innerHTML='<div class="done"><div class="done-mark">'+IC.check+'</div>'+
     '<h1>'+(e.inst?"You’re booked":"Request sent")+'</h1><p class="lede">'+(e.inst?"A confirmation is on its way to your inbox. ":""+e.gd.split(" ")[0]+" will reply within 24 hours. ")+e.gd.split(" ")[0]+" will be in touch the day before with final details.</p>"+
-    '<div class="panel"><dl class="kv"><dt>Booking</dt><dd>'+code+'</dd><dt>Experience</dt><dd>'+esc(e.t)+'</dd><dt>Date</dt><dd>'+fmtDate(B.date,true)+'</dd><dt>Start time</dt><dd>'+B.time+'</dd><dt>Guests</dt><dd>'+B.guests+'</dd><dt>Paid</dt><dd>'+money(e.p*B.guests)+'</dd></dl></div>'+
+    '<div class="panel"><dl class="kv"><dt>Booking</dt><dd data-booking-code>'+code+'</dd><dt>Experience</dt><dd>'+esc(e.t)+'</dd><dt>Date</dt><dd>'+fmtDate(B.date,true)+'</dd><dt>Start time</dt><dd>'+B.time+'</dd><dt>Guests</dt><dd>'+B.guests+'</dd><dt>Paid</dt><dd>'+money(e.p*B.guests)+'</dd></dl></div>'+
     '<div class="done-actions"><button class="btn btn-primary" type="button" data-toast="Calendar file downloaded">Add to calendar</button><button class="btn btn-ghost" type="button" data-toast="Messaging opens after sign-in">Message '+e.gd.split(" ")[0]+'</button><button class="btn btn-ghost" type="button" data-go="search">Find another adventure</button></div></div>';
 }
 
 /* ---------------- routing ---------------- */
 function go(view,opts){
   opts=opts||{};
+  if(view==="profile"||(view==="saved"&&S.member)){
+    if(!S.member){toast("Sign in to see your profile");$('[data-modal-box="signin"]').classList.add("on");return}
+    if(view==="saved")S.ptab="saved";else if(opts.ptab)S.ptab=opts.ptab;
+    view="profile";S.savedOnly=false;renderProfile();
+  }
   if(view==="saved"){S.savedOnly=true;view="search"}
   else if(view==="search"&&!opts.keepSaved)S.savedOnly=false;
   if(view==="experience"){S.id=opts.id||S.id||EXP[0].id;renderDetail()}
@@ -1411,7 +1532,7 @@ function go(view,opts){
   exitMapFullscreen();
   document.body.classList.toggle("v-loc-active",view==="locations");
   if(view==="locations")drawLocations();else if(S.locmap){S.locmap.remove();S.locmap=null}
-  var tab=S.savedOnly?"saved":(["home","search","locations"].indexOf(view)>-1?view:"");
+  var tab=S.savedOnly?"saved":view==="profile"?(S.ptab==="saved"?"saved":"account"):(["home","search","locations"].indexOf(view)>-1?view:"");
   $$("[data-tab]").forEach(function(t){if(t.dataset.tab===tab)t.setAttribute("aria-current","page");else t.removeAttribute("aria-current")});
   $$("[data-nav]").forEach(function(a){if(a.dataset.nav===view&&!S.savedOnly)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
   closeSheets();
@@ -1430,19 +1551,30 @@ var tt;function toast(msg){var t=$("[data-toast-box]");t.textContent=msg;t.class
 document.addEventListener("click",function(ev){
   var t=ev.target.closest("button,a");if(!t)return;
   var d=t.dataset;
-  if(d.save){ev.preventDefault();S.saved[d.save]=!S.saved[d.save];$$('[data-save="'+d.save+'"]').forEach(function(b){b.setAttribute("aria-pressed",!!S.saved[d.save])});toast(S.saved[d.save]?"Saved to your list":"Removed from saved");if(S.savedOnly)renderResults();return}
+  if(d.save){ev.preventDefault();S.saved[d.save]=!S.saved[d.save];$$('[data-save="'+d.save+'"]').forEach(function(b){b.setAttribute("aria-pressed",!!S.saved[d.save])});toast(S.saved[d.save]?"Saved to your list":"Removed from saved");if(S.member){S.member.saved=Object.keys(S.saved).filter(function(k){return S.saved[k]});saveUser();if(S.view==="profile")renderProfile()}if(S.savedOnly)renderResults();return}
   if(d.toast){ev.preventDefault();toast(d.toast);return}
   if(d.modal){ev.preventDefault();closeModal();var m=$('[data-modal-box="'+d.modal+'"]');m.classList.add("on");setTimeout(function(){var i=$("input",m);if(i)i.focus()},30);return}
   if(d.modalClose!==undefined){closeModal();return}
-  if(d.signin!==undefined){var em=$("#si-email").value.trim();closeModal();setUser({name:em?em.split("@")[0]:"Traveler",guest:false});toast("Signed in");return}
+  if(d.signin!==undefined){
+    var un=$("#si-email").value.trim().toLowerCase(),pw=$("#si-pass").value,er=$("[data-si-err]");
+    if(!un||!pw){er.textContent="Enter your username and password.";er.hidden=false;return}
+    var acct=un.split("@")[0];
+    if(!USERS[acct]||USERS[acct].pass!==pw){er.textContent="That username and password don’t match. Try seamus / seamus.";er.hidden=false;return}
+    er.hidden=true;$("#si-pass").value="";closeModal();login(acct);toast("Welcome back, "+S.member.profile.first);
+    if(S.view==="checkout")renderCheckout();
+    return}
   if(d.guest!==undefined){closeModal();setUser({name:"Guest",guest:true});toast("You’re browsing as a guest");return}
   if(d.acctToggle!==undefined){var mn=$("[data-acct-menu]"),open=mn.hidden;mn.hidden=!open;t.setAttribute("aria-expanded",open);return}
-  if(d.signout!==undefined){closeModal();setUser(null);toast("Signed out");return}
+  if(d.signout!==undefined){closeModal();logout();toast("Signed out");return}
+  if(d.ptab&&d.go===undefined){S.ptab=d.ptab;renderProfile();return}
+  if(d.pact){var pa=S.member.profile.acts,ix=pa.indexOf(d.pact);if(ix>-1)pa.splice(ix,1);else pa.push(d.pact);t.setAttribute("aria-pressed",ix<0);return}
+  if(d.video){openVideo(d.video,d.vtitle);return}
+  if(d.acctTab!==undefined&&S.member){go("profile");return}
   if(d.acctTab!==undefined){$("[data-acct-title]").textContent=S.user.name;$("[data-acct-sub]").textContent=S.user.guest?"Browsing as a guest":"Signed in";$("[data-acct-create]").hidden=!S.user.guest;$('[data-modal-box="account"]').classList.add("on");return}
   if(d.go){
     ev.preventDefault();closeModal();
     if(d.act||d.region){S.f.acts=d.act?[d.act]:[];S.f.regions=d.region&&d.region!=="all"?[d.region]:[];syncSearchSelects()}
-    go(d.go,{id:d.id});return;
+    go(d.go,{id:d.id,ptab:d.ptab});return;
   }
   if(d.locf){if(d.locf==="all")S.locActs=[];else{var li=S.locActs.indexOf(d.locf);if(li>-1)S.locActs.splice(li,1);else S.locActs.push(d.locf)}if(S.locmap)S.locmap.closePopup();updateLoc();return}
   if(d.locId){var mk=S.locMarkers&&S.locMarkers[d.locId];if(mk){S.locmap.setView(mk.getLatLng(),Math.max(S.locmap.getZoom(),9));mk.openPopup()}return}
@@ -1455,7 +1587,7 @@ document.addEventListener("click",function(ev){
   if(d.day){S.book.date=new Date(d.day);S.book.time=null;var e=byId(S.id),open=slots(e,S.book.date).filter(function(s){return s.left>0});if(open.length===1)S.book.time=open[0].t;rerenderBook();return}
   if(d.time){S.book.time=d.time;rerenderBook();return}
   if(d.month){S.book.month=Math.max(0,Math.min(5,S.book.month+(+d.month)));rerenderBook();return}
-  if(d.g){var ex=byId(S.id);S.book.guests=Math.max(1,Math.min(ex.grp,S.book.guests+(+d.g)));rerenderBook();return}
+  if(d.g){var ex=byId(S.id);S.book.guests=Math.max(1,Math.min(ex.grp,S.book.guests+(+d.g)));if(S.book.date&&S.book.time){var sl=slots(ex,S.book.date).filter(function(x){return x.t===S.book.time})[0];if(sl&&sl.left<S.book.guests)S.book.time=null}rerenderBook();return}
   if(d.reserve!==undefined){
     var h=$("[data-book-hint]");
     if(!S.book.date){h.textContent="Choose a date to continue.";return}
@@ -1469,20 +1601,138 @@ document.addEventListener("click",function(ev){
 document.addEventListener("click",function(ev){var a=$("[data-acct]");if(a&&!a.contains(ev.target)||ev.target.closest(".acct-menu button")){var mn=$("[data-acct-menu]");if(mn&&!mn.hidden){mn.hidden=true;$("[data-acct-toggle]").setAttribute("aria-expanded","false")}}});
 document.addEventListener("click",function(ev){if(ev.target.classList.contains("scrim"))closeSheets();if(ev.target.classList.contains("modal"))closeModal()});
 document.addEventListener("keydown",function(ev){if(ev.key==="Escape"){if($(".map-fs")){exitMapFullscreen();if(S.lmap)S.lmap.invalidateSize();if(S.locmap)S.locmap.invalidateSize();return}closeModal();closeSheets()}});
+/* ---------------- accounts (prototype: demo user stored in this browser) ---------------- */
+function daysFromNow(n){var d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()+n);return isoDate(d)}
+function isoDate(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function fromIso(s){var p=s.split("-");return new Date(+p[0],+p[1]-1,+p[2],12)}
+var USERS={
+  seamus:{pass:"seamus",seed:function(){return{
+    profile:{first:"Seamus",last:"O’Brien",email:"seamus@example.com",phone:"(415) 555-0199",city:"San Francisco, CA",level:"Some experience",acts:["hiking","surfing","cycling"],bio:"Weekend hiker and beginner surfer. Always up for an early start if there’s coffee.",news:true,sms:false,since:"March 2025"},
+    saved:["tahoe-climb","mammoth-ski","tomales-kayak","big-sur-cycle"],
+    bookings:[
+      {id:"marin-run",date:daysFromNow(16),time:"8:00 am",guests:1,code:"OD-73120",total:55},
+      {id:"yosemite-hike",date:"2026-06-14",time:"8:00 am",guests:2,code:"OD-48213",total:178,reviewed:5},
+      {id:"santa-cruz-surf",date:"2026-08-02",time:"10:30 am",guests:1,code:"OD-51907",total:95},
+      {id:"american-river-raft",date:"2026-09-20",time:"8:00 am",guests:3,code:"OD-60344",total:315}
+    ]}}}
+};
+function login(acct,quiet){
+  var data=null;
+  try{data=JSON.parse(localStorage.getItem("od-user-"+acct)||"null")}catch(err){}
+  S.member=data||USERS[acct].seed();S.member.acct=acct;
+  S.saved={};S.member.saved.forEach(function(id){S.saved[id]=true});
+  try{localStorage.setItem("od-session",acct)}catch(err){}
+  var P=S.member.profile;setUser({name:P.first,full:P.first+" "+P.last,guest:false,member:true});
+  refreshSaves();
+}
+function logout(){
+  S.member=null;S.saved={};
+  try{localStorage.removeItem("od-session")}catch(err){}
+  setUser(null);refreshSaves();
+  if(S.view==="profile")go("home");
+}
+function saveUser(){if(!S.member)return;try{localStorage.setItem("od-user-"+S.member.acct,JSON.stringify(S.member))}catch(err){}}
+function refreshSaves(){$$("[data-save]").forEach(function(b){b.setAttribute("aria-pressed",!!S.saved[b.dataset.save])})}
+function fmtIso(s,long){return fmtDate(fromIso(s),long)}
+
+function bookingRow(b,past){
+  var e=byId(b.id);
+  var actions=past
+    ?'<button class="btn btn-ghost btn-sm" type="button" data-go="experience" data-id="'+e.id+'">Book again</button>'+
+      (b.reviewed?'<span class="reviewed">'+stars(b.reviewed)+' Reviewed</span>':'<button class="btn btn-primary btn-sm" type="button" data-toast="The review form opens here">Leave a review</button>')
+    :'<button class="btn btn-primary btn-sm" type="button" data-go="experience" data-id="'+e.id+'">View experience</button>'+
+      '<button class="btn btn-ghost btn-sm" type="button" data-toast="Messaging opens here">Message '+e.gd.split(" ")[0]+'</button>';
+  return '<article class="bk acc-'+accOf(e)+'">'+photo(e.id,ACTS[e.a].g,e.t)+
+    '<div class="bk-main"><div class="bk-top"><span class="status '+(past?"st-done":"st-ok")+'">'+(past?"Completed":"Confirmed")+'</span><span class="bk-code">'+b.code+'</span></div>'+
+    '<h3>'+esc(e.t)+'</h3>'+
+    '<div class="bk-meta"><span>'+IC.cal+fmtIso(b.date,true)+'</span><span>'+IC.clock+b.time+'</span><span>'+IC.users+b.guests+' guest'+(b.guests>1?"s":"")+'</span><span>'+IC.pin+esc(e.place)+'</span></div>'+
+    '<div class="bk-total">'+money(b.total)+' paid</div></div>'+
+    '<div class="bk-actions">'+actions+'</div></article>';
+}
+function renderProfile(){
+  var M=S.member;if(!M)return;
+  var P=M.profile,today=isoDate(new Date());
+  var up=M.bookings.filter(function(b){return b.date>=today}).sort(function(a,b){return a.date<b.date?-1:1});
+  var past=M.bookings.filter(function(b){return b.date<today}).sort(function(a,b){return a.date>b.date?-1:1});
+  var saved=EXP.filter(function(e){return S.saved[e.id]});
+  var tab=S.ptab||"bookings";
+  var tabs=[["bookings","Bookings",M.bookings.length],["saved","Saved",saved.length],["details","Profile details",""]];
+  var body="";
+  if(tab==="bookings"){
+    body='<section class="bk-group"><h2>Upcoming</h2>'+(up.length?up.map(function(b){return bookingRow(b,false)}).join(""):'<div class="empty"><h3>No upcoming trips</h3><p>Your next adventure will show up here once it’s booked.</p><button class="btn btn-primary" type="button" data-go="search">Find an experience</button></div>')+'</section>'+
+      '<section class="bk-group"><h2>Past trips</h2>'+(past.length?past.map(function(b){return bookingRow(b,true)}).join(""):'<p class="muted">Trips you’ve completed will be listed here.</p>')+'</section>';
+  }else if(tab==="saved"){
+    body=saved.length?'<div class="grid">'+saved.map(card).join("")+'</div>':'<div class="empty"><h3>No saved experiences yet</h3><p>Tap the heart on any experience to keep it here.</p><button class="btn btn-primary" type="button" data-go="search">Browse experiences</button></div>';
+  }else{
+    var f=function(id,label,val,type,ac,full){return '<div class="field'+(full?" full":"")+'"><label for="'+id+'">'+label+'</label><input id="'+id+'" name="'+id+'" type="'+(type||"text")+'" value="'+esc(val||"")+'"'+(ac?' autocomplete="'+ac+'"':"")+'><div class="err">Enter '+label.toLowerCase()+'</div></div>'};
+    body='<form class="panel pf-form" data-pf novalidate>'+
+      '<h2>Personal details</h2><div class="fields">'+f("pf-first","First name",P.first,"text","given-name")+f("pf-last","Last name",P.last,"text","family-name")+f("pf-email","Email",P.email,"email","email")+f("pf-phone","Mobile phone",P.phone,"tel","tel")+f("pf-city","Home city",P.city,"text","address-level2",true)+'</div>'+
+      '<h2 style="margin-top:28px">Outdoor preferences</h2><div class="fields">'+
+        '<div class="field"><label for="pf-level">Experience level</label><select id="pf-level" name="pf-level">'+["First time","Some experience","Very experienced"].map(function(l){return '<option'+(l===P.level?" selected":"")+'>'+l+'</option>'}).join("")+'</select></div>'+
+        '<div class="field full"><span class="flabel">Favourite activities</span><div class="act-pick">'+Object.keys(ACTS).map(function(k){return '<button type="button" class="chip sm" data-pact="'+k+'" aria-pressed="'+(P.acts.indexOf(k)>-1)+'">'+IC[k]+ACTS[k].n+'</button>'}).join("")+'</div><div class="hint">We use these to suggest trips on your home page.</div></div>'+
+        '<div class="field full"><label for="pf-bio">About you <span class="opt">(shared with your guide)</span></label><textarea id="pf-bio" name="pf-bio">'+esc(P.bio)+'</textarea></div>'+
+      '</div>'+
+      '<h2 style="margin-top:28px">Notifications</h2>'+
+      '<label class="check"><input type="checkbox" id="pf-news"'+(P.news?" checked":"")+'>Email me new experiences near me</label>'+
+      '<label class="check"><input type="checkbox" id="pf-sms"'+(P.sms?" checked":"")+'>Text me reminders the day before a trip</label>'+
+      '<div class="pf-actions"><button class="btn btn-primary" type="submit">Save changes</button><button class="btn btn-ghost" type="button" data-toast="Password reset email sent">Change password</button><button class="btn btn-ghost" type="button" data-signout>Sign out</button></div>'+
+    '</form>';
+  }
+  $("[data-profile]").innerHTML=
+    '<header class="pf-head"><span class="av xl">'+initials(P.first+" "+P.last)+'</span><div><h1>'+esc(P.first+" "+P.last)+'</h1><p class="pf-meta">'+IC.pin+esc(P.city)+' · Member since '+P.since+'</p></div>'+
+      '<dl class="pf-stats"><div><dt>Trips</dt><dd>'+past.length+'</dd></div><div><dt>Upcoming</dt><dd>'+up.length+'</dd></div><div><dt>Saved</dt><dd>'+saved.length+'</dd></div></dl></header>'+
+    '<div class="ptabs" role="tablist">'+tabs.map(function(t){return '<button type="button" role="tab" data-ptab="'+t[0]+'" aria-selected="'+(t[0]===tab)+'">'+t[1]+(t[2]!==""?'<span class="n">'+t[2]+'</span>':"")+'</button>'}).join("")+'</div>'+
+    '<div role="tabpanel">'+body+'</div>';
+  hydrate($("[data-profile]"));
+}
+document.addEventListener("submit",function(ev){
+  if(!ev.target.matches("[data-pf]"))return;
+  ev.preventDefault();var P=S.member.profile,v=function(id){return $("#"+id).value.trim()};
+  var bad=null;["pf-first","pf-last","pf-email"].forEach(function(id){var ok=v(id)!=="";if(id==="pf-email")ok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v(id));$("#"+id).closest(".field").classList.toggle("bad",!ok);if(!ok&&!bad)bad=$("#"+id)});
+  if(bad){bad.focus();return}
+  P.first=v("pf-first");P.last=v("pf-last");P.email=v("pf-email");P.phone=v("pf-phone");P.city=v("pf-city");P.level=$("#pf-level").value;P.bio=$("#pf-bio").value.trim();P.news=$("#pf-news").checked;P.sms=$("#pf-sms").checked;
+  saveUser();setUser({name:P.first,full:P.first+" "+P.last,guest:false,member:true});renderProfile();toast("Profile saved");
+});
+
+/* ---------------- videos (YouTube) ----------------
+   Add YouTube links or video IDs per experience, e.g.
+   "yosemite-hike":[{url:"https://www.youtube.com/watch?v=XXXXXXXXXXX",title:"Mist Trail walkthrough"}]
+   Until an experience has videos, its page links to a YouTube search instead. */
+var VIDEOS={};
+function ytId(u){var m=/(?:v=|youtu\.be\/|embed\/|shorts\/)([\w-]{11})/.exec(u||"");return m?m[1]:(/^[\w-]{11}$/.test(u||"")?u:"")}
+var PLAY='<span class="play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg></span>';
+function videoSection(e){
+  var list=(VIDEOS[e.id]||[]).map(function(v){return{id:ytId(v.url||v.id),title:v.title||""}}).filter(function(v){return v.id});
+  var html;
+  if(list.length){
+    html='<div class="videos">'+list.map(function(v){return '<button type="button" class="vid" data-video="'+v.id+'" data-vtitle="'+esc(v.title)+'" aria-label="Play video: '+esc(v.title)+'"><img src="https://i.ytimg.com/vi/'+v.id+'/hqdefault.jpg" alt="" loading="lazy">'+PLAY+'<span class="vt">'+esc(v.title)+'</span></button>'}).join("")+'</div>';
+  }else{
+    var q=ACTS[e.a].n.toLowerCase()+" "+e.place.replace(" National Park","");
+    html='<div class="videos"><a class="vid vid-search" href="https://www.youtube.com/results?search_query='+encodeURIComponent(e.q||q)+'" target="_blank" rel="noopener">'+photo(e.id+"-3",ACTS[e.a].g,"")+PLAY+'<span class="vt">Watch '+esc(ACTS[e.a].n.toLowerCase())+' in '+esc(e.place.replace(" National Park",""))+' on YouTube<small>Opens YouTube in a new tab</small></span></a></div>';
+  }
+  return '<section class="d-sec" id="videos"><h2>Videos</h2>'+html+'</section>';
+}
+function openVideo(id,title){
+  var box=$('[data-modal-box="video"]');
+  $("[data-video-frame]").innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&modestbranding=1" title="'+esc(title||"YouTube video")+'" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+  box.classList.add("on");
+}
+
 function setUser(u){
   S.user=u;
   $(".hdr .btn-signin").hidden=!!u;$("[data-acct]").hidden=!u;
   var tab=$('[data-tab="account"]');
   if(u){
-    $("[data-acct-name]").textContent=u.name;$("[data-acct-av]").textContent=u.name.charAt(0).toUpperCase();
-    $("[data-acct-who]").textContent=u.guest?"Browsing as a guest":"Signed in as "+u.name;
+    $("[data-acct-name]").textContent=u.name;$("[data-acct-av]").textContent=u.full?initials(u.full):u.name.charAt(0).toUpperCase();
+    $("[data-acct-who]").textContent=u.guest?"Browsing as a guest":"Signed in as "+(u.full||u.name);
+    $$("[data-member-only]").forEach(function(x){x.hidden=!u.member});
     $("[data-guest-upgrade]").hidden=!u.guest;
     tab.removeAttribute("data-modal");tab.setAttribute("data-acct-tab","");tab.lastChild.textContent=u.guest?"Guest":"Account";
   }else{
     tab.setAttribute("data-modal","signin");tab.removeAttribute("data-acct-tab");tab.lastChild.textContent="Account";
   }
 }
-function closeModal(){$$(".modal").forEach(function(m){m.classList.remove("on")})}
+function closeModal(){$$(".modal").forEach(function(m){m.classList.remove("on")});var vf=$("[data-video-frame]");if(vf)vf.innerHTML=""}
 document.addEventListener("change",function(ev){
   var t=ev.target;
   if(t.dataset.fk){var arr=S.f[t.dataset.fk],i=arr.indexOf(t.value);if(t.checked&&i<0)arr.push(t.value);if(!t.checked&&i>-1)arr.splice(i,1);syncSearchSelects();renderResults()}
@@ -1503,6 +1753,8 @@ document.addEventListener("submit",function(ev){
     $$("[data-req]",f).forEach(function(i){var ok=i.value.trim()!=="";if(i.type==="email")ok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(i.value.trim());i.closest(".field").classList.toggle("bad",!ok);if(!ok&&!bad)bad=i});
     if(bad){bad.focus();return}
     go("confirmed");
+    if(S.member){var be=byId(S.book.id),code=$("[data-booking-code]")?$("[data-booking-code]").textContent:"";
+      if(!S.member.bookings.some(function(x){return x.code===code})){S.member.bookings.push({id:be.id,date:isoDate(S.book.date),time:S.book.time,guests:S.book.guests,code:code,total:be.p*S.book.guests});saveUser()}}
   }
 });
 function syncSearchSelects(){
@@ -1518,10 +1770,11 @@ fillSelects();renderHome();
 function routeFromHash(){
   var h=(location.hash||"").slice(1);
   if(h.indexOf("experience-")===0)go("experience",{id:h.slice(11)});
-  else if(["search","saved","checkout","locations"].indexOf(h)>-1)go(h);
+  else if(["search","saved","checkout","locations","profile"].indexOf(h)>-1)go(h);
   else if(h==="confirmed"){go("checkout");go("confirmed")}
   else if(h==="home"&&S.view!=="home")go("home");
 }
+try{var sess=localStorage.getItem("od-session");if(sess&&USERS[sess])login(sess,true)}catch(err){}
 routeFromHash();
 window.addEventListener("hashchange",routeFromHash);
 })();

@@ -60,6 +60,7 @@ select{height:38px;border:1px solid var(--line);border-radius:8px;background:var
     <option value="checkout">Checkout</option>
     <option value="confirmed">Booking confirmed</option>
     <option value="saved">Saved</option>
+    <option value="profile">Profile (sign in)</option>
   </select>
   <label class="tog" id="slots-wrap"><input type="checkbox" id="slots" checked>Show photo file names</label>
   <a class="open-site" id="open-site" href="app.html" target="_blank" rel="noopener" hidden>Open full site</a>
@@ -92,7 +93,7 @@ document.querySelectorAll("[data-dev]").forEach(function(b){b.addEventListener("
 window.addEventListener("hashchange",function(){var x=location.hash.slice(1);if(DEV[x]){dev=x;fit()}});
 window.addEventListener("resize",fit);
 function send(msg){try{frame.contentWindow.postMessage(msg,"*")}catch(e){}}
-var PAGEHASH={home:"home",search:"search",locations:"locations",experience:"experience-yosemite-hike",checkout:"checkout",confirmed:"confirmed",saved:"saved"};
+var PAGEHASH={home:"home",search:"search",locations:"locations",experience:"experience-yosemite-hike",checkout:"checkout",confirmed:"confirmed",saved:"saved",profile:"profile"};
 document.getElementById("page").addEventListener("change",function(e){
   if(!hashMode){send({od:"go",view:e.target.value});return}
   try{frame.contentWindow.location.hash=PAGEHASH[e.target.value]}catch(err){frame.src="app.html#"+PAGEHASH[e.target.value]}
