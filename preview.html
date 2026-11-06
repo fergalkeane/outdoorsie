@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Outdoorsie — responsive preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#DDE3DF;--bar:#FFFFFF;--ink:#1E2A30;--muted:#5F6D74;--line:#CCD5D0;--seg:#EEF2EF;--on:#2E3A44;--on-ink:#FFFFFF;--blue:#1A93D0;--bezel:#1B2226;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0C1214;--bar:#151D20;--ink:#E8EEEB;--muted:#94A39E;--line:#2A3639;--seg:#1E292C;--on:#3AAAE3;--on-ink:#0C1214;--bezel:#000;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0C1214;--bar:#151D20;--ink:#E8EEEB;--muted:#94A39E;--line:#2A3639;--seg:#1E292C;--on:#3AAAE3;--on-ink:#0C1214;--bezel:#000;color-scheme:dark}
+*{box-sizing:border-box}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.4 "Figtree",system-ui,-apple-system,sans-serif;display:flex;flex-direction:column;overflow:hidden}
+.bar{flex:none;display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 16px;background:var(--bar);border-bottom:1px solid var(--line)}
+.brand{font:600 17px/1 "Outfit",system-ui,sans-serif;letter-spacing:-.01em;margin-right:4px}
+.brand span{color:var(--muted);font-weight:500}
+.seg{display:inline-flex;background:var(--seg);border-radius:8px;padding:3px;gap:2px}
+.seg button{border:0;background:none;color:var(--ink);font:500 14px/1 inherit;font-family:inherit;height:32px;padding:0 12px;border-radius:6px;display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.seg button svg{width:16px;height:16px}
+.seg button[aria-pressed="true"]{background:var(--on);color:var(--on-ink)}
+.seg button:focus-visible,select:focus-visible,label:focus-within{outline:2px solid var(--blue);outline-offset:2px}
+select{height:38px;border:1px solid var(--line);border-radius:8px;background:var(--bar);color:var(--ink);padding:0 10px;font:inherit}
+.tog{display:inline-flex;align-items:center;gap:6px;color:var(--muted);cursor:pointer;border-radius:6px}
+.tog input{accent-color:var(--blue)}
+.dim{margin-left:auto;color:var(--muted);font-variant-numeric:tabular-nums}
+.stage{flex:1;min-height:0;position:relative;overflow:hidden;display:flex;justify-content:center;align-items:flex-start;padding:20px}
+.device{transform-origin:top center;flex:none;background:var(--bezel);transition:width .25s ease,height .25s ease}
+.device iframe{display:block;border:0;background:#fff;width:100%;height:100%}
+.device.desktop{border-radius:10px;padding:28px 0 0;position:relative;box-shadow:0 20px 50px rgba(0,0,0,.18)}
+.device.desktop::before{content:"";position:absolute;top:10px;left:14px;width:52px;height:9px;background:radial-gradient(circle at 4.5px 4.5px,#ff5f57 4px,transparent 4.5px),radial-gradient(circle at 22.5px 4.5px,#febc2e 4px,transparent 4.5px),radial-gradient(circle at 40.5px 4.5px,#28c840 4px,transparent 4.5px)}
+.device.desktop iframe{border-radius:0 0 10px 10px}
+.device.tablet{border-radius:36px;padding:22px;box-shadow:0 20px 50px rgba(0,0,0,.22)}
+.device.tablet iframe{border-radius:16px}
+.device.mobile{border-radius:52px;padding:14px;box-shadow:0 20px 50px rgba(0,0,0,.22)}
+.device.mobile iframe{border-radius:40px}
+@media (max-width:640px){.dim{display:none}.brand span{display:none}.stage{padding:12px}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">Outdoorsie <span>· booking preview</span></div>
+  <div class="seg" role="group" aria-label="Device">
+    <button type="button" data-dev="desktop" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg>Desktop</button>
+    <button type="button" data-dev="tablet" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="2.5" width="14" height="19" rx="2"/><path d="M11 18.5h2"/></svg>Tablet</button>
+    <button type="button" data-dev="mobile" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18.5h2"/></svg>Mobile</button>
+  </div>
+  <label class="sr" for="page" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Page</label>
+  <select id="page" aria-label="Jump to page">
+    <option value="home">Home</option>
+    <option value="search">Search results</option>
+    <option value="experience">Experience detail</option>
+    <option value="checkout">Checkout</option>
+    <option value="confirmed">Booking confirmed</option>
+    <option value="saved">Saved</option>
+  </select>
+  <label class="tog"><input type="checkbox" id="slots" checked>Show photo file names</label>
+  <div class="dim" id="dim"></div>
+</div>
+<div class="stage" id="stage">
+  <div class="device desktop" id="device"><iframe id="site" title="Outdoorsie site preview" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, viewport-fit=cover&quot;&gt;
+&lt;title&gt;Outdoorsie — Book guided outdoor experiences in California&lt;/title&gt;
+&lt;meta name=&quot;description&quot; content=&quot;Book expert-guided hiking, climbing, surfing, paddling, cycling and skiing across California.&quot;&gt;
+&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;&gt;
+&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin&gt;
+&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&amp;family=Figtree:wght@400;500;600;700&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;!--
+  PHOTOGRAPHY
+  Every photo is loaded from img/&lt;name&gt;.jpg. Until a file exists, a tinted
+  landscape placeholder shows instead.
+  Recommended: 2400px wide for heroes, 1200px for cards. See IMAGES.md.
+--&gt;
+&lt;style&gt;
+:root{
+  --blue:#1A93D0; --blue-hover:#1380B8; --blue-ink:#0F6E9E;
+  --slate:#2E3A44; --green:#2BAE5F; --green-ink:#1F8A4A;
+  --pine:#173A2E; --pine-2:#1F4A3B;
+  --bg:#E7ECE8; --surface:#FFFFFF; --surface-2:#F4F7F5;
+  --ink:#1E2A30; --ink-soft:#3A4850; --muted:#5F6D74; --line:#D3DCD7;
+  --star:#F5A623; --danger:#C7362F;
+  --on-dark:#FFFFFF;
+  --r-sm:6px; --r:10px; --r-lg:16px;
+  --shadow:0 1px 2px rgba(23,40,35,.06),0 8px 24px rgba(23,40,35,.08);
+  --display:&quot;Outfit&quot;,&quot;Avenir Next&quot;,&quot;Segoe UI&quot;,system-ui,sans-serif;
+  --body:&quot;Figtree&quot;,&quot;Avenir Next&quot;,&quot;Segoe UI&quot;,system-ui,-apple-system,sans-serif;
+  --wrap:1200px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme=&quot;light&quot;]){
+    --blue:#3AAAE3; --blue-hover:#5BBAEA; --blue-ink:#7CC8EF;
+    --green:#3CC172; --green-ink:#5BD18C;
+    --bg:#101719; --surface:#182124; --surface-2:#1E292C;
+    --ink:#E8EEEB; --ink-soft:#C9D3CF; --muted:#94A39E; --line:#2A3639;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.3);
+    color-scheme:dark;
+  }
+}
+:root[data-theme=&quot;dark&quot;]{
+  --blue:#3AAAE3; --blue-hover:#5BBAEA; --blue-ink:#7CC8EF;
+  --green:#3CC172; --green-ink:#5BD18C;
+  --bg:#101719; --surface:#182124; --surface-2:#1E292C;
+  --ink:#E8EEEB; --ink-soft:#C9D3CF; --muted:#94A39E; --line:#2A3639;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.3);
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 80px);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--body);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--blue-ink);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px}
+h1,h2,h3,h4{font-family:var(--display);font-weight:600;line-height:1.15;margin:0;letter-spacing:-.01em}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 clamp(16px,4vw,32px)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.view{display:none}
+.view.on{display:block}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ---------- photo placeholders ---------- */
+.ph{position:relative;overflow:hidden;background:linear-gradient(180deg,var(--g1,#8fb3c7) 0%,var(--g2,#3f5d55) 100%)}
+.ph::before,.ph::after{content:&quot;&quot;;position:absolute;left:0;right:0;bottom:0;pointer-events:none;background-repeat:no-repeat;background-size:100% 100%}
+.ph::before{height:62%;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 400 200&#x27; preserveAspectRatio=&#x27;none&#x27;%3E%3Cpath d=&#x27;M0 200V120L55 70 92 104 150 30 214 112 250 82 300 128 345 60 400 110V200z&#x27; fill=&#x27;%23000&#x27; fill-opacity=&#x27;.16&#x27;/%3E%3C/svg%3E&quot;)}
+.ph::after{height:42%;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 400 200&#x27; preserveAspectRatio=&#x27;none&#x27;%3E%3Cpath d=&#x27;M0 200V112L70 64 120 98 190 40 260 108 330 70 400 120V200z&#x27; fill=&#x27;%23000&#x27; fill-opacity=&#x27;.22&#x27;/%3E%3C/svg%3E&quot;)}
+.ph&gt;img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+.ph.loaded::before,.ph.loaded::after{display:none}
+
+/* ---------- header ---------- */
+.hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
+body::before{content:&quot;&quot;;position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--surface)}
+.hdr-in{display:flex;align-items:center;gap:24px;height:68px}
+.logo{display:flex;align-items:center;gap:2px;font:600 27px/1 var(--display);color:var(--ink);letter-spacing:-.02em}
+.logo:hover{text-decoration:none}
+.logo svg{width:26px;height:26px;margin-right:1px;color:var(--blue)}
+.nav{display:flex;gap:4px;margin-left:12px}
+.nav a{color:var(--ink-soft);font-weight:500;padding:8px 12px;border-radius:var(--r-sm)}
+.nav a:hover{background:var(--surface-2);text-decoration:none}
+.nav a[aria-current=&quot;page&quot;]{color:var(--blue-ink)}
+.hdr-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.icon-btn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;border:1px solid transparent;background:none;color:var(--ink-soft)}
+.icon-btn:hover{background:var(--surface-2)}
+.icon-btn svg{width:20px;height:20px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 20px;border-radius:var(--r-sm);border:1px solid transparent;font-weight:600;font-size:15px;white-space:nowrap;transition:background .15s}
+.btn:hover{text-decoration:none}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-primary:hover{background:var(--blue-hover)}
+.btn-green{background:var(--green);color:#fff}
+.btn-green:hover{background:var(--green-ink)}
+.btn-ghost{background:transparent;border-color:var(--line);color:var(--ink)}
+.btn-ghost:hover{background:var(--surface-2)}
+.btn-sm{height:36px;padding:0 14px;font-size:14px}
+.btn-block{width:100%}
+.hdr .btn-signin{height:38px}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:clamp(540px,78vh,720px);display:flex;align-items:flex-end;color:#fff;--g1:#7FA7C2;--g2:#36533F}
+.hero&gt;.ph{position:absolute;inset:0}
+.hero-shade{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(10,20,25,.15) 0%,rgba(10,20,25,.05) 35%,rgba(10,20,25,.62) 100%)}
+.hero-in{position:relative;z-index:2;width:100%;padding-bottom:clamp(32px,6vw,64px)}
+.hero h1{font-size:clamp(48px,8.4vw,108px);font-weight:600;letter-spacing:-.035em;line-height:.95;max-width:9ch;text-wrap:balance}
+.hero p.lede{font-size:clamp(17px,1.6vw,20px);max-width:36em;margin:18px 0 28px;color:rgba(255,255,255,.92)}
+
+.search{display:grid;grid-template-columns:1.3fr 1.1fr 1fr .8fr auto;background:var(--surface);color:var(--ink);border-radius:var(--r);box-shadow:0 18px 50px rgba(0,0,0,.25);padding:6px;gap:0;max-width:980px}
+.sf{display:flex;flex-direction:column;justify-content:center;padding:8px 16px;border-right:1px solid var(--line);min-width:0;border-radius:var(--r-sm)}
+.sf:hover{background:var(--surface-2)}
+.sf:nth-child(4){border-right:0}
+.sf label{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:1px}
+.sf input,.sf select{border:0;background:transparent;padding:0;font-size:16px;font-weight:500;width:100%;outline:none;appearance:none;-webkit-appearance:none;min-height:24px}
+.sf select{cursor:pointer}
+.search .btn{height:auto;min-height:56px;padding:0 26px;font-size:16px}
+.search .btn svg{width:18px;height:18px}
+
+/* ---------- activity strip ---------- */
+.acts{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding:22px 0 4px}
+.acts::-webkit-scrollbar{display:none}
+.chip{flex:none;display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 16px 0 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-weight:500;font-size:15px}
+.chip svg{width:20px;height:20px;color:var(--blue-ink)}
+.chip:hover{border-color:var(--ink-soft)}
+.chip[aria-pressed=&quot;true&quot;]{background:var(--slate);border-color:var(--slate);color:#fff}
+.chip[aria-pressed=&quot;true&quot;] svg{color:#fff}
+:root[data-theme=&quot;dark&quot;] .chip[aria-pressed=&quot;true&quot;]{background:var(--blue);border-color:var(--blue)}
+
+/* ---------- sections ---------- */
+.sec{padding:clamp(40px,6vw,72px) 0}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:24px}
+.sec-head h2{font-size:clamp(26px,3vw,36px)}
+.sec-head p{margin:6px 0 0;color:var(--muted)}
+.link-more{font-weight:600;white-space:nowrap}
+
+/* ---------- experience cards ---------- */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:var(--surface);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;position:relative}
+.card-media{display:block;aspect-ratio:4/3}
+.card-media:hover{text-decoration:none}
+.price-tag{position:absolute;top:0;left:0;z-index:2;background:var(--slate);color:#fff;padding:10px 14px 9px;font:500 30px/1 var(--display);letter-spacing:-.02em;border-bottom-right-radius:var(--r-sm)}
+.price-tag sup{font-size:.55em;vertical-align:.55em;margin-right:1px}
+.price-tag small{display:block;font:500 11px/1 var(--body);letter-spacing:0;opacity:.75;margin-bottom:4px}
+.save{position:absolute;top:10px;right:10px;z-index:3;width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:var(--slate);display:flex;align-items:center;justify-content:center}
+.save svg{width:19px;height:19px}
+.save[aria-pressed=&quot;true&quot;]{color:#E0455B}
+.save[aria-pressed=&quot;true&quot;] svg{fill:currentColor}
+.card-body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card-meta{display:flex;gap:14px;font-size:14px;color:var(--muted)}
+.card-meta span{display:inline-flex;align-items:center;gap:5px}
+.card-meta svg{width:15px;height:15px}
+.card h3{font-size:21px;font-weight:600}
+.card h3 a{color:var(--ink)}
+.card h3 a::after{content:&quot;&quot;;position:absolute;inset:0;z-index:1}
+.card .guide a{position:relative;z-index:3}
+.rating{display:inline-flex;align-items:center;gap:6px;font-size:14px;color:var(--ink-soft)}
+.stars{display:inline-flex;gap:1px;color:var(--star)}
+.stars svg{width:15px;height:15px}
+.rating b{font-weight:600;color:var(--ink)}
+.card-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;padding-top:12px;border-top:1px solid var(--line)}
+.guide{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted)}
+.av{flex:none;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--pine-2);color:#fff;font:600 13px/1 var(--body)}
+.av.lg{width:64px;height:64px;font-size:22px}
+.tag{display:inline-flex;align-items:center;gap:4px;height:24px;padding:0 9px;border-radius:999px;font-size:12px;font-weight:600;background:var(--surface-2);color:var(--ink-soft);border:1px solid var(--line)}
+.tag.instant{background:color-mix(in srgb,var(--green) 14%,transparent);border-color:transparent;color:var(--green-ink)}
+.tag svg{width:12px;height:12px}
+
+/* ---------- regions ---------- */
+.regions{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:220px 220px;gap:16px}
+.region{position:relative;border-radius:var(--r);overflow:hidden;color:#fff;display:flex;align-items:flex-end;padding:20px;text-align:left;border:0;font:inherit}
+.region:first-child{grid-row:span 2}
+.region&gt;.ph{position:absolute;inset:0}
+.region::after{content:&quot;&quot;;position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.55))}
+.region-txt{position:relative;z-index:2}
+.region .rh{display:block;font:600 24px/1.15 var(--display);letter-spacing:-.01em}
+.region:first-child .rh{font-size:34px}
+.region .rd{display:block;margin-top:2px;font-size:14px;opacity:.9}
+.region:hover .rh{text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:2px}
+
+/* ---------- how it works ---------- */
+.how{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,4vw,48px);counter-reset:s;list-style:none;margin:0;padding:0}
+.steps li{counter-increment:s;position:relative;padding-left:72px}
+.steps li::before{content:counter(s);position:absolute;left:0;top:-4px;width:52px;height:52px;border-radius:50%;border:3px solid var(--green);display:flex;align-items:center;justify-content:center;font:600 22px/1 var(--display);color:var(--ink)}
+.steps h3{font-size:22px;margin-bottom:6px}
+.steps p{margin:0;color:var(--muted)}
+.trust{display:flex;flex-wrap:wrap;gap:12px 32px;margin-top:40px;padding-top:28px;border-top:1px solid var(--line);color:var(--ink-soft);font-weight:500}
+.trust span{display:inline-flex;align-items:center;gap:8px}
+.trust svg{width:20px;height:20px;color:var(--green)}
+
+/* ---------- guide band ---------- */
+.band{position:relative;border-radius:var(--r-lg);overflow:hidden;color:#fff;min-height:360px;display:flex;align-items:center;--g1:#D49A63;--g2:#5C4A3E}
+.band&gt;.ph{position:absolute;inset:0}
+.band::after{content:&quot;&quot;;position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(15,30,25,.78) 0%,rgba(15,30,25,.35) 60%,transparent)}
+.band-in{position:relative;z-index:2;padding:clamp(28px,5vw,56px);max-width:560px}
+.band h2{font-size:clamp(28px,3.4vw,40px);margin-bottom:12px}
+.band p{margin:0 0 24px;opacity:.92}
+.expand{margin-top:20px;display:flex;align-items:center;gap:16px;padding:18px 22px;border:1px dashed var(--line);border-radius:var(--r);color:var(--ink-soft);background:var(--surface)}
+.expand svg{flex:none;width:28px;height:28px;color:var(--blue)}
+.expand p{margin:0}
+
+/* ---------- footer ---------- */
+.ftr{background:var(--pine);color:rgba(255,255,255,.82);padding:56px 0 calc(32px + env(safe-area-inset-bottom,0px));margin-top:24px}
+.ftr .logo{color:#fff}
+.ftr-grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:32px}
+.ftr h4{font:600 15px/1.2 var(--body);color:#fff;margin-bottom:12px}
+.ftr ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:15px}
+.ftr a{color:rgba(255,255,255,.82)}
+.ftr a:hover{color:#fff}
+.ftr-base{margin-top:40px;padding-top:20px;border-top:1px solid rgba(255,255,255,.14);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:14px;color:rgba(255,255,255,.6)}
+
+/* ---------- search results ---------- */
+.res-bar{background:var(--surface);border-bottom:1px solid var(--line)}
+.res-bar-in{display:flex;align-items:center;gap:12px;padding-top:14px;padding-bottom:14px}
+.res-bar .search{box-shadow:none;border:1px solid var(--line);flex:1;grid-template-columns:1.2fr 1fr 1fr .7fr auto;max-width:none;padding:4px}
+.res-bar .sf{padding:4px 14px}
+.res-bar .search .btn{min-height:46px}
+.res{display:grid;grid-template-columns:260px 1fr;gap:32px;padding-top:28px;padding-bottom:56px}
+.filters{align-self:start;position:sticky;top:92px}
+.fgroup{padding:18px 0;border-bottom:1px solid var(--line)}
+.fgroup:first-child{padding-top:0}
+.fgroup h3{font:600 15px/1.2 var(--body);margin-bottom:12px}
+.check{display:flex;align-items:center;gap:10px;padding:5px 0;cursor:pointer;font-size:15px}
+.check input{width:18px;height:18px;accent-color:var(--blue);margin:0}
+.check .n{margin-left:auto;color:var(--muted);font-size:13px}
+.range{width:100%;accent-color:var(--blue)}
+.range-out{display:flex;justify-content:space-between;font-size:14px;color:var(--muted)}
+.res-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.res-top h1{font-size:26px}
+.res-top p{margin:2px 0 0;color:var(--muted);font-size:15px}
+.res-tools{display:flex;gap:8px;align-items:center}
+.select{height:40px;border:1px solid var(--line);background:var(--surface);border-radius:var(--r-sm);padding:0 12px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:none;height:38px;padding:0 14px;display:inline-flex;align-items:center;gap:6px;font-weight:500;font-size:14px;color:var(--ink-soft)}
+.seg button svg{width:16px;height:16px}
+.seg button[aria-pressed=&quot;true&quot;]{background:var(--slate);color:#fff}
+.res .grid{grid-template-columns:repeat(2,1fr)}
+.filter-btn{display:none}
+.empty{grid-column:1/-1;text-align:center;padding:56px 20px;background:var(--surface);border-radius:var(--r);border:1px dashed var(--line)}
+.empty h3{font-size:22px;margin-bottom:8px}
+.empty p{color:var(--muted);margin:0 0 18px}
+.map{position:relative;background:color-mix(in srgb,var(--blue) 10%,var(--surface));border:1px solid var(--line);border-radius:var(--r);overflow:hidden;min-height:560px}
+.map svg.ca{position:absolute;inset:0;width:100%;height:100%}
+.pin{position:absolute;transform:translate(-50%,-100%);background:var(--slate);color:#fff;font:600 14px/1 var(--body);padding:7px 10px;border-radius:999px;border:2px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.25);white-space:nowrap}
+.pin:hover,.pin:focus-visible{background:var(--blue);z-index:2}
+
+.compact{display:none;flex:1;align-items:center;gap:10px;height:46px;border:1px solid var(--line);border-radius:999px;padding:0 16px;background:var(--surface);text-align:left;min-width:0}
+.compact svg{width:18px;height:18px;flex:none;color:var(--muted)}
+.compact span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500}
+/* ---------- detail ---------- */
+.crumbs{font-size:14px;color:var(--muted);padding:18px 0 14px;display:flex;gap:8px;flex-wrap:wrap}
+.crumbs a{color:var(--muted)}
+.gallery{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:200px 200px;gap:8px;border-radius:var(--r);overflow:hidden}
+.gallery .ph:first-child{grid-row:span 2}
+.gallery .more{position:absolute;right:12px;bottom:12px;z-index:2;height:34px;font-size:14px;background:var(--surface);color:var(--ink);border:0}
+.detail{display:grid;grid-template-columns:1fr 380px;gap:48px;padding:28px 0 64px;align-items:start}
+.d-head h1{font-size:clamp(30px,3.6vw,44px);margin-bottom:10px}
+.d-sub{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;color:var(--muted);font-size:15px}
+.d-sub span{display:inline-flex;align-items:center;gap:6px}
+.d-sub svg{width:16px;height:16px}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:28px 0}
+.fact{background:var(--surface);padding:14px 16px}
+.fact svg{width:20px;height:20px;color:var(--blue-ink);margin-bottom:6px}
+.fact dt{font-size:13px;color:var(--muted)}
+.fact dd{margin:0;font-weight:600}
+.d-sec{padding:28px 0;border-top:1px solid var(--line)}
+.d-sec h2{font-size:24px;margin-bottom:14px}
+.d-sec p{margin:0 0 12px;max-width:68ch}
+.d-sec .big{font-size:19px;line-height:1.55;color:var(--ink)}
+.incl{display:grid;grid-template-columns:1fr 1fr;gap:10px 24px;list-style:none;padding:0;margin:0}
+.incl li{display:flex;gap:10px;align-items:flex-start}
+.incl svg{flex:none;width:20px;height:20px;margin-top:2px}
+.incl .y svg{color:var(--green)}
+.incl .x svg{color:var(--muted)}
+.incl .x{color:var(--muted)}
+.itin{list-style:none;margin:0;padding:0;position:relative}
+.itin li{display:grid;grid-template-columns:72px 1fr;gap:16px;padding:0 0 20px;position:relative}
+.itin li::before{content:&quot;&quot;;position:absolute;left:83px;top:8px;width:11px;height:11px;border-radius:50%;background:var(--surface);border:3px solid var(--green);z-index:1}
+.itin li:not(:last-child)::after{content:&quot;&quot;;position:absolute;left:89px;top:20px;bottom:-6px;width:2px;background:var(--line)}
+.itin time{font-weight:600;font-size:15px;color:var(--ink-soft)}
+.itin div{padding-left:24px}
+.itin h3{font:600 17px/1.3 var(--body);margin-bottom:2px}
+.itin p{margin:0;color:var(--muted);font-size:15px}
+.guide-card{display:flex;gap:18px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.guide-card h3{font-size:20px}
+.guide-card .meta{color:var(--muted);font-size:14px;margin:2px 0 10px}
+.guide-card p{margin:0 0 12px}
+.rev-sum{display:grid;grid-template-columns:180px 1fr;gap:28px;align-items:center;margin-bottom:24px}
+.rev-score{font:600 56px/1 var(--display)}
+.rev-score small{display:block;font:400 14px/1.4 var(--body);color:var(--muted);margin-top:6px}
+.bars{display:grid;gap:6px}
+.bar{display:grid;grid-template-columns:110px 1fr 36px;gap:10px;align-items:center;font-size:14px;color:var(--ink-soft)}
+.bar i{display:block;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.bar i b{display:block;height:100%;background:var(--green)}
+.reviews{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.review{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.review header{display:flex;gap:10px;align-items:center;margin-bottom:10px}
+.review header div{font-size:14px;color:var(--muted)}
+.review header b{display:block;color:var(--ink);font-size:15px}
+.review p{margin:8px 0 0;font-size:15px}
+.meet{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.meet .map{min-height:200px}
+
+/* booking card */
+.book{position:sticky;top:92px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden}
+.book-head{background:var(--slate);color:#fff;padding:18px 22px;display:flex;align-items:baseline;justify-content:space-between}
+.book-head .p{font:500 38px/1 var(--display);letter-spacing:-.02em}
+.book-head .p sup{font-size:.5em;vertical-align:.7em}
+.book-head .u{font-size:14px;opacity:.8;margin-left:4px}
+.book-head .r{font-size:14px;display:flex;align-items:center;gap:4px}
+.book-head .r svg{width:15px;height:15px;color:var(--star)}
+.book-body{padding:20px 22px 22px}
+.book h3{font:600 15px/1.2 var(--body);margin:0 0 10px}
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.cal-head b{font-weight:600}
+.cal-head .icon-btn{width:34px;height:34px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center}
+.cal .dow{font-size:12px;color:var(--muted);padding:4px 0}
+.cal button{aspect-ratio:1;border:0;border-radius:50%;background:none;font-size:14px;font-weight:500;position:relative}
+.cal button:disabled{color:var(--muted);opacity:.45;cursor:default;text-decoration:line-through}
+.cal button.avail::after{content:&quot;&quot;;position:absolute;left:50%;bottom:4px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--green)}
+.cal button.avail:hover{background:var(--surface-2)}
+.cal button[aria-pressed=&quot;true&quot;]{background:var(--blue);color:#fff}
+.cal button[aria-pressed=&quot;true&quot;]::after{background:#fff}
+.legend{display:flex;gap:16px;font-size:12px;color:var(--muted);margin:8px 0 18px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:6px;height:6px;border-radius:50%;background:var(--green)}
+.times{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
+.time{border:1px solid var(--line);background:var(--surface);border-radius:var(--r-sm);padding:8px 4px;text-align:center;line-height:1.2}
+.time b{display:block;font-size:15px}
+.time small{font-size:12px;color:var(--muted)}
+.time small.low{color:var(--danger)}
+.time[aria-pressed=&quot;true&quot;]{border-color:var(--blue);box-shadow:inset 0 0 0 1px var(--blue);background:color-mix(in srgb,var(--blue) 8%,var(--surface))}
+.time:disabled{opacity:.45;cursor:default}
+.guests{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:16px}
+.guests div small{display:block;color:var(--muted);font-size:13px}
+.stepper{display:flex;align-items:center;gap:12px}
+.stepper button{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--surface);font-size:18px;line-height:1;display:flex;align-items:center;justify-content:center}
+.stepper button:disabled{opacity:.35;cursor:default}
+.stepper output{min-width:20px;text-align:center;font-weight:600}
+.total{display:flex;justify-content:space-between;font-size:15px;color:var(--ink-soft);margin-bottom:6px}
+.total.grand{font-weight:700;color:var(--ink);font-size:17px;margin:10px 0 16px}
+.book-note{display:flex;gap:8px;font-size:13px;color:var(--muted);margin-top:12px;align-items:flex-start}
+.book-note svg{flex:none;width:16px;height:16px;color:var(--green);margin-top:1px}
+.book-hint{font-size:13px;color:var(--danger);margin:-6px 0 12px;min-height:0}
+.mbar{display:none}
+.sheet-close{display:none}
+
+/* ---------- checkout ---------- */
+.co{display:grid;grid-template-columns:1fr 400px;gap:40px;padding:32px 0 64px;align-items:start}
+.co h1{font-size:clamp(28px,3vw,36px);margin-bottom:6px}
+.co-lede{color:var(--muted);margin:0 0 24px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:24px;margin-bottom:16px}
+.panel h2{font-size:20px;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.panel h2 .num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--slate);color:#fff;font:600 14px/1 var(--body)}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fields .full{grid-column:1/-1}
+.field label{display:block;font-size:14px;font-weight:600;margin-bottom:6px}
+.field input,.field select,.field textarea{width:100%;height:46px;border:1px solid var(--line);border-radius:var(--r-sm);padding:0 12px;background:var(--surface);font-size:16px}
+.field textarea{height:88px;padding:10px 12px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px color-mix(in srgb,var(--blue) 22%,transparent)}
+.field .err{display:none;color:var(--danger);font-size:13px;margin-top:4px}
+.field.bad input{border-color:var(--danger)}
+.field.bad .err{display:block}
+.field .hint{font-size:13px;color:var(--muted);margin-top:4px}
+.pay-opts{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.pay-opts button{flex:1;min-width:120px;height:46px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface);font-weight:600}
+.pay-opts button[aria-pressed=&quot;true&quot;]{border-color:var(--blue);box-shadow:inset 0 0 0 1px var(--blue)}
+.summary{position:sticky;top:92px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.summary .ph{aspect-ratio:16/9}
+.summary-in{padding:20px}
+.summary h3{font-size:20px;margin-bottom:12px}
+.sum-list{list-style:none;padding:0;margin:0 0 14px;display:grid;gap:8px;font-size:15px}
+.sum-list li{display:flex;gap:10px;align-items:center;color:var(--ink-soft)}
+.sum-list svg{width:18px;height:18px;color:var(--muted)}
+.sum-change{font-size:14px;font-weight:600}
+.legal{font-size:13px;color:var(--muted);margin:12px 0 0}
+
+.done{max-width:640px;margin:0 auto;padding:56px 0 72px;text-align:center}
+.done-mark{width:72px;height:72px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+.done-mark svg{width:36px;height:36px}
+.done h1{font-size:clamp(32px,4vw,44px);margin-bottom:10px}
+.done .lede{color:var(--muted);margin:0 0 28px}
+.done .panel{text-align:left}
+.done-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.kv{display:grid;grid-template-columns:140px 1fr;gap:8px 16px;font-size:15px;margin:0}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0;font-weight:500}
+
+/* ---------- modal / toast ---------- */
+.modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(10,20,22,.55)}
+.modal.on{display:flex}
+.modal-card{background:var(--surface);border-radius:var(--r-lg);width:100%;max-width:420px;padding:28px;position:relative;box-shadow:0 24px 60px rgba(0,0,0,.35);max-height:100%;overflow:auto}
+.modal-card h2{font-size:26px;margin-bottom:6px}
+.modal-card&gt;p{color:var(--muted);margin:0 0 20px}
+.modal-card .icon-btn{position:absolute;top:14px;right:14px}
+.social{display:grid;gap:10px;margin-bottom:18px}
+.or{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:13px;margin:4px 0 16px}
+.or::before,.or::after{content:&quot;&quot;;flex:1;height:1px;background:var(--line)}
+.modal .field{margin-bottom:12px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);opacity:0;z-index:120;background:var(--slate);color:#fff;padding:12px 18px;border-radius:var(--r-sm);font-size:15px;pointer-events:none;transition:opacity .2s,transform .2s;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* ---------- mobile tab bar ---------- */
+.tabs{display:none}
+
+/* ================= TABLET ================= */
+@media (max-width:1024px){
+  .nav{display:none}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .search{grid-template-columns:1fr 1fr;max-width:none}
+  .sf{border-right:0;border-bottom:1px solid var(--line)}
+  .sf:nth-child(odd){border-right:1px solid var(--line)}
+  .sf:nth-child(3),.sf:nth-child(4){border-bottom:0}
+  .search .btn{grid-column:1/-1;margin-top:6px;min-height:52px}
+  .res-bar .search{display:none}
+  .res-bar .compact{display:flex}
+  .regions{grid-template-columns:1fr 1fr;grid-template-rows:260px 200px 200px}
+  .region:first-child{grid-row:auto;grid-column:1/-1}
+  .res{grid-template-columns:1fr}
+  .filters{position:fixed;inset:0;z-index:90;background:var(--surface);padding:calc(20px + env(safe-area-inset-top,0px)) 24px calc(96px + env(safe-area-inset-bottom,0px));overflow:auto;display:none}
+  .filters.on{display:block}
+  .filters-head{display:flex!important}
+  .filters-foot{display:flex!important}
+  .filter-btn{display:inline-flex}
+  .detail{grid-template-columns:1fr;gap:0}
+  .book{position:fixed;left:0;right:0;bottom:0;top:auto;z-index:95;border-radius:var(--r-lg) var(--r-lg) 0 0;max-height:88vh;overflow:auto;transform:translateY(105%);transition:transform .25s ease;padding-bottom:env(safe-area-inset-bottom,0px)}
+  .book.on{transform:none;visibility:visible}
+  .book:not(.on){visibility:hidden;transition:transform .25s ease,visibility 0s .25s}
+  .sheet-close{display:inline-flex;color:#fff}
+  .sheet-close:hover{background:rgba(255,255,255,.12)}
+  .book-head{align-items:center}
+  .mbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:80;background:var(--surface);border-top:1px solid var(--line);padding:12px clamp(16px,4vw,32px) calc(12px + env(safe-area-inset-bottom,0px));align-items:center;justify-content:space-between;gap:12px}
+  .mbar .p{font:600 22px/1 var(--display)}
+  .mbar small{display:block;color:var(--muted);font-size:13px;margin-top:3px}
+  .view-detail-pad{height:84px}
+  .co{grid-template-columns:1fr}
+  .summary{position:static;order:-1}
+  .ftr-grid{grid-template-columns:1fr 1fr}
+  .scrim{position:fixed;inset:0;z-index:89;background:rgba(10,20,22,.5);display:none}
+  .scrim.on{display:block}
+}
+.filters-head,.filters-foot{display:none}
+.filters-head{align-items:center;justify-content:space-between;margin-bottom:16px}
+.filters-head h2{font-size:24px}
+.filters-foot{position:fixed;left:0;right:0;bottom:0;padding:14px 24px calc(14px + env(safe-area-inset-bottom,0px));background:var(--surface);border-top:1px solid var(--line);gap:10px}
+.filters-foot .btn{flex:1}
+
+/* ================= MOBILE ================= */
+@media (max-width:680px){
+  body{padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}
+  .hdr-in{height:58px}
+  .logo{font-size:24px}
+  .hdr .btn-signin{display:none}
+  .hero{min-height:auto;padding-top:120px}
+  .hero h1{font-size:54px}
+  .search{grid-template-columns:1fr}
+  .sf,.sf:nth-child(odd){border-right:0;border-bottom:1px solid var(--line)}
+  .sf:nth-child(3){border-bottom:1px solid var(--line)}
+  .sf:nth-child(4){border-bottom:0}
+  .res-bar-in{padding-top:10px;padding-bottom:10px}
+  .grid,.res .grid{grid-template-columns:1fr}
+  .sec-head{flex-direction:column;align-items:flex-start}
+  .regions{grid-template-columns:1fr;grid-template-rows:none;grid-auto-rows:180px}
+  .region:first-child{grid-column:auto}
+  .region:first-child .rh{font-size:28px}
+  .steps{grid-template-columns:1fr;gap:28px}
+  .gallery{grid-template-columns:1fr;grid-template-rows:260px;margin:0 calc(-1 * clamp(16px,4vw,32px));border-radius:0}
+  .gallery&gt;*:not(:first-child){display:none}
+  .gallery .ph:first-child{grid-row:auto}
+  .facts{grid-template-columns:1fr 1fr}
+  .incl{grid-template-columns:1fr}
+  .reviews{grid-template-columns:1fr}
+  .rev-sum{grid-template-columns:1fr;gap:16px}
+  .meet{grid-template-columns:1fr}
+  .fields{grid-template-columns:1fr}
+  .kv{grid-template-columns:110px 1fr}
+  .ftr-grid{grid-template-columns:1fr 1fr}
+  .ftr-grid&gt;div:first-child{grid-column:1/-1}
+  .mbar{bottom:calc(64px + env(safe-area-inset-bottom,0px));padding-bottom:12px}
+  .filters-foot{bottom:0}
+  .tabs{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:0;right:0;bottom:0;z-index:85;background:var(--pine);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
+  .tabs button{border:0;background:none;color:rgba(255,255,255,.72);display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:600;padding:6px 0;border-radius:var(--r-sm)}
+  .tabs svg{width:22px;height:22px}
+  .tabs button[aria-current=&quot;page&quot;]{color:#fff;background:var(--green)}
+  .toast{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+  .modal{align-items:flex-end;padding:0}
+  .modal-card{border-radius:var(--r-lg) var(--r-lg) 0 0;max-width:none;padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))}
+}
+&lt;/style&gt;
+&lt;style&gt;
+.slot-note{display:none;position:absolute;left:10px;bottom:10px;z-index:2;font:500 11px/1 var(--body);color:#fff;background:rgba(0,0,0,.38);padding:5px 8px;border-radius:999px;max-width:calc(100% - 20px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.show-slots .ph:not(.loaded) .slot-note{display:block}
+.hero .slot-note{bottom:auto;top:84px;left:auto;right:16px}
+.region .slot-note{top:10px;bottom:auto}
+.band .slot-note{left:auto;right:10px}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;header class=&quot;hdr&quot;&gt;
+  &lt;div class=&quot;wrap hdr-in&quot;&gt;
+    &lt;a class=&quot;logo&quot; href=&quot;#home&quot; data-go=&quot;home&quot; aria-label=&quot;Outdoorsie home&quot;&gt;
+      &lt;svg viewBox=&quot;0 0 32 32&quot; fill=&quot;none&quot; aria-hidden=&quot;true&quot;&gt;&lt;circle cx=&quot;16&quot; cy=&quot;16&quot; r=&quot;13&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;3.2&quot;/&gt;&lt;path d=&quot;M6 21l6.5-7 4 4.2 3-3L26 21&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;3&quot; stroke-linejoin=&quot;round&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;utdoorsie
+    &lt;/a&gt;
+    &lt;nav class=&quot;nav&quot; aria-label=&quot;Main&quot;&gt;
+      &lt;a href=&quot;#search&quot; data-go=&quot;search&quot; data-nav=&quot;search&quot;&gt;Experiences&lt;/a&gt;
+      &lt;a href=&quot;#search&quot; data-go=&quot;search&quot; data-region=&quot;all&quot; data-nav=&quot;regions&quot;&gt;Locations&lt;/a&gt;
+      &lt;a href=&quot;#guides&quot; data-toast=&quot;Guide sign-up opens with the next release&quot;&gt;Become a guide&lt;/a&gt;
+    &lt;/nav&gt;
+    &lt;div class=&quot;hdr-right&quot;&gt;
+      &lt;button class=&quot;icon-btn&quot; type=&quot;button&quot; data-go=&quot;saved&quot; aria-label=&quot;Saved experiences&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
+      &lt;button class=&quot;btn btn-primary btn-sm btn-signin&quot; type=&quot;button&quot; data-modal=&quot;signin&quot;&gt;Sign in&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/header&gt;
+
+&lt;main&gt;
+&lt;!-- ======================= HOME ======================= --&gt;
+&lt;section class=&quot;view on&quot; id=&quot;v-home&quot; data-view=&quot;home&quot;&gt;
+  &lt;div class=&quot;hero&quot;&gt;
+    &lt;div class=&quot;ph&quot; data-img=&quot;hero-home&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;hero-shade&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;wrap hero-in&quot;&gt;
+      &lt;h1&gt;Get outdoors&lt;/h1&gt;
+      &lt;p class=&quot;lede&quot;&gt;Book expert-guided hiking, climbing, surfing, paddling, cycling and skiing across California.&lt;/p&gt;
+      &lt;form class=&quot;search&quot; data-search&gt;
+        &lt;div class=&quot;sf&quot;&gt;&lt;label for=&quot;s-where&quot;&gt;Where&lt;/label&gt;
+          &lt;select id=&quot;s-where&quot; name=&quot;region&quot;&gt;&lt;option value=&quot;all&quot;&gt;Anywhere in California&lt;/option&gt;&lt;/select&gt;&lt;/div&gt;
+        &lt;div class=&quot;sf&quot;&gt;&lt;label for=&quot;s-what&quot;&gt;Activity&lt;/label&gt;
+          &lt;select id=&quot;s-what&quot; name=&quot;act&quot;&gt;&lt;option value=&quot;all&quot;&gt;All activities&lt;/option&gt;&lt;/select&gt;&lt;/div&gt;
+        &lt;div class=&quot;sf&quot;&gt;&lt;label for=&quot;s-when&quot;&gt;When&lt;/label&gt;&lt;input id=&quot;s-when&quot; name=&quot;date&quot; type=&quot;date&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;sf&quot;&gt;&lt;label for=&quot;s-who&quot;&gt;Guests&lt;/label&gt;
+          &lt;select id=&quot;s-who&quot; name=&quot;guests&quot;&gt;&lt;option&gt;1&lt;/option&gt;&lt;option selected&gt;2&lt;/option&gt;&lt;option&gt;3&lt;/option&gt;&lt;option&gt;4&lt;/option&gt;&lt;option&gt;5&lt;/option&gt;&lt;option&gt;6+&lt;/option&gt;&lt;/select&gt;&lt;/div&gt;
+        &lt;button class=&quot;btn btn-primary&quot; type=&quot;submit&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.4&quot; stroke-linecap=&quot;round&quot;&gt;&lt;circle cx=&quot;11&quot; cy=&quot;11&quot; r=&quot;7&quot;/&gt;&lt;path d=&quot;M20 20l-3.5-3.5&quot;/&gt;&lt;/svg&gt;Search&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;wrap&quot;&gt;
+    &lt;div class=&quot;acts&quot; role=&quot;list&quot; data-acts&gt;&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;section class=&quot;sec&quot;&gt;
+    &lt;div class=&quot;wrap&quot;&gt;
+      &lt;div class=&quot;sec-head&quot;&gt;
+        &lt;div&gt;&lt;h2&gt;Popular this week&lt;/h2&gt;&lt;p&gt;Small-group trips with top-rated local guides.&lt;/p&gt;&lt;/div&gt;
+        &lt;a class=&quot;link-more&quot; href=&quot;#search&quot; data-go=&quot;search&quot;&gt;See all experiences&lt;/a&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;grid&quot; data-popular&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;section class=&quot;sec&quot; style=&quot;padding-top:0&quot;&gt;
+    &lt;div class=&quot;wrap&quot;&gt;
+      &lt;div class=&quot;sec-head&quot;&gt;&lt;div&gt;&lt;h2&gt;Explore California&lt;/h2&gt;&lt;p&gt;From Sierra granite to Pacific swell, pick a region to start.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&quot;regions&quot; data-regions&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;section class=&quot;sec how&quot;&gt;
+    &lt;div class=&quot;wrap&quot;&gt;
+      &lt;div class=&quot;sec-head&quot;&gt;&lt;div&gt;&lt;h2&gt;How booking works&lt;/h2&gt;&lt;/div&gt;&lt;/div&gt;
+      &lt;ol class=&quot;steps&quot;&gt;
+        &lt;li&gt;&lt;h3&gt;Discover&lt;/h3&gt;&lt;p&gt;Search by place, activity and date. Filter by skill level so you land on a trip that fits.&lt;/p&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;h3&gt;Book&lt;/h3&gt;&lt;p&gt;Pick a time, choose your group size and pay securely. Message your guide before the day.&lt;/p&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;h3&gt;Go&lt;/h3&gt;&lt;p&gt;Meet your guide at the trailhead, dock or crag. Gear and permits are handled.&lt;/p&gt;&lt;/li&gt;
+      &lt;/ol&gt;
+      &lt;div class=&quot;trust&quot;&gt;
+        &lt;span&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z&quot;/&gt;&lt;path d=&quot;M9 12l2 2 4-4&quot;/&gt;&lt;/svg&gt;Certified, insured guides&lt;/span&gt;
+        &lt;span&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;9&quot;/&gt;&lt;path d=&quot;M12 7v5l3 2&quot;/&gt;&lt;/svg&gt;Free cancellation up to 24 hours&lt;/span&gt;
+        &lt;span&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;circle cx=&quot;9&quot; cy=&quot;8&quot; r=&quot;3.5&quot;/&gt;&lt;path d=&quot;M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6&quot;/&gt;&lt;path d=&quot;M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20c0-2.8-1.6-4.9-4-5.7&quot;/&gt;&lt;/svg&gt;Groups capped at 14&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;section class=&quot;sec&quot; id=&quot;guides&quot;&gt;
+    &lt;div class=&quot;wrap&quot;&gt;
+      &lt;div class=&quot;band&quot;&gt;
+        &lt;div class=&quot;ph&quot; data-img=&quot;guide-band&quot; style=&quot;--g1:#D49A63;--g2:#5C4A3E&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;band-in&quot;&gt;
+          &lt;h2&gt;Lead trips with Outdoorsie&lt;/h2&gt;
+          &lt;p&gt;Fill your calendar, get paid weekly and let us handle bookings, payments and insurance paperwork.&lt;/p&gt;
+          &lt;button class=&quot;btn btn-green&quot; type=&quot;button&quot; data-toast=&quot;Guide sign-up opens with the next release&quot;&gt;Apply to guide&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;expand&quot;&gt;
+        &lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;9&quot;/&gt;&lt;path d=&quot;M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z&quot;/&gt;&lt;/svg&gt;
+        &lt;p&gt;&lt;b&gt;Starting in California.&lt;/b&gt; Oregon, Washington, Colorado and British Columbia are next. &lt;a href=&quot;#notify&quot; data-toast=&quot;We’ll email you when new regions open&quot;&gt;Get notified&lt;/a&gt;&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+&lt;/section&gt;
+
+&lt;!-- ======================= SEARCH ======================= --&gt;
+&lt;section class=&quot;view&quot; id=&quot;v-search&quot; data-view=&quot;search&quot;&gt;
+  &lt;div class=&quot;res-bar&quot;&gt;
+    &lt;div class=&quot;wrap res-bar-in&quot;&gt;
+      &lt;form class=&quot;search&quot; data-search&gt;
+        &lt;div class=&quot;sf&quot;&gt;&lt;label for=&quot;r-where&quot;&gt;Where&lt;/label&gt;&lt;select id=&quot;r-where&quot; name=&quot;region&quot;&gt;&lt;option value=&quot;all&quot;&gt;Anywhere in California&lt;/option&gt;&lt;/select&gt;&lt;/div&gt;
+        &lt;div class=&quot;sf&quot;&gt;&lt;label for=&quot;r-what&quot;&gt;Activity&lt;/label&gt;&lt;select id=&quot;r-what&quot; name=&quot;act&quot;&gt;&lt;option value=&quot;all&quot;&gt;All activities&lt;/option&gt;&lt;/select&gt;&lt;/div&gt;
+        &lt;div class=&quot;sf&quot;&gt;&lt;label for=&quot;r-when&quot;&gt;When&lt;/label&gt;&lt;input id=&quot;r-when&quot; name=&quot;date&quot; type=&quot;date&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;sf&quot;&gt;&lt;label for=&quot;r-who&quot;&gt;Guests&lt;/label&gt;&lt;select id=&quot;r-who&quot; name=&quot;guests&quot;&gt;&lt;option&gt;1&lt;/option&gt;&lt;option selected&gt;2&lt;/option&gt;&lt;option&gt;3&lt;/option&gt;&lt;option&gt;4&lt;/option&gt;&lt;option&gt;5&lt;/option&gt;&lt;option&gt;6+&lt;/option&gt;&lt;/select&gt;&lt;/div&gt;
+        &lt;button class=&quot;btn btn-primary&quot; type=&quot;submit&quot;&gt;Search&lt;/button&gt;
+      &lt;/form&gt;
+      &lt;button class=&quot;compact&quot; type=&quot;button&quot; data-compact&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.4&quot; stroke-linecap=&quot;round&quot;&gt;&lt;circle cx=&quot;11&quot; cy=&quot;11&quot; r=&quot;7&quot;/&gt;&lt;path d=&quot;M20 20l-3.5-3.5&quot;/&gt;&lt;/svg&gt;&lt;span data-compact-label&gt;Anywhere · All activities&lt;/span&gt;&lt;/button&gt;
+      &lt;button class=&quot;btn btn-ghost filter-btn&quot; type=&quot;button&quot; data-filters-open&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;18&quot; height=&quot;18&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;&gt;&lt;path d=&quot;M4 6h16M7 12h10M10 18h4&quot;/&gt;&lt;/svg&gt;Filters&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;wrap res&quot;&gt;
+    &lt;aside class=&quot;filters&quot; data-filters aria-label=&quot;Filters&quot;&gt;
+      &lt;div class=&quot;filters-head&quot;&gt;&lt;h2&gt;Filters&lt;/h2&gt;&lt;button class=&quot;icon-btn&quot; type=&quot;button&quot; data-filters-close aria-label=&quot;Close filters&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;&gt;&lt;path d=&quot;M6 6l12 12M18 6L6 18&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;&lt;/div&gt;
+      &lt;div class=&quot;fgroup&quot;&gt;&lt;h3&gt;Activity&lt;/h3&gt;&lt;div data-f-acts&gt;&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&quot;fgroup&quot;&gt;&lt;h3&gt;Region&lt;/h3&gt;&lt;div data-f-regions&gt;&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&quot;fgroup&quot;&gt;&lt;h3&gt;Skill level&lt;/h3&gt;&lt;div data-f-levels&gt;&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&quot;fgroup&quot;&gt;&lt;h3&gt;Price per person&lt;/h3&gt;
+        &lt;input class=&quot;range&quot; type=&quot;range&quot; min=&quot;50&quot; max=&quot;400&quot; step=&quot;10&quot; value=&quot;400&quot; data-f-price aria-label=&quot;Maximum price&quot;&gt;
+        &lt;div class=&quot;range-out&quot;&gt;&lt;span&gt;$50&lt;/span&gt;&lt;span data-f-price-out&gt;Up to $400&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&quot;fgroup&quot;&gt;&lt;h3&gt;Duration&lt;/h3&gt;&lt;div data-f-dur&gt;&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&quot;fgroup&quot;&gt;&lt;label class=&quot;check&quot;&gt;&lt;input type=&quot;checkbox&quot; data-f-instant&gt;Instant book only&lt;/label&gt;&lt;/div&gt;
+      &lt;div class=&quot;filters-foot&quot;&gt;&lt;button class=&quot;btn btn-ghost&quot; type=&quot;button&quot; data-f-clear&gt;Clear all&lt;/button&gt;&lt;button class=&quot;btn btn-primary&quot; type=&quot;button&quot; data-filters-close data-f-show&gt;Show results&lt;/button&gt;&lt;/div&gt;
+    &lt;/aside&gt;
+    &lt;div&gt;
+      &lt;div class=&quot;res-top&quot;&gt;
+        &lt;div&gt;&lt;h1 data-res-title&gt;Experiences in California&lt;/h1&gt;&lt;p data-res-count&gt;&lt;/p&gt;&lt;/div&gt;
+        &lt;div class=&quot;res-tools&quot;&gt;
+          &lt;label class=&quot;sr&quot; for=&quot;sort&quot;&gt;Sort by&lt;/label&gt;
+          &lt;select class=&quot;select&quot; id=&quot;sort&quot; data-sort&gt;&lt;option value=&quot;pop&quot;&gt;Most popular&lt;/option&gt;&lt;option value=&quot;rating&quot;&gt;Highest rated&lt;/option&gt;&lt;option value=&quot;low&quot;&gt;Price: low to high&lt;/option&gt;&lt;option value=&quot;high&quot;&gt;Price: high to low&lt;/option&gt;&lt;/select&gt;
+          &lt;div class=&quot;seg&quot; role=&quot;group&quot; aria-label=&quot;Layout&quot;&gt;
+            &lt;button type=&quot;button&quot; aria-pressed=&quot;true&quot; data-layout=&quot;grid&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;&gt;&lt;rect x=&quot;4&quot; y=&quot;4&quot; width=&quot;7&quot; height=&quot;7&quot; rx=&quot;1&quot;/&gt;&lt;rect x=&quot;13&quot; y=&quot;4&quot; width=&quot;7&quot; height=&quot;7&quot; rx=&quot;1&quot;/&gt;&lt;rect x=&quot;4&quot; y=&quot;13&quot; width=&quot;7&quot; height=&quot;7&quot; rx=&quot;1&quot;/&gt;&lt;rect x=&quot;13&quot; y=&quot;13&quot; width=&quot;7&quot; height=&quot;7&quot; rx=&quot;1&quot;/&gt;&lt;/svg&gt;List&lt;/button&gt;
+            &lt;button type=&quot;button&quot; aria-pressed=&quot;false&quot; data-layout=&quot;map&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14&quot;/&gt;&lt;/svg&gt;Map&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;grid&quot; data-results&gt;&lt;/div&gt;
+      &lt;div class=&quot;map&quot; data-map hidden&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;scrim&quot; data-scrim&gt;&lt;/div&gt;
+&lt;/section&gt;
+
+&lt;!-- ======================= DETAIL ======================= --&gt;
+&lt;section class=&quot;view&quot; id=&quot;v-experience&quot; data-view=&quot;experience&quot;&gt;
+  &lt;div class=&quot;wrap&quot; data-detail&gt;&lt;/div&gt;
+  &lt;div class=&quot;view-detail-pad&quot;&gt;&lt;/div&gt;
+&lt;/section&gt;
+
+&lt;!-- ======================= CHECKOUT ======================= --&gt;
+&lt;section class=&quot;view&quot; id=&quot;v-checkout&quot; data-view=&quot;checkout&quot;&gt;
+  &lt;div class=&quot;wrap&quot; data-checkout&gt;&lt;/div&gt;
+&lt;/section&gt;
+
+&lt;!-- ======================= CONFIRMED ======================= --&gt;
+&lt;section class=&quot;view&quot; id=&quot;v-confirmed&quot; data-view=&quot;confirmed&quot;&gt;
+  &lt;div class=&quot;wrap&quot; data-confirmed&gt;&lt;/div&gt;
+&lt;/section&gt;
+&lt;/main&gt;
+
+&lt;footer class=&quot;ftr&quot;&gt;
+  &lt;div class=&quot;wrap&quot;&gt;
+    &lt;div class=&quot;ftr-grid&quot;&gt;
+      &lt;div&gt;
+        &lt;a class=&quot;logo&quot; href=&quot;#home&quot; data-go=&quot;home&quot;&gt;&lt;svg viewBox=&quot;0 0 32 32&quot; fill=&quot;none&quot; aria-hidden=&quot;true&quot; style=&quot;color:#fff&quot;&gt;&lt;circle cx=&quot;16&quot; cy=&quot;16&quot; r=&quot;13&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;3.2&quot;/&gt;&lt;path d=&quot;M6 21l6.5-7 4 4.2 3-3L26 21&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;3&quot; stroke-linejoin=&quot;round&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;utdoorsie&lt;/a&gt;
+        &lt;p style=&quot;margin:14px 0 0;max-width:30ch&quot;&gt;Guided outdoor experiences with local experts. Based in Sacramento, California.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div&gt;&lt;h4&gt;Explore&lt;/h4&gt;&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;#search&quot; data-go=&quot;search&quot;&gt;All experiences&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;#search&quot; data-go=&quot;search&quot; data-act=&quot;hiking&quot;&gt;Hiking&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;#search&quot; data-go=&quot;search&quot; data-act=&quot;surfing&quot;&gt;Surfing&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;#search&quot; data-go=&quot;search&quot; data-act=&quot;skiing&quot;&gt;Skiing&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;
+      &lt;div&gt;&lt;h4&gt;Guides&lt;/h4&gt;&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;#guides&quot; data-go=&quot;home&quot;&gt;Become a guide&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;#safety&quot; data-toast=&quot;Safety standards page coming soon&quot;&gt;Safety standards&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;#insurance&quot; data-toast=&quot;Insurance page coming soon&quot;&gt;Insurance&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;
+      &lt;div&gt;&lt;h4&gt;Support&lt;/h4&gt;&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;#help&quot; data-toast=&quot;Help centre coming soon&quot;&gt;Help centre&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;#cancel&quot; data-toast=&quot;Cancellation policy page coming soon&quot;&gt;Cancellation policy&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;#contact&quot; data-toast=&quot;Contact page coming soon&quot;&gt;Contact us&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;ftr-base&quot;&gt;&lt;span&gt;© 2026 Outdoorsie, Inc.&lt;/span&gt;&lt;span&gt;&lt;a href=&quot;#privacy&quot; data-toast=&quot;Privacy page coming soon&quot;&gt;Privacy&lt;/a&gt; &amp;nbsp; &lt;a href=&quot;#terms&quot; data-toast=&quot;Terms page coming soon&quot;&gt;Terms&lt;/a&gt;&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/footer&gt;
+
+&lt;nav class=&quot;tabs&quot; aria-label=&quot;App&quot;&gt;
+  &lt;button type=&quot;button&quot; data-go=&quot;home&quot; data-tab=&quot;home&quot; aria-current=&quot;page&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z&quot;/&gt;&lt;/svg&gt;Explore&lt;/button&gt;
+  &lt;button type=&quot;button&quot; data-go=&quot;search&quot; data-tab=&quot;search&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;&gt;&lt;circle cx=&quot;11&quot; cy=&quot;11&quot; r=&quot;7&quot;/&gt;&lt;path d=&quot;M20 20l-3.5-3.5&quot;/&gt;&lt;/svg&gt;Search&lt;/button&gt;
+  &lt;button type=&quot;button&quot; data-go=&quot;saved&quot; data-tab=&quot;saved&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z&quot;/&gt;&lt;/svg&gt;Saved&lt;/button&gt;
+  &lt;button type=&quot;button&quot; data-modal=&quot;signin&quot; data-tab=&quot;account&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;&gt;&lt;circle cx=&quot;12&quot; cy=&quot;8&quot; r=&quot;4&quot;/&gt;&lt;path d=&quot;M4 21c0-4 3.6-7 8-7s8 3 8 7&quot;/&gt;&lt;/svg&gt;Account&lt;/button&gt;
+&lt;/nav&gt;
+
+&lt;div class=&quot;modal&quot; data-modal-box=&quot;signin&quot; role=&quot;dialog&quot; aria-modal=&quot;true&quot; aria-labelledby=&quot;signin-title&quot;&gt;
+  &lt;div class=&quot;modal-card&quot;&gt;
+    &lt;button class=&quot;icon-btn&quot; type=&quot;button&quot; data-modal-close aria-label=&quot;Close&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;&gt;&lt;path d=&quot;M6 6l12 12M18 6L6 18&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
+    &lt;h2 id=&quot;signin-title&quot;&gt;Sign in&lt;/h2&gt;
+    &lt;p&gt;Manage bookings, save trips and message guides.&lt;/p&gt;
+    &lt;div class=&quot;social&quot;&gt;
+      &lt;button class=&quot;btn btn-ghost btn-block&quot; type=&quot;button&quot; data-toast=&quot;Apple sign-in isn’t connected in this prototype&quot;&gt;Continue with Apple&lt;/button&gt;
+      &lt;button class=&quot;btn btn-ghost btn-block&quot; type=&quot;button&quot; data-toast=&quot;Google sign-in isn’t connected in this prototype&quot;&gt;Continue with Google&lt;/button&gt;
+      &lt;button class=&quot;btn btn-ghost btn-block&quot; type=&quot;button&quot; data-toast=&quot;Facebook sign-in isn’t connected in this prototype&quot;&gt;Continue with Facebook&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;or&quot;&gt;or use email&lt;/div&gt;
+    &lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;si-email&quot;&gt;Email&lt;/label&gt;&lt;input id=&quot;si-email&quot; type=&quot;email&quot; autocomplete=&quot;email&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;si-pass&quot;&gt;Password&lt;/label&gt;&lt;input id=&quot;si-pass&quot; type=&quot;password&quot; autocomplete=&quot;current-password&quot;&gt;&lt;/div&gt;
+    &lt;button class=&quot;btn btn-primary btn-block&quot; type=&quot;button&quot; data-signin&gt;Sign in&lt;/button&gt;
+    &lt;p style=&quot;text-align:center;font-size:14px;margin:16px 0 0;color:var(--muted)&quot;&gt;New here? &lt;a href=&quot;#signup&quot; data-toast=&quot;Account creation coming soon&quot;&gt;Create an account&lt;/a&gt;&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;toast&quot; role=&quot;status&quot; aria-live=&quot;polite&quot; data-toast-box&gt;&lt;/div&gt;
+
+&lt;script&gt;
+(function(){
+&quot;use strict&quot;;
+/* ---------------- data ---------------- */
+var ACTS={
+  hiking:{n:&quot;Hiking&quot;,g:[&quot;#8DB3C9&quot;,&quot;#355441&quot;]},
+  climbing:{n:&quot;Climbing&quot;,g:[&quot;#E3B486&quot;,&quot;#7A4D35&quot;]},
+  surfing:{n:&quot;Surfing&quot;,g:[&quot;#7CC4D6&quot;,&quot;#1D4E6B&quot;]},
+  paddling:{n:&quot;Paddling&quot;,g:[&quot;#9FC6C0&quot;,&quot;#2F5B55&quot;]},
+  rafting:{n:&quot;Rafting&quot;,g:[&quot;#86BFD3&quot;,&quot;#2B5D73&quot;]},
+  cycling:{n:&quot;Cycling&quot;,g:[&quot;#E6B27E&quot;,&quot;#4E5E6E&quot;]},
+  skiing:{n:&quot;Skiing&quot;,g:[&quot;#D8E6EF&quot;,&quot;#6D8AA3&quot;]},
+  running:{n:&quot;Trail running&quot;,g:[&quot;#E9C190&quot;,&quot;#4F6A62&quot;]}
+};
+var REGIONS={
+  sierra:{n:&quot;Yosemite &amp; the Sierra&quot;,d:&quot;Granite domes, alpine lakes, whitewater&quot;,g:[&quot;#8FB0C8&quot;,&quot;#3B5A47&quot;],x:56,y:40},
+  tahoe:{n:&quot;Lake Tahoe&quot;,d:&quot;Climbing, paddling and ski touring&quot;,g:[&quot;#7FB4D8&quot;,&quot;#2E5770&quot;],x:47,y:27},
+  coast:{n:&quot;Big Sur &amp; Central Coast&quot;,d:&quot;Coastal rides and surf breaks&quot;,g:[&quot;#9CC9DA&quot;,&quot;#3E6170&quot;],x:33,y:52},
+  north:{n:&quot;Bay Area &amp; North Coast&quot;,d:&quot;Headlands, redwoods and rivers&quot;,g:[&quot;#A6C2B0&quot;,&quot;#365646&quot;],x:24,y:33},
+  south:{n:&quot;Southern California&quot;,d:&quot;Desert boulders and warm surf&quot;,g:[&quot;#EDC08E&quot;,&quot;#8A5A3C&quot;],x:64,y:80}
+};
+var LEVELS=[&quot;Beginner&quot;,&quot;Intermediate&quot;,&quot;Advanced&quot;];
+var GUIDES={
+  &quot;Mike Scott&quot;:{yrs:12,cert:&quot;Wilderness First Responder, AMGA Single Pitch&quot;,bio:&quot;Mike grew up in Mariposa and has led more than 1,400 trips in Yosemite. Expect lots of geology, a well-paced climb and the best sandwich spot in the valley.&quot;,trips:1420},
+  &quot;Ana Ruiz&quot;:{yrs:9,cert:&quot;AMGA Rock Guide, WFR&quot;,bio:&quot;Ana has climbed from Tahoe to Joshua Tree for nearly a decade and specialises in first-timers.&quot;,trips:860},
+  &quot;Kai Morales&quot;:{yrs:7,cert:&quot;ISA Level 2 Surf Coach, Lifeguard&quot;,bio:&quot;Kai teaches patient, small-group lessons and will have you standing on your first session.&quot;,trips:2100},
+  &quot;Jess Park&quot;:{yrs:11,cert:&quot;Class V Raft Guide, Swiftwater Rescue&quot;,bio:&quot;Jess runs the American and Yuba rivers every summer and rides the Downieville trails the rest of the year.&quot;,trips:1100},
+  &quot;Lena Ortiz&quot;:{yrs:8,cert:&quot;ACA Kayak Instructor, WFR&quot;,bio:&quot;Lena knows every cove of Tomales Bay and the quiet bends of the Russian River.&quot;,trips:740},
+  &quot;Tom Becker&quot;:{yrs:15,cert:&quot;AMGA Ski Guide, AIARE 2&quot;,bio:&quot;Tom has guided Eastern Sierra backcountry for fifteen winters, with an obsessive eye on snowpack.&quot;,trips:520}
+};
+var EXP=[
+  {id:&quot;yosemite-hike&quot;,t:&quot;Yosemite Valley half-day hike&quot;,a:&quot;hiking&quot;,r:&quot;sierra&quot;,place:&quot;Yosemite National Park&quot;,p:89,dur:&quot;4.5 hrs&quot;,h:4.5,lv:&quot;Beginner&quot;,rt:4.8,rv:51,gd:&quot;Mike Scott&quot;,grp:8,inst:true,q:&quot;yosemite valley hiking&quot;,mx:58,my:44,
+   desc:&quot;Take in the scenery of Yosemite on a half-day hike along a gentle trail in Yosemite Valley, with plenty of photo stops and a picnic at a vista point beside a meadow and the Merced River. Expect four to five miles with minimal elevation gain.&quot;},
+  {id:&quot;tahoe-climb&quot;,t:&quot;Intro to rock climbing at Lake Tahoe&quot;,a:&quot;climbing&quot;,r:&quot;tahoe&quot;,place:&quot;South Lake Tahoe&quot;,p:200,dur:&quot;4 hrs&quot;,h:4,lv:&quot;Beginner&quot;,rt:4.9,rv:88,gd:&quot;Ana Ruiz&quot;,grp:4,inst:true,q:&quot;lake tahoe rock climbing&quot;,mx:48,my:28},
+  {id:&quot;santa-cruz-surf&quot;,t:&quot;Learn to surf at Cowell’s Beach&quot;,a:&quot;surfing&quot;,r:&quot;coast&quot;,place:&quot;Santa Cruz&quot;,p:95,dur:&quot;2 hrs&quot;,h:2,lv:&quot;Beginner&quot;,rt:4.7,rv:142,gd:&quot;Kai Morales&quot;,grp:6,inst:true,q:&quot;santa cruz surfing&quot;,mx:30,my:44},
+  {id:&quot;american-river-raft&quot;,t:&quot;American River whitewater rafting&quot;,a:&quot;rafting&quot;,r:&quot;sierra&quot;,place:&quot;Coloma&quot;,p:105,dur:&quot;5 hrs&quot;,h:5,lv:&quot;Intermediate&quot;,rt:4.8,rv:213,gd:&quot;Jess Park&quot;,grp:12,inst:true,q:&quot;whitewater rafting&quot;,mx:42,my:31},
+  {id:&quot;big-sur-cycle&quot;,t:&quot;Big Sur coastal ride&quot;,a:&quot;cycling&quot;,r:&quot;coast&quot;,place:&quot;Big Sur&quot;,p:70,dur:&quot;3 hrs&quot;,h:3,lv:&quot;Intermediate&quot;,rt:4.6,rv:101,gd:&quot;Mike Scott&quot;,grp:10,inst:false,q:&quot;big sur highway 1&quot;,mx:33,my:55},
+  {id:&quot;tomales-kayak&quot;,t:&quot;Bioluminescence night paddle&quot;,a:&quot;paddling&quot;,r:&quot;north&quot;,place:&quot;Tomales Bay&quot;,p:120,dur:&quot;2.5 hrs&quot;,h:2.5,lv:&quot;Beginner&quot;,rt:4.9,rv:64,gd:&quot;Lena Ortiz&quot;,grp:10,inst:false,q:&quot;kayak tomales bay&quot;,mx:21,my:33},
+  {id:&quot;mammoth-ski&quot;,t:&quot;Backcountry ski touring day&quot;,a:&quot;skiing&quot;,r:&quot;sierra&quot;,place:&quot;Mammoth Lakes&quot;,p:240,dur:&quot;7 hrs&quot;,h:7,lv:&quot;Advanced&quot;,rt:4.9,rv:37,gd:&quot;Tom Becker&quot;,grp:5,inst:false,q:&quot;backcountry ski touring&quot;,mx:62,my:47},
+  {id:&quot;russian-river-canoe&quot;,t:&quot;Russian River canoe &amp; picnic&quot;,a:&quot;paddling&quot;,r:&quot;north&quot;,place:&quot;Healdsburg&quot;,p:65,dur:&quot;4 hrs&quot;,h:4,lv:&quot;Beginner&quot;,rt:4.6,rv:79,gd:&quot;Lena Ortiz&quot;,grp:14,inst:true,q:&quot;canoe river&quot;,mx:19,my:27},
+  {id:&quot;downieville-mtb&quot;,t:&quot;Downieville downhill shuttle day&quot;,a:&quot;cycling&quot;,r:&quot;sierra&quot;,place:&quot;Downieville&quot;,p:125,dur:&quot;6 hrs&quot;,h:6,lv:&quot;Advanced&quot;,rt:4.8,rv:58,gd:&quot;Jess Park&quot;,grp:8,inst:false,q:&quot;mountain biking downhill&quot;,mx:44,my:22},
+  {id:&quot;joshua-tree-climb&quot;,t:&quot;Joshua Tree bouldering session&quot;,a:&quot;climbing&quot;,r:&quot;south&quot;,place:&quot;Joshua Tree&quot;,p:110,dur:&quot;3 hrs&quot;,h:3,lv:&quot;Intermediate&quot;,rt:4.7,rv:96,gd:&quot;Ana Ruiz&quot;,grp:6,inst:true,q:&quot;joshua tree bouldering&quot;,mx:76,my:82},
+  {id:&quot;marin-run&quot;,t:&quot;Marin Headlands trail run&quot;,a:&quot;running&quot;,r:&quot;north&quot;,place:&quot;Sausalito&quot;,p:55,dur:&quot;2 hrs&quot;,h:2,lv:&quot;Intermediate&quot;,rt:4.8,rv:45,gd:&quot;Mike Scott&quot;,grp:10,inst:true,q:&quot;trail running marin headlands&quot;,mx:24,my:37},
+  {id:&quot;wilderness-survival&quot;,t:&quot;Wilderness survival weekend&quot;,a:&quot;hiking&quot;,r:&quot;sierra&quot;,place:&quot;Yosemite National Park&quot;,p:350,dur:&quot;3 days&quot;,h:72,lv:&quot;Intermediate&quot;,rt:4.9,rv:29,gd:&quot;Mike Scott&quot;,grp:8,inst:false,q:&quot;backpacking camp sierra&quot;,mx:55,my:42}
+];
+var DURS=[{k:&quot;short&quot;,n:&quot;Up to 3 hours&quot;,f:function(h){return h&lt;=3}},{k:&quot;half&quot;,n:&quot;3 to 6 hours&quot;,f:function(h){return h&gt;3&amp;&amp;h&lt;=6}},{k:&quot;full&quot;,n:&quot;Full day or longer&quot;,f:function(h){return h&gt;6}}];
+var INCL={
+  hiking:[&quot;Certified guide&quot;,&quot;Trail snacks and picnic lunch&quot;,&quot;Trekking poles on request&quot;,&quot;Park entry for the group&quot;],
+  climbing:[&quot;Certified guide&quot;,&quot;Harness, helmet and shoes&quot;,&quot;All ropes and protection&quot;,&quot;Photos of your climb&quot;],
+  surfing:[&quot;Certified coach&quot;,&quot;Soft-top board&quot;,&quot;Full wetsuit&quot;,&quot;Beach safety briefing&quot;],
+  paddling:[&quot;Certified guide&quot;,&quot;Kayak or canoe, paddle and PFD&quot;,&quot;Dry bag&quot;,&quot;Snacks and water&quot;],
+  rafting:[&quot;Licensed river guide&quot;,&quot;Raft, paddle, helmet and PFD&quot;,&quot;Wetsuit in cool months&quot;,&quot;Riverside lunch&quot;],
+  cycling:[&quot;Certified guide&quot;,&quot;Support van&quot;,&quot;Snacks and water&quot;,&quot;Basic repairs on the trail&quot;],
+  skiing:[&quot;Certified ski guide&quot;,&quot;Avalanche beacon, shovel and probe&quot;,&quot;Skins on request&quot;,&quot;Hot lunch at the hut&quot;],
+  running:[&quot;Certified coach&quot;,&quot;Route briefing&quot;,&quot;Electrolytes and snacks&quot;,&quot;Post-run photos&quot;]
+};
+var NOTINCL=[&quot;Transport to the meeting point&quot;,&quot;Gratuities&quot;];
+
+/* ---------------- helpers ---------------- */
+var $=function(s,el){return (el||document).querySelector(s)};
+var $$=function(s,el){return Array.prototype.slice.call((el||document).querySelectorAll(s))};
+var byId=function(id){for(var i=0;i&lt;EXP.length;i++)if(EXP[i].id===id)return EXP[i];return EXP[0]};
+var money=function(n){return &quot;$&quot;+n.toLocaleString(&quot;en-US&quot;)};
+var initials=function(n){return n.split(&quot; &quot;).map(function(w){return w[0]}).join(&quot;&quot;)};
+var esc=function(s){return String(s).replace(/[&amp;&lt;&gt;&quot;]/g,function(c){return{&quot;&amp;&quot;:&quot;&amp;amp;&quot;,&quot;&lt;&quot;:&quot;&amp;lt;&quot;,&quot;&gt;&quot;:&quot;&amp;gt;&quot;,&#x27;&quot;&#x27;:&quot;&amp;quot;&quot;}[c]})};
+var IC={
+  pin:&#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z&quot;/&gt;&lt;circle cx=&quot;12&quot; cy=&quot;10&quot; r=&quot;2.5&quot;/&gt;&lt;/svg&gt;&#x27;,
+  clock:&#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;9&quot;/&gt;&lt;path d=&quot;M12 7v5l3 2&quot;/&gt;&lt;/svg&gt;&#x27;,
+  star:&#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;currentColor&quot;&gt;&lt;path d=&quot;M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4L2.8 9.5l6.4-.8z&quot;/&gt;&lt;/svg&gt;&#x27;,
+  starO:&#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;currentColor&quot; opacity=&quot;.28&quot;&gt;&lt;path d=&quot;M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4L2.8 9.5l6.4-.8z&quot;/&gt;&lt;/svg&gt;&#x27;,
+  heart:&#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z&quot;/&gt;&lt;/svg&gt;&#x27;,
+  bolt:&#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;currentColor&quot;&gt;&lt;path d=&quot;M13 2L4 14h7l-1 8 9-12h-7z&quot;/&gt;&lt;/svg&gt;&#x27;,
+  check:&#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.4&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M5 12.5l4.5 4.5L19 7.5&quot;/&gt;&lt;/svg&gt;&#x27;,
+  x:&#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;&gt;&lt;path d=&quot;M7 7l10 10M17 7L7 17&quot;/&gt;&lt;/svg&gt;&#x27;,
+  users:&#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;&gt;&lt;circle cx=&quot;9&quot; cy=&quot;8&quot; r=&quot;3.5&quot;/&gt;&lt;path d=&quot;M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6&quot;/&gt;&lt;path d=&quot;M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20c0-2.8-1.6-4.9-4-5.7&quot;/&gt;&lt;/svg&gt;&#x27;,
+  level:&#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;&gt;&lt;path d=&quot;M5 20v-5M12 20V10M19 20V4&quot;/&gt;&lt;/svg&gt;&#x27;,
+  lang:&#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M21 12a8 8 0 0 1-11.8 7L4 20l1.1-4.6A8 8 0 1 1 21 12z&quot;/&gt;&lt;/svg&gt;&#x27;,
+  cal:&#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;&gt;&lt;rect x=&quot;3.5&quot; y=&quot;5&quot; width=&quot;17&quot; height=&quot;15&quot; rx=&quot;2&quot;/&gt;&lt;path d=&quot;M3.5 10h17M8 3v4M16 3v4&quot;/&gt;&lt;/svg&gt;&#x27;,
+  shield:&#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z&quot;/&gt;&lt;path d=&quot;M9 12l2 2 4-4&quot;/&gt;&lt;/svg&gt;&#x27;,
+  left:&#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M15 6l-6 6 6 6&quot;/&gt;&lt;/svg&gt;&#x27;,
+  right:&#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M9 6l6 6-6 6&quot;/&gt;&lt;/svg&gt;&#x27;,
+  close:&#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;&gt;&lt;path d=&quot;M6 6l12 12M18 6L6 18&quot;/&gt;&lt;/svg&gt;&#x27;,
+  hiking:&#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M3 20l6-9 4 5 3-3 5 7z&quot;/&gt;&lt;circle cx=&quot;16&quot; cy=&quot;5&quot; r=&quot;2&quot;/&gt;&lt;/svg&gt;&#x27;,
+  climbing:&#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;circle cx=&quot;13&quot; cy=&quot;4.5&quot; r=&quot;2&quot;/&gt;&lt;path d=&quot;M8 8l4 1.5 4-2M12 9.5l-1 5 3 3v4M11 14.5l-4 2-1 4M18 3v18&quot;/&gt;&lt;/svg&gt;&#x27;,
+  surfing:&#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M2 16c2 0 2-1.5 4-1.5S8 16 10 16s2-1.5 4-1.5 2 1.5 4 1.5 2-1.5 4-1.5M2 20c2 0 2-1.5 4-1.5S8 20 10 20s2-1.5 4-1.5 2 1.5 4 1.5 2-1.5 4-1.5&quot;/&gt;&lt;path d=&quot;M5 12c1-5 5-8 11-8-2 2-3 5-3 8&quot;/&gt;&lt;/svg&gt;&#x27;,
+  paddling:&#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M2 16c4 3 16 3 20 0M5 4l14 14M3.5 2.5l3 3M17.5 16.5l3 3&quot;/&gt;&lt;/svg&gt;&#x27;,
+  rafting:&#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M3 14h18l-2 4H5zM2 21c2 0 2-1 4-1s2 1 4 1 2-1 4-1 2 1 4 1 2-1 4-1&quot;/&gt;&lt;circle cx=&quot;8&quot; cy=&quot;8&quot; r=&quot;1.8&quot;/&gt;&lt;circle cx=&quot;15&quot; cy=&quot;8&quot; r=&quot;1.8&quot;/&gt;&lt;/svg&gt;&#x27;,
+  cycling:&#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;circle cx=&quot;5.5&quot; cy=&quot;17&quot; r=&quot;3.5&quot;/&gt;&lt;circle cx=&quot;18.5&quot; cy=&quot;17&quot; r=&quot;3.5&quot;/&gt;&lt;path d=&quot;M5.5 17l4-8h6l3 8M9.5 9L12 17h2M14 5h3&quot;/&gt;&lt;/svg&gt;&#x27;,
+  skiing:&#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;circle cx=&quot;15&quot; cy=&quot;4.5&quot; r=&quot;2&quot;/&gt;&lt;path d=&quot;M3 18l18 4M8 9l5 1 2 4-4 4M13 10l-3 5&quot;/&gt;&lt;/svg&gt;&#x27;,
+  running:&#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;circle cx=&quot;14&quot; cy=&quot;4.5&quot; r=&quot;2&quot;/&gt;&lt;path d=&quot;M6 21l3-6 3 2v4M9 15l2-6 4 3h4M11 9H7l-2 3&quot;/&gt;&lt;/svg&gt;&#x27;
+};
+var stars=function(r){var s=&quot;&quot;;for(var i=1;i&lt;=5;i++)s+=(r&gt;=i-.25?IC.star:IC.starO);return &#x27;&lt;span class=&quot;stars&quot; aria-hidden=&quot;true&quot;&gt;&#x27;+s+&#x27;&lt;/span&gt;&#x27;};
+function photo(name,g,alt,extra){
+  var gs=g?&#x27;--g1:&#x27;+g[0]+&#x27;;--g2:&#x27;+g[1]+&#x27;;&#x27;:&#x27;&#x27;;
+  return &#x27;&lt;div class=&quot;ph &#x27;+(extra||&quot;&quot;)+&#x27;&quot; style=&quot;&#x27;+gs+&#x27;&quot; data-img=&quot;&#x27;+name+&#x27;&quot; data-alt=&quot;&#x27;+esc(alt||&quot;&quot;)+&#x27;&quot;&gt;&lt;/div&gt;&#x27;;
+}
+/* turn every .ph[data-img] into an &lt;img&gt; with fallback */
+function hydrate(root){
+  $$(&quot;.ph[data-img]&quot;,root).forEach(function(el){
+    if(el.dataset.done)return;el.dataset.done=&quot;1&quot;;
+    var name=el.dataset.img,file=&quot;img/&quot;+name+&quot;.jpg&quot;;
+    var img=new Image();img.alt=el.dataset.alt||&quot;&quot;;img.loading=&quot;lazy&quot;;img.decoding=&quot;async&quot;;
+    img.onload=function(){el.classList.add(&quot;loaded&quot;)};
+    img.onerror=function(){img.remove()};
+    img.src=file;el.insertBefore(img,el.firstChild);
+  });
+}
+
+/* ---------------- state ---------------- */
+var S={view:&quot;home&quot;,id:null,f:{acts:[],regions:[],levels:[],durs:[],price:400,instant:false},sort:&quot;pop&quot;,layout:&quot;grid&quot;,saved:{},savedOnly:false,
+  book:{id:null,date:null,time:null,guests:2,month:0},search:{region:&quot;all&quot;,act:&quot;all&quot;,date:&quot;&quot;,guests:&quot;2&quot;}};
+
+/* ---------------- cards ---------------- */
+function card(e){
+  var sv=!!S.saved[e.id];
+  return &#x27;&lt;article class=&quot;card&quot;&gt;&#x27;+
+    &#x27;&lt;a class=&quot;card-media&quot; href=&quot;#experience&quot; data-go=&quot;experience&quot; data-id=&quot;&#x27;+e.id+&#x27;&quot; tabindex=&quot;-1&quot; aria-hidden=&quot;true&quot;&gt;&#x27;+photo(e.id,ACTS[e.a].g,e.t,&quot;card-ph&quot;)+&#x27;&lt;/a&gt;&#x27;+
+    &#x27;&lt;span class=&quot;price-tag&quot;&gt;&lt;small&gt;from&lt;/small&gt;&lt;sup&gt;$&lt;/sup&gt;&#x27;+e.p+&#x27;&lt;/span&gt;&#x27;+
+    &#x27;&lt;button class=&quot;save&quot; type=&quot;button&quot; data-save=&quot;&#x27;+e.id+&#x27;&quot; aria-pressed=&quot;&#x27;+sv+&#x27;&quot; aria-label=&quot;Save &#x27;+esc(e.t)+&#x27;&quot;&gt;&#x27;+IC.heart+&#x27;&lt;/button&gt;&#x27;+
+    &#x27;&lt;div class=&quot;card-body&quot;&gt;&#x27;+
+      &#x27;&lt;div class=&quot;card-meta&quot;&gt;&lt;span&gt;&#x27;+IC.pin+esc(e.place)+&#x27;&lt;/span&gt;&lt;span&gt;&#x27;+IC.clock+e.dur+&#x27;&lt;/span&gt;&lt;/div&gt;&#x27;+
+      &#x27;&lt;h3&gt;&lt;a href=&quot;#experience&quot; data-go=&quot;experience&quot; data-id=&quot;&#x27;+e.id+&#x27;&quot;&gt;&#x27;+esc(e.t)+&#x27;&lt;/a&gt;&lt;/h3&gt;&#x27;+
+      &#x27;&lt;div class=&quot;rating&quot;&gt;&#x27;+stars(e.rt)+&#x27;&lt;b&gt;&#x27;+e.rt.toFixed(1)+&#x27;&lt;/b&gt;&lt;span&gt;(&#x27;+e.rv+&#x27; reviews)&lt;/span&gt;&lt;/div&gt;&#x27;+
+      &#x27;&lt;div class=&quot;card-foot&quot;&gt;&lt;span class=&quot;guide&quot;&gt;&lt;span class=&quot;av&quot;&gt;&#x27;+initials(e.gd)+&#x27;&lt;/span&gt;&#x27;+esc(e.gd)+&#x27;&lt;/span&gt;&#x27;+
+        &#x27;&lt;span style=&quot;display:flex;gap:6px&quot;&gt;&#x27;+(e.inst?&#x27;&lt;span class=&quot;tag instant&quot;&gt;&#x27;+IC.bolt+&#x27;Instant&lt;/span&gt;&#x27;:&#x27;&#x27;)+&#x27;&lt;span class=&quot;tag&quot;&gt;&#x27;+e.lv+&#x27;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&#x27;+
+    &#x27;&lt;/div&gt;&lt;/article&gt;&#x27;;
+}
+/* make the media area fill the card&#x27;s position:relative context */
+var style=document.createElement(&quot;style&quot;);style.textContent=&quot;.card-media .ph{position:absolute;inset:0}.card-media{position:relative}&quot;;document.head.appendChild(style);
+
+/* ---------------- home ---------------- */
+function renderHome(){
+  var acts=$(&quot;[data-acts]&quot;);
+  acts.innerHTML=Object.keys(ACTS).map(function(k){
+    return &#x27;&lt;button class=&quot;chip&quot; role=&quot;listitem&quot; type=&quot;button&quot; data-go=&quot;search&quot; data-act=&quot;&#x27;+k+&#x27;&quot;&gt;&#x27;+IC[k]+ACTS[k].n+&#x27;&lt;/button&gt;&#x27;}).join(&quot;&quot;);
+  $(&quot;[data-popular]&quot;).innerHTML=EXP.slice().sort(function(a,b){return b.rv*b.rt-a.rv*a.rt}).slice(0,6).map(card).join(&quot;&quot;);
+  $(&quot;[data-regions]&quot;).innerHTML=[&quot;sierra&quot;,&quot;coast&quot;,&quot;tahoe&quot;,&quot;north&quot;,&quot;south&quot;].map(function(k){
+    var R=REGIONS[k],n=EXP.filter(function(e){return e.r===k}).length;
+    return &#x27;&lt;button class=&quot;region&quot; type=&quot;button&quot; data-go=&quot;search&quot; data-region=&quot;&#x27;+k+&#x27;&quot;&gt;&#x27;+photo(&quot;region-&quot;+k,R.g,R.n)+&#x27;&lt;span class=&quot;region-txt&quot;&gt;&lt;span class=&quot;rh&quot;&gt;&#x27;+R.n+&#x27;&lt;/span&gt;&lt;span class=&quot;rd&quot;&gt;&#x27;+R.d+&#x27; · &#x27;+n+&#x27; experience&#x27;+(n===1?&quot;&quot;:&quot;s&quot;)+&#x27;&lt;/span&gt;&lt;/span&gt;&lt;/button&gt;&#x27;}).join(&quot;&quot;);
+  hydrate(document);
+}
+function fillSelects(){
+  $$(&quot;select[name=region]&quot;).forEach(function(s){Object.keys(REGIONS).forEach(function(k){s.add(new Option(REGIONS[k].n,k))})});
+  $$(&quot;select[name=act]&quot;).forEach(function(s){Object.keys(ACTS).forEach(function(k){s.add(new Option(ACTS[k].n,k))})});
+  var t=new Date();t.setDate(t.getDate()+1);var iso=t.toISOString().slice(0,10);
+  $$(&quot;input[name=date]&quot;).forEach(function(i){i.min=iso});
+}
+
+/* ---------------- search ---------------- */
+function checks(el,items,key){
+  el.innerHTML=items.map(function(it){
+    var n=EXP.filter(function(e){return it.match(e)}).length;
+    return &#x27;&lt;label class=&quot;check&quot;&gt;&lt;input type=&quot;checkbox&quot; data-fk=&quot;&#x27;+key+&#x27;&quot; value=&quot;&#x27;+it.k+&#x27;&quot;&#x27;+(S.f[key].indexOf(it.k)&gt;-1?&quot; checked&quot;:&quot;&quot;)+&#x27;&gt;&#x27;+it.n+&#x27;&lt;span class=&quot;n&quot;&gt;&#x27;+n+&#x27;&lt;/span&gt;&lt;/label&gt;&#x27;}).join(&quot;&quot;);
+}
+function renderFilters(){
+  checks($(&quot;[data-f-acts]&quot;),Object.keys(ACTS).map(function(k){return{k:k,n:ACTS[k].n,match:function(e){return e.a===k}}}),&quot;acts&quot;);
+  checks($(&quot;[data-f-regions]&quot;),Object.keys(REGIONS).map(function(k){return{k:k,n:REGIONS[k].n,match:function(e){return e.r===k}}}),&quot;regions&quot;);
+  checks($(&quot;[data-f-levels]&quot;),LEVELS.map(function(k){return{k:k,n:k,match:function(e){return e.lv===k}}}),&quot;levels&quot;);
+  checks($(&quot;[data-f-dur]&quot;),DURS.map(function(d){return{k:d.k,n:d.n,match:function(e){return d.f(e.h)}}}),&quot;durs&quot;);
+  $(&quot;[data-f-price]&quot;).value=S.f.price;$(&quot;[data-f-price-out]&quot;).textContent=&quot;Up to &quot;+money(S.f.price);
+  $(&quot;[data-f-instant]&quot;).checked=S.f.instant;
+}
+function filtered(){
+  var f=S.f;
+  var list=EXP.filter(function(e){
+    if(S.savedOnly&amp;&amp;!S.saved[e.id])return false;
+    if(f.acts.length&amp;&amp;f.acts.indexOf(e.a)&lt;0)return false;
+    if(f.regions.length&amp;&amp;f.regions.indexOf(e.r)&lt;0)return false;
+    if(f.levels.length&amp;&amp;f.levels.indexOf(e.lv)&lt;0)return false;
+    if(f.durs.length&amp;&amp;!DURS.some(function(d){return f.durs.indexOf(d.k)&gt;-1&amp;&amp;d.f(e.h)}))return false;
+    if(e.p&gt;f.price)return false;
+    if(f.instant&amp;&amp;!e.inst)return false;
+    return true;
+  });
+  var s={pop:function(a,b){return b.rv*b.rt-a.rv*a.rt},rating:function(a,b){return b.rt-a.rt||b.rv-a.rv},low:function(a,b){return a.p-b.p},high:function(a,b){return b.p-a.p}}[S.sort];
+  return list.sort(s);
+}
+function renderResults(){
+  var list=filtered();
+  var title=&quot;Experiences in California&quot;;
+  if(S.savedOnly)title=&quot;Saved experiences&quot;;
+  else if(S.f.regions.length===1)title=&quot;Experiences in &quot;+REGIONS[S.f.regions[0]].n;
+  if(!S.savedOnly&amp;&amp;S.f.acts.length===1)title=ACTS[S.f.acts[0]].n+(S.f.regions.length===1?&quot; in &quot;+REGIONS[S.f.regions[0]].n:&quot; in California&quot;);
+  $(&quot;[data-res-title]&quot;).textContent=title;
+  $(&quot;[data-res-count]&quot;).textContent=list.length+&quot; experience&quot;+(list.length===1?&quot;&quot;:&quot;s&quot;)+(S.search.date?&quot; with openings on &quot;+fmtDate(new Date(S.search.date+&quot;T12:00&quot;)):&quot;&quot;);
+  var res=$(&quot;[data-results]&quot;),map=$(&quot;[data-map]&quot;);
+  if(!list.length){
+    res.innerHTML=S.savedOnly?&#x27;&lt;div class=&quot;empty&quot;&gt;&lt;h3&gt;No saved experiences yet&lt;/h3&gt;&lt;p&gt;Tap the heart on any experience to keep it here.&lt;/p&gt;&lt;button class=&quot;btn btn-primary&quot; type=&quot;button&quot; data-go=&quot;search&quot;&gt;Browse experiences&lt;/button&gt;&lt;/div&gt;&#x27;
+      :&#x27;&lt;div class=&quot;empty&quot;&gt;&lt;h3&gt;No experiences match these filters&lt;/h3&gt;&lt;p&gt;Try a higher price limit or another region.&lt;/p&gt;&lt;button class=&quot;btn btn-primary&quot; type=&quot;button&quot; data-f-clear&gt;Clear filters&lt;/button&gt;&lt;/div&gt;&#x27;;
+  } else res.innerHTML=list.map(card).join(&quot;&quot;);
+  res.hidden=S.layout===&quot;map&quot;;map.hidden=S.layout!==&quot;map&quot;;
+  if(S.layout===&quot;map&quot;)map.innerHTML=renderMap(list);
+  $$(&quot;[data-layout]&quot;).forEach(function(b){b.setAttribute(&quot;aria-pressed&quot;,b.dataset.layout===S.layout)});
+  var cl=$(&quot;[data-compact-label]&quot;);
+  cl.textContent=(S.f.regions.length===1?REGIONS[S.f.regions[0]].n:&quot;Anywhere&quot;)+&quot; · &quot;+(S.f.acts.length===1?ACTS[S.f.acts[0]].n:&quot;All activities&quot;);
+  hydrate(res);
+}
+function renderMap(list){
+  var ca=&#x27;&lt;svg class=&quot;ca&quot; viewBox=&quot;0 0 100 100&quot; preserveAspectRatio=&quot;none&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M8 2 L46 2 L46 30 L78 58 L80 64 L86 74 L84 86 L78 96 L60 97 L56 90 L48 84 L40 76 L34 66 L28 56 L22 46 L16 38 L12 28 L10 18 Z&quot; fill=&quot;var(--surface)&quot; stroke=&quot;var(--line)&quot; stroke-width=&quot;.6&quot; vector-effect=&quot;non-scaling-stroke&quot;/&gt;&lt;/svg&gt;&#x27;;
+  return ca+list.map(function(e){return &#x27;&lt;button class=&quot;pin&quot; type=&quot;button&quot; style=&quot;left:&#x27;+e.mx+&#x27;%;top:&#x27;+e.my+&#x27;%&quot; data-go=&quot;experience&quot; data-id=&quot;&#x27;+e.id+&#x27;&quot; aria-label=&quot;&#x27;+esc(e.t)+&#x27;, &#x27;+money(e.p)+&#x27;&quot;&gt;&#x27;+money(e.p)+&#x27;&lt;/button&gt;&#x27;}).join(&quot;&quot;);
+}
+
+/* ---------------- detail ---------------- */
+function seed(s){var h=0;for(var i=0;i&lt;s.length;i++)h=(h*31+s.charCodeAt(i))|0;return Math.abs(h)}
+function avail(e,d){var t=new Date();t.setHours(0,0,0,0);if(d&lt;=t)return false;return seed(e.id+d.toDateString())%5!==0}
+function slots(e,d){
+  var base=e.h&gt;6?[&quot;7:00 am&quot;]:e.h&gt;=4?[&quot;8:00 am&quot;,&quot;1:00 pm&quot;]:[&quot;8:00 am&quot;,&quot;10:30 am&quot;,&quot;3:00 pm&quot;];
+  return base.map(function(t,i){var left=(seed(e.id+d.toDateString()+t)%(e.grp+1));return{t:t,left:left}});
+}
+function fmtDate(d,long){return d.toLocaleDateString(&quot;en-US&quot;,long?{weekday:&quot;long&quot;,month:&quot;long&quot;,day:&quot;numeric&quot;,year:&quot;numeric&quot;}:{weekday:&quot;short&quot;,month:&quot;short&quot;,day:&quot;numeric&quot;})}
+function bookingHTML(e){
+  var B=S.book,base=new Date();base.setDate(1);base.setMonth(base.getMonth()+B.month);
+  var y=base.getFullYear(),m=base.getMonth(),first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate();
+  var cal=[&quot;S&quot;,&quot;M&quot;,&quot;T&quot;,&quot;W&quot;,&quot;T&quot;,&quot;F&quot;,&quot;S&quot;].map(function(d){return &#x27;&lt;span class=&quot;dow&quot; aria-hidden=&quot;true&quot;&gt;&#x27;+d+&#x27;&lt;/span&gt;&#x27;}).join(&quot;&quot;);
+  for(var i=0;i&lt;first;i++)cal+=&#x27;&lt;span&gt;&lt;/span&gt;&#x27;;
+  for(var d=1;d&lt;=days;d++){
+    var dt=new Date(y,m,d),ok=avail(e,dt),sel=B.date&amp;&amp;B.date.toDateString()===dt.toDateString();
+    cal+=&#x27;&lt;button type=&quot;button&quot; &#x27;+(ok?&#x27;class=&quot;avail&quot; data-day=&quot;&#x27;+dt.toISOString()+&#x27;&quot;&#x27;:&quot;disabled&quot;)+&#x27; aria-pressed=&quot;&#x27;+!!sel+&#x27;&quot; aria-label=&quot;&#x27;+fmtDate(dt)+(ok?&quot;, available&quot;:&quot;, unavailable&quot;)+&#x27;&quot;&gt;&#x27;+d+&#x27;&lt;/button&gt;&#x27;;
+  }
+  var times=&quot;&quot;;
+  if(B.date){
+    times=&#x27;&lt;h3&gt;Choose a start time&lt;/h3&gt;&lt;div class=&quot;times&quot;&gt;&#x27;+slots(e,B.date).map(function(s){
+      var full=s.left===0;
+      return &#x27;&lt;button class=&quot;time&quot; type=&quot;button&quot; data-time=&quot;&#x27;+s.t+&#x27;&quot; aria-pressed=&quot;&#x27;+(B.time===s.t)+&#x27;&quot;&#x27;+(full?&quot; disabled&quot;:&quot;&quot;)+&#x27;&gt;&lt;b&gt;&#x27;+s.t+&#x27;&lt;/b&gt;&lt;small&#x27;+(s.left&amp;&amp;s.left&lt;=3?&#x27; class=&quot;low&quot;&#x27;:&quot;&quot;)+&#x27;&gt;&#x27;+(full?&quot;Full&quot;:s.left+&quot; spots left&quot;)+&#x27;&lt;/small&gt;&lt;/button&gt;&#x27;}).join(&quot;&quot;)+&#x27;&lt;/div&gt;&#x27;;
+  }
+  var maxG=e.grp,sub=e.p*B.guests;
+  return &#x27;&lt;div class=&quot;book-head&quot;&gt;&lt;div&gt;&lt;span class=&quot;p&quot;&gt;&lt;sup&gt;$&lt;/sup&gt;&#x27;+e.p+&#x27;&lt;/span&gt;&lt;span class=&quot;u&quot;&gt;per person&lt;/span&gt;&lt;/div&gt;&#x27;+
+      &#x27;&lt;span class=&quot;r&quot;&gt;&#x27;+IC.star+e.rt.toFixed(1)+&#x27; · &#x27;+e.rv+&#x27;&lt;/span&gt;&#x27;+
+      &#x27;&lt;button class=&quot;icon-btn sheet-close&quot; type=&quot;button&quot; data-book-close aria-label=&quot;Close booking&quot;&gt;&#x27;+IC.close+&#x27;&lt;/button&gt;&lt;/div&gt;&#x27;+
+    &#x27;&lt;div class=&quot;book-body&quot;&gt;&#x27;+
+      &#x27;&lt;h3&gt;Choose a date&lt;/h3&gt;&#x27;+
+      &#x27;&lt;div class=&quot;cal-head&quot;&gt;&lt;button class=&quot;icon-btn&quot; type=&quot;button&quot; data-month=&quot;-1&quot; aria-label=&quot;Previous month&quot;&#x27;+(B.month&lt;=0?&quot; disabled&quot;:&quot;&quot;)+&#x27;&gt;&#x27;+IC.left+&#x27;&lt;/button&gt;&lt;b&gt;&#x27;+base.toLocaleDateString(&quot;en-US&quot;,{month:&quot;long&quot;,year:&quot;numeric&quot;})+&#x27;&lt;/b&gt;&lt;button class=&quot;icon-btn&quot; type=&quot;button&quot; data-month=&quot;1&quot; aria-label=&quot;Next month&quot;&#x27;+(B.month&gt;=5?&quot; disabled&quot;:&quot;&quot;)+&#x27;&gt;&#x27;+IC.right+&#x27;&lt;/button&gt;&lt;/div&gt;&#x27;+
+      &#x27;&lt;div class=&quot;cal&quot;&gt;&#x27;+cal+&#x27;&lt;/div&gt;&#x27;+
+      &#x27;&lt;div class=&quot;legend&quot;&gt;&lt;span&gt;&lt;i&gt;&lt;/i&gt;Available&lt;/span&gt;&lt;span&gt;Crossed-out dates are full&lt;/span&gt;&lt;/div&gt;&#x27;+
+      times+
+      &#x27;&lt;div class=&quot;guests&quot;&gt;&lt;div&gt;&lt;b&gt;Guests&lt;/b&gt;&lt;small&gt;Up to &#x27;+maxG+&#x27; per group&lt;/small&gt;&lt;/div&gt;&lt;div class=&quot;stepper&quot;&gt;&lt;button type=&quot;button&quot; data-g=&quot;-1&quot; aria-label=&quot;Fewer guests&quot;&#x27;+(B.guests&lt;=1?&quot; disabled&quot;:&quot;&quot;)+&#x27;&gt;−&lt;/button&gt;&lt;output aria-live=&quot;polite&quot;&gt;&#x27;+B.guests+&#x27;&lt;/output&gt;&lt;button type=&quot;button&quot; data-g=&quot;1&quot; aria-label=&quot;More guests&quot;&#x27;+(B.guests&gt;=maxG?&quot; disabled&quot;:&quot;&quot;)+&#x27;&gt;+&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;&#x27;+
+      &#x27;&lt;div class=&quot;total&quot;&gt;&lt;span&gt;&#x27;+money(e.p)+&#x27; × &#x27;+B.guests+&#x27; guest&#x27;+(B.guests&gt;1?&quot;s&quot;:&quot;&quot;)+&#x27;&lt;/span&gt;&lt;span&gt;&#x27;+money(sub)+&#x27;&lt;/span&gt;&lt;/div&gt;&#x27;+
+      &#x27;&lt;div class=&quot;total grand&quot;&gt;&lt;span&gt;Total&lt;/span&gt;&lt;span&gt;&#x27;+money(sub)+&#x27;&lt;/span&gt;&lt;/div&gt;&#x27;+
+      &#x27;&lt;p class=&quot;book-hint&quot; data-book-hint&gt;&lt;/p&gt;&#x27;+
+      &#x27;&lt;button class=&quot;btn &#x27;+(e.inst?&quot;btn-green&quot;:&quot;btn-primary&quot;)+&#x27; btn-block&quot; type=&quot;button&quot; data-reserve&gt;&#x27;+(e.inst?&quot;Book now&quot;:&quot;Request to book&quot;)+&#x27;&lt;/button&gt;&#x27;+
+      &#x27;&lt;p class=&quot;book-note&quot;&gt;&#x27;+IC.shield+&#x27;&lt;span&gt;&#x27;+(e.inst?&quot;Confirmed instantly. &quot;:&quot;Your guide confirms within 24 hours. &quot;)+&#x27;You won’t be charged until confirmed. Free cancellation up to 24 hours before.&lt;/span&gt;&lt;/p&gt;&#x27;+
+    &#x27;&lt;/div&gt;&#x27;;
+}
+function renderDetail(){
+  var e=byId(S.id),G=GUIDES[e.gd],A=ACTS[e.a],R=REGIONS[e.r];
+  if(S.book.id!==e.id)S.book={id:e.id,date:null,time:null,guests:Math.min(2,e.grp),month:0};
+  var desc=e.desc||(&quot;Join &quot;+e.gd.split(&quot; &quot;)[0]+&quot; for a &quot;+e.dur+&quot; &quot;+A.n.toLowerCase()+&quot; experience around &quot;+e.place+&quot;. Small groups, expert instruction and all the gear you need, so you can focus on the day.&quot;);
+  var steps=e.h&gt;24?[[&quot;Day 1&quot;,&quot;Hike in and set up camp&quot;,&quot;Navigation basics, shelter building and water purification.&quot;],[&quot;Day 2&quot;,&quot;Fire, food and signalling&quot;,&quot;Friction fire, foraging awareness and rescue signalling.&quot;],[&quot;Day 3&quot;,&quot;Solo challenge and hike out&quot;,&quot;Put your skills together, then walk out by early afternoon.&quot;]]
+    :[[&quot;Start&quot;,&quot;Meet your guide&quot;,&quot;Check-in, gear fitting and a safety briefing at the meeting point.&quot;],[&quot;20 min&quot;,&quot;Skills warm-up&quot;,&quot;Technique basics matched to your group’s experience.&quot;],[&quot;45 min&quot;,A.n+&quot; in &quot;+e.place.split(&quot; &quot;)[0],&quot;The main event, with regular stops for photos, water and snacks.&quot;],[e.dur,&quot;Wrap up&quot;,&quot;Back at the meeting point with recommendations for your next trip.&quot;]];
+  var html=
+    &#x27;&lt;nav class=&quot;crumbs&quot; aria-label=&quot;Breadcrumb&quot;&gt;&lt;a href=&quot;#home&quot; data-go=&quot;home&quot;&gt;Home&lt;/a&gt;&lt;span&gt;/&lt;/span&gt;&lt;a href=&quot;#search&quot; data-go=&quot;search&quot; data-region=&quot;&#x27;+e.r+&#x27;&quot;&gt;&#x27;+R.n+&#x27;&lt;/a&gt;&lt;span&gt;/&lt;/span&gt;&lt;a href=&quot;#search&quot; data-go=&quot;search&quot; data-act=&quot;&#x27;+e.a+&#x27;&quot;&gt;&#x27;+A.n+&#x27;&lt;/a&gt;&lt;/nav&gt;&#x27;+
+    &#x27;&lt;div class=&quot;gallery&quot;&gt;&#x27;+photo(e.id,A.g,e.t)+photo(e.id+&quot;-2&quot;,A.g,&quot;&quot;)+photo(e.id+&quot;-3&quot;,A.g,&quot;&quot;)+photo(e.id+&quot;-4&quot;,A.g,&quot;&quot;)+&#x27;&lt;div style=&quot;position:relative&quot;&gt;&#x27;+photo(e.id+&quot;-5&quot;,A.g,&quot;&quot;,&quot;g5&quot;)+&#x27;&lt;button class=&quot;btn btn-sm more&quot; type=&quot;button&quot; data-toast=&quot;Full photo gallery opens in a lightbox&quot;&gt;See all photos&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;&#x27;+
+    &#x27;&lt;div class=&quot;detail&quot;&gt;&#x27;+
+      &#x27;&lt;div&gt;&#x27;+
+        &#x27;&lt;div class=&quot;d-head&quot;&gt;&lt;h1&gt;&#x27;+esc(e.t)+&#x27;&lt;/h1&gt;&#x27;+
+          &#x27;&lt;div class=&quot;d-sub&quot;&gt;&lt;span&gt;&#x27;+stars(e.rt)+&#x27;&lt;b style=&quot;color:var(--ink)&quot;&gt;&#x27;+e.rt.toFixed(1)+&#x27;&lt;/b&gt;&lt;a href=&quot;#reviews&quot; data-scroll=&quot;reviews&quot;&gt;&#x27;+e.rv+&#x27; reviews&lt;/a&gt;&lt;/span&gt;&lt;span&gt;&#x27;+IC.pin+esc(e.place)+&#x27;&lt;/span&gt;&#x27;+(e.inst?&#x27;&lt;span class=&quot;tag instant&quot;&gt;&#x27;+IC.bolt+&#x27;Instant book&lt;/span&gt;&#x27;:&quot;&quot;)+&#x27;&lt;/div&gt;&lt;/div&gt;&#x27;+
+        &#x27;&lt;dl class=&quot;facts&quot;&gt;&#x27;+
+          &#x27;&lt;div class=&quot;fact&quot;&gt;&#x27;+IC.clock+&#x27;&lt;dt&gt;Duration&lt;/dt&gt;&lt;dd&gt;&#x27;+e.dur+&#x27;&lt;/dd&gt;&lt;/div&gt;&#x27;+
+          &#x27;&lt;div class=&quot;fact&quot;&gt;&#x27;+IC.level+&#x27;&lt;dt&gt;Skill level&lt;/dt&gt;&lt;dd&gt;&#x27;+e.lv+&#x27;&lt;/dd&gt;&lt;/div&gt;&#x27;+
+          &#x27;&lt;div class=&quot;fact&quot;&gt;&#x27;+IC.users+&#x27;&lt;dt&gt;Group size&lt;/dt&gt;&lt;dd&gt;Up to &#x27;+e.grp+&#x27;&lt;/dd&gt;&lt;/div&gt;&#x27;+
+          &#x27;&lt;div class=&quot;fact&quot;&gt;&#x27;+IC.lang+&#x27;&lt;dt&gt;Language&lt;/dt&gt;&lt;dd&gt;English, Spanish&lt;/dd&gt;&lt;/div&gt;&#x27;+
+        &#x27;&lt;/dl&gt;&#x27;+
+        &#x27;&lt;section class=&quot;d-sec&quot;&gt;&lt;h2&gt;About this experience&lt;/h2&gt;&lt;p class=&quot;big&quot;&gt;&#x27;+desc+&#x27;&lt;/p&gt;&lt;p&gt;You should be comfortable being active for the full duration. Your guide will adjust the pace to the group. Ages &#x27;+(e.lv===&quot;Advanced&quot;?&quot;18&quot;:&quot;10&quot;)+&#x27; and up.&lt;/p&gt;&lt;/section&gt;&#x27;+
+        &#x27;&lt;section class=&quot;d-sec&quot;&gt;&lt;h2&gt;What’s included&lt;/h2&gt;&lt;ul class=&quot;incl&quot;&gt;&#x27;+INCL[e.a].map(function(t){return &#x27;&lt;li class=&quot;y&quot;&gt;&#x27;+IC.check+t+&#x27;&lt;/li&gt;&#x27;}).join(&quot;&quot;)+NOTINCL.map(function(t){return &#x27;&lt;li class=&quot;x&quot;&gt;&#x27;+IC.x+t+&#x27;&lt;/li&gt;&#x27;}).join(&quot;&quot;)+&#x27;&lt;/ul&gt;&lt;/section&gt;&#x27;+
+        &#x27;&lt;section class=&quot;d-sec&quot;&gt;&lt;h2&gt;Itinerary&lt;/h2&gt;&lt;ol class=&quot;itin&quot;&gt;&#x27;+steps.map(function(s){return &#x27;&lt;li&gt;&lt;time&gt;&#x27;+s[0]+&#x27;&lt;/time&gt;&lt;div&gt;&lt;h3&gt;&#x27;+s[1]+&#x27;&lt;/h3&gt;&lt;p&gt;&#x27;+s[2]+&#x27;&lt;/p&gt;&lt;/div&gt;&lt;/li&gt;&#x27;}).join(&quot;&quot;)+&#x27;&lt;/ol&gt;&lt;/section&gt;&#x27;+
+        &#x27;&lt;section class=&quot;d-sec&quot;&gt;&lt;h2&gt;Your guide&lt;/h2&gt;&lt;div class=&quot;guide-card&quot;&gt;&lt;span class=&quot;av lg&quot;&gt;&#x27;+initials(e.gd)+&#x27;&lt;/span&gt;&lt;div&gt;&lt;h3&gt;&#x27;+e.gd+&#x27;&lt;/h3&gt;&lt;div class=&quot;meta&quot;&gt;&#x27;+G.yrs+&#x27; years guiding · &#x27;+G.trips.toLocaleString(&quot;en-US&quot;)+&#x27; trips led&lt;/div&gt;&lt;p&gt;&#x27;+G.bio+&#x27;&lt;/p&gt;&lt;p style=&quot;font-size:14px;color:var(--muted)&quot;&gt;&#x27;+G.cert+&#x27;&lt;/p&gt;&lt;button class=&quot;btn btn-ghost btn-sm&quot; type=&quot;button&quot; data-toast=&quot;Messaging opens after sign-in&quot;&gt;Message &#x27;+e.gd.split(&quot; &quot;)[0]+&#x27;&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;&#x27;+
+        &#x27;&lt;section class=&quot;d-sec&quot; id=&quot;reviews&quot;&gt;&lt;h2&gt;Reviews&lt;/h2&gt;&#x27;+
+          &#x27;&lt;div class=&quot;rev-sum&quot;&gt;&lt;div class=&quot;rev-score&quot;&gt;&#x27;+e.rt.toFixed(1)+&#x27;&lt;small&gt;&#x27;+stars(e.rt)+&#x27;&lt;br&gt;&#x27;+e.rv+&#x27; verified reviews&lt;/small&gt;&lt;/div&gt;&#x27;+
+          &#x27;&lt;div class=&quot;bars&quot;&gt;&#x27;+[[&quot;Guide&quot;,4.9],[&quot;Value&quot;,4.6],[&quot;Safety&quot;,5],[&quot;Scenery&quot;,4.8]].map(function(b){return &#x27;&lt;div class=&quot;bar&quot;&gt;&lt;span&gt;&#x27;+b[0]+&#x27;&lt;/span&gt;&lt;i&gt;&lt;b style=&quot;width:&#x27;+(b[1]/5*100)+&#x27;%&quot;&gt;&lt;/b&gt;&lt;/i&gt;&lt;span&gt;&#x27;+b[1].toFixed(1)+&#x27;&lt;/span&gt;&lt;/div&gt;&#x27;}).join(&quot;&quot;)+&#x27;&lt;/div&gt;&lt;/div&gt;&#x27;+
+          &#x27;&lt;div class=&quot;reviews&quot;&gt;&#x27;+[[&quot;Priya N.&quot;,&quot;October 2026&quot;,&quot;The pace was perfect for our kids and &quot;+e.gd.split(&quot; &quot;)[0]+&quot; knew every plant and rock. Already planning the next one.&quot;],[&quot;Daniel K.&quot;,&quot;September 2026&quot;,&quot;Well organised from booking to the end. Gear was in great shape and the group felt small.&quot;],[&quot;Marisol T.&quot;,&quot;August 2026&quot;,&quot;Exactly as described. The meeting point was easy to find and the photos afterwards were a lovely touch.&quot;],[&quot;Ben W.&quot;,&quot;July 2026&quot;,&quot;Clear safety briefing, great stories, beautiful spot. Worth every dollar.&quot;]].map(function(r){return &#x27;&lt;article class=&quot;review&quot;&gt;&lt;header&gt;&lt;span class=&quot;av&quot;&gt;&#x27;+initials(r[0])+&#x27;&lt;/span&gt;&lt;div&gt;&lt;b&gt;&#x27;+r[0]+&#x27;&lt;/b&gt;&#x27;+r[1]+&#x27;&lt;/div&gt;&lt;/header&gt;&#x27;+stars(5)+&#x27;&lt;p&gt;&#x27;+r[2]+&#x27;&lt;/p&gt;&lt;/article&gt;&#x27;}).join(&quot;&quot;)+&#x27;&lt;/div&gt;&#x27;+
+          &#x27;&lt;p style=&quot;margin-top:18px&quot;&gt;&lt;button class=&quot;btn btn-ghost&quot; type=&quot;button&quot; data-toast=&quot;All reviews open in a full list&quot;&gt;Show all &#x27;+e.rv+&#x27; reviews&lt;/button&gt;&lt;/p&gt;&lt;/section&gt;&#x27;+
+        &#x27;&lt;section class=&quot;d-sec&quot;&gt;&lt;h2&gt;Meeting point&lt;/h2&gt;&lt;div class=&quot;meet&quot;&gt;&lt;div&gt;&lt;p&gt;&lt;b&gt;&#x27;+esc(e.place)+&#x27;&lt;/b&gt;&lt;br&gt;Exact location and parking details are sent with your confirmation.&lt;/p&gt;&lt;p style=&quot;color:var(--muted)&quot;&gt;Plan to arrive 15 minutes early.&lt;/p&gt;&lt;/div&gt;&lt;div class=&quot;map&quot;&gt;&#x27;+renderMap([e]).replace(&#x27;class=&quot;pin&quot;&#x27;,&#x27;class=&quot;pin&quot; tabindex=&quot;-1&quot;&#x27;)+&#x27;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;&#x27;+
+        &#x27;&lt;section class=&quot;d-sec&quot;&gt;&lt;h2&gt;Cancellation policy&lt;/h2&gt;&lt;p&gt;Cancel up to 24 hours before the start time for a full refund. If weather makes the trip unsafe, your guide will reschedule or refund you in full.&lt;/p&gt;&lt;/section&gt;&#x27;+
+      &#x27;&lt;/div&gt;&#x27;+
+      &#x27;&lt;aside class=&quot;book&quot; data-book aria-label=&quot;Booking&quot;&gt;&#x27;+bookingHTML(e)+&#x27;&lt;/aside&gt;&#x27;+
+    &#x27;&lt;/div&gt;&#x27;+
+    &#x27;&lt;div class=&quot;mbar&quot;&gt;&lt;div&gt;&lt;span class=&quot;p&quot;&gt;&#x27;+money(e.p)+&#x27;&lt;/span&gt;&lt;small&gt;per person · &#x27;+e.rt.toFixed(1)+&#x27; ★&lt;/small&gt;&lt;/div&gt;&lt;button class=&quot;btn &#x27;+(e.inst?&quot;btn-green&quot;:&quot;btn-primary&quot;)+&#x27;&quot; type=&quot;button&quot; data-book-open&gt;Check availability&lt;/button&gt;&lt;/div&gt;&#x27;+
+    &#x27;&lt;div class=&quot;scrim&quot; data-book-scrim&gt;&lt;/div&gt;&#x27;;
+  $(&quot;[data-detail]&quot;).innerHTML=html;
+  var g5=$(&quot;.g5&quot;);if(g5){g5.style.position=&quot;absolute&quot;;g5.style.inset=&quot;0&quot;}
+  hydrate($(&quot;[data-detail]&quot;));
+}
+function rerenderBook(){var e=byId(S.id),b=$(&quot;[data-book]&quot;);if(b)b.innerHTML=bookingHTML(e)}
+
+/* ---------------- checkout ---------------- */
+function renderCheckout(){
+  var e=byId(S.book.id||S.id),B=S.book,total=e.p*B.guests;
+  var fields=function(id,label,type,ac,full,hint){return &#x27;&lt;div class=&quot;field&#x27;+(full?&quot; full&quot;:&quot;&quot;)+&#x27;&quot;&gt;&lt;label for=&quot;&#x27;+id+&#x27;&quot;&gt;&#x27;+label+&#x27;&lt;/label&gt;&lt;input id=&quot;&#x27;+id+&#x27;&quot; type=&quot;&#x27;+type+&#x27;&quot;&#x27;+(ac?&#x27; autocomplete=&quot;&#x27;+ac+&#x27;&quot;&#x27;:&quot;&quot;)+&#x27; data-req&gt;&lt;div class=&quot;err&quot;&gt;Enter your &#x27;+label.toLowerCase()+&#x27;&lt;/div&gt;&#x27;+(hint?&#x27;&lt;div class=&quot;hint&quot;&gt;&#x27;+hint+&#x27;&lt;/div&gt;&#x27;:&quot;&quot;)+&#x27;&lt;/div&gt;&#x27;};
+  $(&quot;[data-checkout]&quot;).innerHTML=
+    &#x27;&lt;nav class=&quot;crumbs&quot;&gt;&lt;a href=&quot;#experience&quot; data-go=&quot;experience&quot; data-id=&quot;&#x27;+e.id+&#x27;&quot;&gt;Back to experience&lt;/a&gt;&lt;/nav&gt;&#x27;+
+    &#x27;&lt;div class=&quot;co&quot; style=&quot;padding-top:8px&quot;&gt;&#x27;+
+      &#x27;&lt;div&gt;&#x27;+
+        &#x27;&lt;h1&gt;Confirm and pay&lt;/h1&gt;&lt;p class=&quot;co-lede&quot;&gt;&#x27;+(e.inst?&quot;Your spot is confirmed as soon as you pay.&quot;:&quot;Your guide reviews requests within 24 hours. You’re charged only if they accept.&quot;)+&#x27;&lt;/p&gt;&#x27;+
+        &#x27;&lt;form data-co novalidate&gt;&#x27;+
+        &#x27;&lt;div class=&quot;panel&quot;&gt;&lt;h2&gt;&lt;span class=&quot;num&quot;&gt;1&lt;/span&gt;Contact details&lt;/h2&gt;&lt;div class=&quot;fields&quot;&gt;&#x27;+fields(&quot;c-first&quot;,&quot;First name&quot;,&quot;text&quot;,&quot;given-name&quot;)+fields(&quot;c-last&quot;,&quot;Last name&quot;,&quot;text&quot;,&quot;family-name&quot;)+fields(&quot;c-email&quot;,&quot;Email&quot;,&quot;email&quot;,&quot;email&quot;,false,&quot;We’ll send your confirmation here&quot;)+fields(&quot;c-phone&quot;,&quot;Mobile phone&quot;,&quot;tel&quot;,&quot;tel&quot;,false,&quot;For day-of updates from your guide&quot;)+&#x27;&lt;/div&gt;&lt;/div&gt;&#x27;+
+        &#x27;&lt;div class=&quot;panel&quot;&gt;&lt;h2&gt;&lt;span class=&quot;num&quot;&gt;2&lt;/span&gt;About your group&lt;/h2&gt;&lt;div class=&quot;fields&quot;&gt;&#x27;+
+          &#x27;&lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;c-level&quot;&gt;Experience level&lt;/label&gt;&lt;select id=&quot;c-level&quot;&gt;&lt;option&gt;First time&lt;/option&gt;&lt;option&gt;Some experience&lt;/option&gt;&lt;option&gt;Very experienced&lt;/option&gt;&lt;/select&gt;&lt;/div&gt;&#x27;+
+          &#x27;&lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;c-guests&quot;&gt;Guests&lt;/label&gt;&lt;input id=&quot;c-guests&quot; type=&quot;text&quot; value=&quot;&#x27;+B.guests+&#x27;&quot; readonly&gt;&lt;/div&gt;&#x27;+
+          &#x27;&lt;div class=&quot;field full&quot;&gt;&lt;label for=&quot;c-notes&quot;&gt;Anything your guide should know? &lt;span style=&quot;font-weight:400;color:var(--muted)&quot;&gt;(optional)&lt;/span&gt;&lt;/label&gt;&lt;textarea id=&quot;c-notes&quot; placeholder=&quot;Injuries, dietary needs, sizes for gear…&quot;&gt;&lt;/textarea&gt;&lt;/div&gt;&#x27;+
+        &#x27;&lt;/div&gt;&lt;/div&gt;&#x27;+
+        &#x27;&lt;div class=&quot;panel&quot;&gt;&lt;h2&gt;&lt;span class=&quot;num&quot;&gt;3&lt;/span&gt;Payment&lt;/h2&gt;&#x27;+
+          &#x27;&lt;div class=&quot;pay-opts&quot; role=&quot;group&quot; aria-label=&quot;Payment method&quot;&gt;&lt;button type=&quot;button&quot; aria-pressed=&quot;true&quot; data-pay&gt;Card&lt;/button&gt;&lt;button type=&quot;button&quot; aria-pressed=&quot;false&quot; data-pay&gt;Apple Pay&lt;/button&gt;&lt;button type=&quot;button&quot; aria-pressed=&quot;false&quot; data-pay&gt;Google Pay&lt;/button&gt;&lt;/div&gt;&#x27;+
+          &#x27;&lt;div class=&quot;fields&quot;&gt;&#x27;+fields(&quot;c-card&quot;,&quot;Card number&quot;,&quot;text&quot;,&quot;cc-number&quot;,true)+fields(&quot;c-exp&quot;,&quot;Expiry&quot;,&quot;text&quot;,&quot;cc-exp&quot;)+fields(&quot;c-cvc&quot;,&quot;Security code&quot;,&quot;text&quot;,&quot;cc-csc&quot;)+fields(&quot;c-zip&quot;,&quot;ZIP code&quot;,&quot;text&quot;,&quot;postal-code&quot;,true)+&#x27;&lt;/div&gt;&lt;/div&gt;&#x27;+
+        &#x27;&lt;button class=&quot;btn &#x27;+(e.inst?&quot;btn-green&quot;:&quot;btn-primary&quot;)+&#x27; btn-block&quot; type=&quot;submit&quot; style=&quot;height:54px;font-size:17px&quot;&gt;&#x27;+(e.inst?&quot;Pay &quot;+money(total):&quot;Send request&quot;)+&#x27;&lt;/button&gt;&#x27;+
+        &#x27;&lt;p class=&quot;legal&quot;&gt;By continuing you agree to the Outdoorsie terms, the guide’s waiver and the cancellation policy.&lt;/p&gt;&#x27;+
+        &#x27;&lt;/form&gt;&#x27;+
+      &#x27;&lt;/div&gt;&#x27;+
+      &#x27;&lt;aside class=&quot;summary&quot;&gt;&#x27;+photo(e.id,ACTS[e.a].g,e.t)+&#x27;&lt;div class=&quot;summary-in&quot;&gt;&lt;h3&gt;&#x27;+esc(e.t)+&#x27;&lt;/h3&gt;&#x27;+
+        &#x27;&lt;ul class=&quot;sum-list&quot;&gt;&lt;li&gt;&#x27;+IC.cal+fmtDate(B.date,true)+&#x27;&lt;/li&gt;&lt;li&gt;&#x27;+IC.clock+B.time+&#x27; · &#x27;+e.dur+&#x27;&lt;/li&gt;&lt;li&gt;&#x27;+IC.users+B.guests+&#x27; guest&#x27;+(B.guests&gt;1?&quot;s&quot;:&quot;&quot;)+&#x27;&lt;/li&gt;&lt;li&gt;&#x27;+IC.pin+esc(e.place)+&#x27;&lt;/li&gt;&lt;/ul&gt;&#x27;+
+        &#x27;&lt;a class=&quot;sum-change&quot; href=&quot;#experience&quot; data-go=&quot;experience&quot; data-id=&quot;&#x27;+e.id+&#x27;&quot;&gt;Change date or guests&lt;/a&gt;&#x27;+
+        &#x27;&lt;div style=&quot;border-top:1px solid var(--line);margin-top:16px;padding-top:14px&quot;&gt;&lt;div class=&quot;total&quot;&gt;&lt;span&gt;&#x27;+money(e.p)+&#x27; × &#x27;+B.guests+&#x27;&lt;/span&gt;&lt;span&gt;&#x27;+money(total)+&#x27;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;total&quot;&gt;&lt;span&gt;Booking fee&lt;/span&gt;&lt;span&gt;$0&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;total grand&quot; style=&quot;margin-bottom:0&quot;&gt;&lt;span&gt;Total (USD)&lt;/span&gt;&lt;span&gt;&#x27;+money(total)+&#x27;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&#x27;+
+        &#x27;&lt;p class=&quot;book-note&quot;&gt;&#x27;+IC.shield+&#x27;&lt;span&gt;Free cancellation until 24 hours before your start time.&lt;/span&gt;&lt;/p&gt;&#x27;+
+      &#x27;&lt;/div&gt;&lt;/aside&gt;&#x27;+
+    &#x27;&lt;/div&gt;&#x27;;
+  hydrate($(&quot;[data-checkout]&quot;));
+}
+function renderConfirmed(){
+  var e=byId(S.book.id),B=S.book,code=&quot;OD-&quot;+(seed(e.id+(B.date?B.date.toDateString():&quot;&quot;))%90000+10000);
+  $(&quot;[data-confirmed]&quot;).innerHTML=&#x27;&lt;div class=&quot;done&quot;&gt;&lt;div class=&quot;done-mark&quot;&gt;&#x27;+IC.check+&#x27;&lt;/div&gt;&#x27;+
+    &#x27;&lt;h1&gt;&#x27;+(e.inst?&quot;You’re booked&quot;:&quot;Request sent&quot;)+&#x27;&lt;/h1&gt;&lt;p class=&quot;lede&quot;&gt;&#x27;+(e.inst?&quot;A confirmation is on its way to your inbox. &quot;:&quot;&quot;+e.gd.split(&quot; &quot;)[0]+&quot; will reply within 24 hours. &quot;)+e.gd.split(&quot; &quot;)[0]+&quot; will be in touch the day before with final details.&lt;/p&gt;&quot;+
+    &#x27;&lt;div class=&quot;panel&quot;&gt;&lt;dl class=&quot;kv&quot;&gt;&lt;dt&gt;Booking&lt;/dt&gt;&lt;dd&gt;&#x27;+code+&#x27;&lt;/dd&gt;&lt;dt&gt;Experience&lt;/dt&gt;&lt;dd&gt;&#x27;+esc(e.t)+&#x27;&lt;/dd&gt;&lt;dt&gt;Date&lt;/dt&gt;&lt;dd&gt;&#x27;+fmtDate(B.date,true)+&#x27;&lt;/dd&gt;&lt;dt&gt;Start time&lt;/dt&gt;&lt;dd&gt;&#x27;+B.time+&#x27;&lt;/dd&gt;&lt;dt&gt;Guests&lt;/dt&gt;&lt;dd&gt;&#x27;+B.guests+&#x27;&lt;/dd&gt;&lt;dt&gt;Paid&lt;/dt&gt;&lt;dd&gt;&#x27;+money(e.p*B.guests)+&#x27;&lt;/dd&gt;&lt;/dl&gt;&lt;/div&gt;&#x27;+
+    &#x27;&lt;div class=&quot;done-actions&quot;&gt;&lt;button class=&quot;btn btn-primary&quot; type=&quot;button&quot; data-toast=&quot;Calendar file downloaded&quot;&gt;Add to calendar&lt;/button&gt;&lt;button class=&quot;btn btn-ghost&quot; type=&quot;button&quot; data-toast=&quot;Messaging opens after sign-in&quot;&gt;Message &#x27;+e.gd.split(&quot; &quot;)[0]+&#x27;&lt;/button&gt;&lt;button class=&quot;btn btn-ghost&quot; type=&quot;button&quot; data-go=&quot;search&quot;&gt;Find another adventure&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;&#x27;;
+}
+
+/* ---------------- routing ---------------- */
+function go(view,opts){
+  opts=opts||{};
+  if(view===&quot;saved&quot;){S.savedOnly=true;view=&quot;search&quot;}
+  else if(view===&quot;search&quot;&amp;&amp;!opts.keepSaved)S.savedOnly=false;
+  if(view===&quot;experience&quot;){S.id=opts.id||S.id||EXP[0].id;renderDetail()}
+  if(view===&quot;search&quot;){renderFilters();renderResults()}
+  if(view===&quot;checkout&quot;){
+    if(!S.book.date){var e=byId(S.id||EXP[0].id);S.book={id:e.id,date:null,time:null,guests:2,month:0};var d=new Date();d.setHours(0,0,0,0);for(var i=1;i&lt;30;i++){d.setDate(d.getDate()+1);if(avail(e,d)){S.book.date=new Date(d);break}}S.book.time=(slots(e,S.book.date).filter(function(s){return s.left&gt;0})[0]||{t:&quot;8:00 am&quot;}).t}
+    renderCheckout();
+  }
+  if(view===&quot;confirmed&quot;)renderConfirmed();
+  S.view=view;
+  $$(&quot;[data-view]&quot;).forEach(function(v){v.classList.toggle(&quot;on&quot;,v.dataset.view===view)});
+  var tab=S.savedOnly?&quot;saved&quot;:(view===&quot;home&quot;?&quot;home&quot;:view===&quot;search&quot;?&quot;search&quot;:&quot;&quot;);
+  $$(&quot;[data-tab]&quot;).forEach(function(t){if(t.dataset.tab===tab)t.setAttribute(&quot;aria-current&quot;,&quot;page&quot;);else t.removeAttribute(&quot;aria-current&quot;)});
+  $$(&quot;[data-nav]&quot;).forEach(function(a){if(view===&quot;search&quot;&amp;&amp;a.dataset.nav===&quot;search&quot;)a.setAttribute(&quot;aria-current&quot;,&quot;page&quot;);else a.removeAttribute(&quot;aria-current&quot;)});
+  closeSheets();
+  if(!opts.noScroll)window.scrollTo(0,0);
+  try{var h=(S.savedOnly?&quot;saved&quot;:view)+(view===&quot;experience&quot;?&quot;-&quot;+S.id:&quot;&quot;);if(location.hash.slice(1)!==h)history.replaceState(null,&quot;&quot;,&quot;#&quot;+h)}catch(err){}
+}
+function closeSheets(){
+  var f=$(&quot;[data-filters]&quot;);if(f)f.classList.remove(&quot;on&quot;);
+  $$(&quot;.scrim&quot;).forEach(function(s){s.classList.remove(&quot;on&quot;)});
+  var b=$(&quot;[data-book]&quot;);if(b)b.classList.remove(&quot;on&quot;);
+  document.body.style.overflow=&quot;&quot;;
+}
+var tt;function toast(msg){var t=$(&quot;[data-toast-box]&quot;);t.textContent=msg;t.classList.add(&quot;on&quot;);clearTimeout(tt);tt=setTimeout(function(){t.classList.remove(&quot;on&quot;)},2600)}
+
+/* ---------------- events ---------------- */
+document.addEventListener(&quot;click&quot;,function(ev){
+  var t=ev.target.closest(&quot;button,a&quot;);if(!t)return;
+  var d=t.dataset;
+  if(d.save){ev.preventDefault();S.saved[d.save]=!S.saved[d.save];$$(&#x27;[data-save=&quot;&#x27;+d.save+&#x27;&quot;]&#x27;).forEach(function(b){b.setAttribute(&quot;aria-pressed&quot;,!!S.saved[d.save])});toast(S.saved[d.save]?&quot;Saved to your list&quot;:&quot;Removed from saved&quot;);if(S.savedOnly)renderResults();return}
+  if(d.toast){ev.preventDefault();toast(d.toast);return}
+  if(d.modal){ev.preventDefault();var m=$(&#x27;[data-modal-box=&quot;&#x27;+d.modal+&#x27;&quot;]&#x27;);m.classList.add(&quot;on&quot;);setTimeout(function(){var i=$(&quot;input&quot;,m);if(i)i.focus()},30);return}
+  if(d.modalClose!==undefined){closeModal();return}
+  if(d.signin!==undefined){closeModal();toast(&quot;Signed in as a guest for this preview&quot;);return}
+  if(d.go){
+    ev.preventDefault();
+    if(d.act||d.region){S.f.acts=d.act?[d.act]:[];S.f.regions=d.region&amp;&amp;d.region!==&quot;all&quot;?[d.region]:[];syncSearchSelects()}
+    go(d.go,{id:d.id});return;
+  }
+  if(d.layout){S.layout=d.layout;renderResults();return}
+  if(d.fClear!==undefined){S.f={acts:[],regions:[],levels:[],durs:[],price:400,instant:false};syncSearchSelects();renderFilters();renderResults();return}
+  if(d.filtersOpen!==undefined){$(&quot;[data-filters]&quot;).classList.add(&quot;on&quot;);document.body.style.overflow=&quot;hidden&quot;;return}
+  if(d.filtersClose!==undefined){closeSheets();return}
+  if(d.compact!==undefined){$(&quot;[data-filters]&quot;).classList.add(&quot;on&quot;);document.body.style.overflow=&quot;hidden&quot;;return}
+  if(d.scroll){ev.preventDefault();var el=document.getElementById(d.scroll);if(el)el.scrollIntoView({behavior:&quot;smooth&quot;});return}
+  if(d.day){S.book.date=new Date(d.day);S.book.time=null;var e=byId(S.id),open=slots(e,S.book.date).filter(function(s){return s.left&gt;0});if(open.length===1)S.book.time=open[0].t;rerenderBook();return}
+  if(d.time){S.book.time=d.time;rerenderBook();return}
+  if(d.month){S.book.month=Math.max(0,Math.min(5,S.book.month+(+d.month)));rerenderBook();return}
+  if(d.g){var ex=byId(S.id);S.book.guests=Math.max(1,Math.min(ex.grp,S.book.guests+(+d.g)));rerenderBook();return}
+  if(d.reserve!==undefined){
+    var h=$(&quot;[data-book-hint]&quot;);
+    if(!S.book.date){h.textContent=&quot;Choose a date to continue.&quot;;return}
+    if(!S.book.time){h.textContent=&quot;Choose a start time to continue.&quot;;return}
+    go(&quot;checkout&quot;);return;
+  }
+  if(d.bookOpen!==undefined){$(&quot;[data-book]&quot;).classList.add(&quot;on&quot;);$(&quot;[data-book-scrim]&quot;).classList.add(&quot;on&quot;);document.body.style.overflow=&quot;hidden&quot;;return}
+  if(d.bookClose!==undefined){closeSheets();return}
+  if(d.pay!==undefined){$$(&quot;[data-pay]&quot;).forEach(function(b){b.setAttribute(&quot;aria-pressed&quot;,b===t)});return}
+});
+document.addEventListener(&quot;click&quot;,function(ev){if(ev.target.classList.contains(&quot;scrim&quot;))closeSheets();if(ev.target.classList.contains(&quot;modal&quot;))closeModal()});
+document.addEventListener(&quot;keydown&quot;,function(ev){if(ev.key===&quot;Escape&quot;){closeModal();closeSheets()}});
+function closeModal(){$$(&quot;.modal&quot;).forEach(function(m){m.classList.remove(&quot;on&quot;)})}
+document.addEventListener(&quot;change&quot;,function(ev){
+  var t=ev.target;
+  if(t.dataset.fk){var arr=S.f[t.dataset.fk],i=arr.indexOf(t.value);if(t.checked&amp;&amp;i&lt;0)arr.push(t.value);if(!t.checked&amp;&amp;i&gt;-1)arr.splice(i,1);syncSearchSelects();renderResults()}
+  if(t.matches(&quot;[data-f-instant]&quot;)){S.f.instant=t.checked;renderResults()}
+  if(t.matches(&quot;[data-sort]&quot;)){S.sort=t.value;renderResults()}
+});
+document.addEventListener(&quot;input&quot;,function(ev){if(ev.target.matches(&quot;[data-f-price]&quot;)){S.f.price=+ev.target.value;$(&quot;[data-f-price-out]&quot;).textContent=&quot;Up to &quot;+money(S.f.price);renderResults()}});
+document.addEventListener(&quot;submit&quot;,function(ev){
+  var f=ev.target;
+  if(f.matches(&quot;[data-search]&quot;)){
+    ev.preventDefault();var fd=new FormData(f);
+    S.search={region:fd.get(&quot;region&quot;),act:fd.get(&quot;act&quot;),date:fd.get(&quot;date&quot;),guests:fd.get(&quot;guests&quot;)};
+    S.f.regions=S.search.region!==&quot;all&quot;?[S.search.region]:[];S.f.acts=S.search.act!==&quot;all&quot;?[S.search.act]:[];
+    syncSearchSelects();go(&quot;search&quot;);return;
+  }
+  if(f.matches(&quot;[data-co]&quot;)){
+    ev.preventDefault();var bad=null;
+    $$(&quot;[data-req]&quot;,f).forEach(function(i){var ok=i.value.trim()!==&quot;&quot;;if(i.type===&quot;email&quot;)ok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(i.value.trim());i.closest(&quot;.field&quot;).classList.toggle(&quot;bad&quot;,!ok);if(!ok&amp;&amp;!bad)bad=i});
+    if(bad){bad.focus();return}
+    go(&quot;confirmed&quot;);
+  }
+});
+function syncSearchSelects(){
+  $$(&quot;select[name=region]&quot;).forEach(function(s){s.value=S.f.regions.length===1?S.f.regions[0]:&quot;all&quot;});
+  $$(&quot;select[name=act]&quot;).forEach(function(s){s.value=S.f.acts.length===1?S.f.acts[0]:&quot;all&quot;});
+  $$(&quot;input[name=date]&quot;).forEach(function(s){s.value=S.search.date||&quot;&quot;});
+}
+
+/* ---- preview hooks (preview.html only) ---- */
+var _hydrate=hydrate;
+hydrate=function(root){
+  $$(&quot;.ph[data-img]&quot;,root).forEach(function(el){if(el.querySelector(&quot;.slot-note&quot;))return;var n=document.createElement(&quot;span&quot;);n.className=&quot;slot-note&quot;;n.textContent=&quot;img/&quot;+el.dataset.img+&quot;.jpg&quot;;el.appendChild(n)});
+  _hydrate(root);
+};
+var _go=go;
+go=function(v,o){_go(v,o);try{window.parent.postMessage({od:&quot;view&quot;,view:S.savedOnly?&quot;saved&quot;:S.view},&quot;*&quot;)}catch(e){}};
+document.body.classList.add(&quot;show-slots&quot;);
+window.addEventListener(&quot;message&quot;,function(m){var d=m.data||{};
+  if(d.od===&quot;go&quot;){if(!S.id)S.id=EXP[0].id;go(d.view,{id:d.view===&quot;experience&quot;?S.id:undefined})}
+  if(d.od===&quot;slots&quot;)document.body.classList.toggle(&quot;show-slots&quot;,!!d.on);
+  if(d.od===&quot;theme&quot;){if(d.theme)document.documentElement.setAttribute(&quot;data-theme&quot;,d.theme);else document.documentElement.removeAttribute(&quot;data-theme&quot;)}
+});
+/* ---------------- boot ---------------- */
+fillSelects();renderHome();
+(function(){
+  var h=(location.hash||&quot;&quot;).slice(1);
+  if(h.indexOf(&quot;experience-&quot;)===0)go(&quot;experience&quot;,{id:h.slice(11)});
+  else if([&quot;search&quot;,&quot;saved&quot;,&quot;checkout&quot;].indexOf(h)&gt;-1)go(h);
+})();
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe></div>
+</div>
+<script>
+(function(){
+var DEV={desktop:{w:1440,h:900,label:"Desktop · 1440 px"},tablet:{w:834,h:1112,label:"Tablet · 834 px"},mobile:{w:390,h:844,label:"Mobile · 390 px"}};
+var dev="desktop",stage=document.getElementById("stage"),box=document.getElementById("device"),frame=document.getElementById("site");
+var h=(location.hash||"").slice(1);if(DEV[h])dev=h;
+function fit(){
+  var d=DEV[dev],cs=getComputedStyle(stage),aw=stage.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight),ah=stage.clientHeight-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom);
+  var pad=dev==="desktop"?{x:0,y:28}:dev==="tablet"?{x:44,y:44}:{x:28,y:28};
+  var fullW=d.w+pad.x,s,fullH;
+  if(dev==="desktop"){s=Math.min(1,aw/fullW);fullH=ah/s;}
+  else{fullH=d.h+pad.y;s=Math.min(1,aw/fullW,ah/fullH);}
+  box.className="device "+dev;
+  box.style.width=fullW+"px";box.style.height=fullH+"px";
+  box.style.transform="scale("+s+")";
+  box.style.marginBottom=(-(fullH*(1-s)))+"px";
+  document.getElementById("dim").textContent=d.label+(s<1?" · "+Math.round(s*100)+"%":"");
+  document.querySelectorAll("[data-dev]").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.dev===dev)});
+}
+document.querySelectorAll("[data-dev]").forEach(function(b){b.addEventListener("click",function(){dev=b.dataset.dev;try{history.replaceState(null,"","#"+dev)}catch(e){}fit()})});
+window.addEventListener("hashchange",function(){var x=location.hash.slice(1);if(DEV[x]){dev=x;fit()}});
+window.addEventListener("resize",fit);
+function send(msg){try{frame.contentWindow.postMessage(msg,"*")}catch(e){}}
+document.getElementById("page").addEventListener("change",function(e){send({od:"go",view:e.target.value})});
+document.getElementById("slots").addEventListener("change",function(e){send({od:"slots",on:e.target.checked})});
+window.addEventListener("message",function(m){var d=m.data||{};if(d.od==="view"){var sel=document.getElementById("page");if(sel.querySelector('option[value="'+d.view+'"]'))sel.value=d.view}});
+function syncTheme(){send({od:"theme",theme:document.documentElement.getAttribute("data-theme")||""})}
+new MutationObserver(syncTheme).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+frame.addEventListener("load",function(){syncTheme();send({od:"slots",on:document.getElementById("slots").checked})});
+fit();
+})();
+</script>
+</body>
+</html>
