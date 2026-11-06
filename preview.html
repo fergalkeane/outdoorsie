@@ -52,6 +52,7 @@ select{height:38px;border:1px solid var(--line);border-radius:8px;background:var
   <select id="page" aria-label="Jump to page">
     <option value="home">Home</option>
     <option value="search">Search results</option>
+    <option value="locations">Locations map</option>
     <option value="experience">Experience detail</option>
     <option value="checkout">Checkout</option>
     <option value="confirmed">Booking confirmed</option>
@@ -61,7 +62,7 @@ select{height:38px;border:1px solid var(--line);border-radius:8px;background:var
   <div class="dim" id="dim"></div>
 </div>
 <div class="stage" id="stage">
-  <div class="device desktop" id="device"><iframe id="site" title="Outdoorsie site preview" srcdoc="&lt;!DOCTYPE html&gt;
+  <div class="device desktop" id="device"><iframe id="site" allow="fullscreen" allowfullscreen title="Outdoorsie site preview" srcdoc="&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot;&gt;
@@ -71,6 +72,9 @@ select{height:38px;border:1px solid var(--line);border-radius:8px;background:var
 &lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;&gt;
 &lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin&gt;
 &lt;link href=&quot;https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&amp;family=Figtree:wght@400;500;600;700&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;!-- Leaflet 1.9.4: stylesheet inlined below, script from cdnjs --&gt;
+&lt;style&gt;.leaflet-pane,.leaflet-tile,.leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-tile-container,.leaflet-pane&gt;svg,.leaflet-pane&gt;canvas,.leaflet-zoom-box,.leaflet-image-layer,.leaflet-layer{position:absolute;left:0;top:0;}.leaflet-container{overflow:hidden;}.leaflet-tile,.leaflet-marker-icon,.leaflet-marker-shadow{-webkit-user-select:none;-moz-user-select:none;user-select:none;-webkit-user-drag:none;}.leaflet-tile::selection{background:transparent;}.leaflet-safari .leaflet-tile{image-rendering:-webkit-optimize-contrast;}.leaflet-safari .leaflet-tile-container{width:1600px;height:1600px;-webkit-transform-origin:0 0;}.leaflet-marker-icon,.leaflet-marker-shadow{display:block;}.leaflet-container .leaflet-overlay-pane svg{max-width:none !important;max-height:none !important;}.leaflet-container .leaflet-marker-pane img,.leaflet-container .leaflet-shadow-pane img,.leaflet-container .leaflet-tile-pane img,.leaflet-container img.leaflet-image-layer,.leaflet-container .leaflet-tile{max-width:none !important;max-height:none !important;width:auto;padding:0;}.leaflet-container img.leaflet-tile{mix-blend-mode:plus-lighter;}.leaflet-container.leaflet-touch-zoom{-ms-touch-action:pan-x pan-y;touch-action:pan-x pan-y;}.leaflet-container.leaflet-touch-drag{-ms-touch-action:pinch-zoom;touch-action:none;touch-action:pinch-zoom;}.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom{-ms-touch-action:none;touch-action:none;}.leaflet-container{-webkit-tap-highlight-color:transparent;}.leaflet-container a{-webkit-tap-highlight-color:rgba(51,181,229,0.4);}.leaflet-tile{filter:inherit;visibility:hidden;}.leaflet-tile-loaded{visibility:inherit;}.leaflet-zoom-box{width:0;height:0;-moz-box-sizing:border-box;box-sizing:border-box;z-index:800;}.leaflet-overlay-pane svg{-moz-user-select:none;}.leaflet-pane{z-index:400;}.leaflet-tile-pane{z-index:200;}.leaflet-overlay-pane{z-index:400;}.leaflet-shadow-pane{z-index:500;}.leaflet-marker-pane{z-index:600;}.leaflet-tooltip-pane{z-index:650;}.leaflet-popup-pane{z-index:700;}.leaflet-map-pane canvas{z-index:100;}.leaflet-map-pane svg{z-index:200;}.leaflet-vml-shape{width:1px;height:1px;}.lvml{display:inline-block;position:absolute;}.leaflet-control{position:relative;z-index:800;pointer-events:visiblePainted;pointer-events:auto;}.leaflet-top,.leaflet-bottom{position:absolute;z-index:1000;pointer-events:none;}.leaflet-top{top:0;}.leaflet-right{right:0;}.leaflet-bottom{bottom:0;}.leaflet-left{left:0;}.leaflet-control{float:left;clear:both;}.leaflet-right .leaflet-control{float:right;}.leaflet-top .leaflet-control{margin-top:10px;}.leaflet-bottom .leaflet-control{margin-bottom:10px;}.leaflet-left .leaflet-control{margin-left:10px;}.leaflet-right .leaflet-control{margin-right:10px;}.leaflet-fade-anim .leaflet-popup{opacity:0;-webkit-transition:opacity 0.2s linear;-moz-transition:opacity 0.2s linear;transition:opacity 0.2s linear;}.leaflet-fade-anim .leaflet-map-pane .leaflet-popup{opacity:1;}.leaflet-zoom-animated{-webkit-transform-origin:0 0;-ms-transform-origin:0 0;transform-origin:0 0;}svg.leaflet-zoom-animated{will-change:transform;}.leaflet-zoom-anim .leaflet-zoom-animated{-webkit-transition:-webkit-transform 0.25s cubic-bezier(0,0,0.25,1);-moz-transition:-moz-transform 0.25s cubic-bezier(0,0,0.25,1);transition:transform 0.25s cubic-bezier(0,0,0.25,1);}.leaflet-zoom-anim .leaflet-tile,.leaflet-pan-anim .leaflet-tile{-webkit-transition:none;-moz-transition:none;transition:none;}.leaflet-zoom-anim .leaflet-zoom-hide{visibility:hidden;}.leaflet-interactive{cursor:pointer;}.leaflet-grab{cursor:-webkit-grab;cursor:-moz-grab;cursor:grab;}.leaflet-crosshair,.leaflet-crosshair .leaflet-interactive{cursor:crosshair;}.leaflet-popup-pane,.leaflet-control{cursor:auto;}.leaflet-dragging .leaflet-grab,.leaflet-dragging .leaflet-grab .leaflet-interactive,.leaflet-dragging .leaflet-marker-draggable{cursor:move;cursor:-webkit-grabbing;cursor:-moz-grabbing;cursor:grabbing;}.leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-image-layer,.leaflet-pane&gt;svg path,.leaflet-tile-container{pointer-events:none;}.leaflet-marker-icon.leaflet-interactive,.leaflet-image-layer.leaflet-interactive,.leaflet-pane&gt;svg path.leaflet-interactive,svg.leaflet-image-layer.leaflet-interactive path{pointer-events:visiblePainted;pointer-events:auto;}.leaflet-container{background:#ddd;outline-offset:1px;}.leaflet-container a{color:#0078A8;}.leaflet-zoom-box{border:2px dotted #38f;background:rgba(255,255,255,0.5);}.leaflet-container{font-family:&quot;Helvetica Neue&quot;,Arial,Helvetica,sans-serif;font-size:12px;font-size:0.75rem;line-height:1.5;}.leaflet-bar{box-shadow:0 1px 5px rgba(0,0,0,0.65);border-radius:4px;}.leaflet-bar a{background-color:#fff;border-bottom:1px solid #ccc;width:26px;height:26px;line-height:26px;display:block;text-align:center;text-decoration:none;color:black;}.leaflet-bar a,.leaflet-control-layers-toggle{background-position:50% 50%;background-repeat:no-repeat;display:block;}.leaflet-bar a:hover,.leaflet-bar a:focus{background-color:#f4f4f4;}.leaflet-bar a:first-child{border-top-left-radius:4px;border-top-right-radius:4px;}.leaflet-bar a:last-child{border-bottom-left-radius:4px;border-bottom-right-radius:4px;border-bottom:none;}.leaflet-bar a.leaflet-disabled{cursor:default;background-color:#f4f4f4;color:#bbb;}.leaflet-touch .leaflet-bar a{width:30px;height:30px;line-height:30px;}.leaflet-touch .leaflet-bar a:first-child{border-top-left-radius:2px;border-top-right-radius:2px;}.leaflet-touch .leaflet-bar a:last-child{border-bottom-left-radius:2px;border-bottom-right-radius:2px;}.leaflet-control-zoom-in,.leaflet-control-zoom-out{font:bold 18px &#x27;Lucida Console&#x27;,Monaco,monospace;text-indent:1px;}.leaflet-touch .leaflet-control-zoom-in,.leaflet-touch .leaflet-control-zoom-out{font-size:22px;}.leaflet-control-layers{box-shadow:0 1px 5px rgba(0,0,0,0.4);background:#fff;border-radius:5px;}.leaflet-control-layers-toggle{width:36px;height:36px;}.leaflet-retina .leaflet-control-layers-toggle{background-size:26px 26px;}.leaflet-touch .leaflet-control-layers-toggle{width:44px;height:44px;}.leaflet-control-layers .leaflet-control-layers-list,.leaflet-control-layers-expanded .leaflet-control-layers-toggle{display:none;}.leaflet-control-layers-expanded .leaflet-control-layers-list{display:block;position:relative;}.leaflet-control-layers-expanded{padding:6px 10px 6px 6px;color:#333;background:#fff;}.leaflet-control-layers-scrollbar{overflow-y:scroll;overflow-x:hidden;padding-right:5px;}.leaflet-control-layers-selector{margin-top:2px;position:relative;top:1px;}.leaflet-control-layers label{display:block;font-size:13px;font-size:1.08333em;}.leaflet-control-layers-separator{height:0;border-top:1px solid #ddd;margin:5px -10px 5px -6px;}.leaflet-default-icon-path{}.leaflet-container .leaflet-control-attribution{background:#fff;background:rgba(255,255,255,0.8);margin:0;}.leaflet-control-attribution,.leaflet-control-scale-line{padding:0 5px;color:#333;line-height:1.4;}.leaflet-control-attribution a{text-decoration:none;}.leaflet-control-attribution a:hover,.leaflet-control-attribution a:focus{text-decoration:underline;}.leaflet-attribution-flag{display:inline !important;vertical-align:baseline !important;width:1em;height:0.6669em;}.leaflet-left .leaflet-control-scale{margin-left:5px;}.leaflet-bottom .leaflet-control-scale{margin-bottom:5px;}.leaflet-control-scale-line{border:2px solid #777;border-top:none;line-height:1.1;padding:2px 5px 1px;white-space:nowrap;-moz-box-sizing:border-box;box-sizing:border-box;background:rgba(255,255,255,0.8);text-shadow:1px 1px #fff;}.leaflet-control-scale-line:not(:first-child){border-top:2px solid #777;border-bottom:none;margin-top:-2px;}.leaflet-control-scale-line:not(:first-child):not(:last-child){border-bottom:2px solid #777;}.leaflet-touch .leaflet-control-attribution,.leaflet-touch .leaflet-control-layers,.leaflet-touch .leaflet-bar{box-shadow:none;}.leaflet-touch .leaflet-control-layers,.leaflet-touch .leaflet-bar{border:2px solid rgba(0,0,0,0.2);background-clip:padding-box;}.leaflet-popup{position:absolute;text-align:center;margin-bottom:20px;}.leaflet-popup-content-wrapper{padding:1px;text-align:left;border-radius:12px;}.leaflet-popup-content{margin:13px 24px 13px 20px;line-height:1.3;font-size:13px;font-size:1.08333em;min-height:1px;}.leaflet-popup-content p{margin:17px 0;margin:1.3em 0;}.leaflet-popup-tip-container{width:40px;height:20px;position:absolute;left:50%;margin-top:-1px;margin-left:-20px;overflow:hidden;pointer-events:none;}.leaflet-popup-tip{width:17px;height:17px;padding:1px;margin:-10px auto 0;pointer-events:auto;-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);-ms-transform:rotate(45deg);transform:rotate(45deg);}.leaflet-popup-content-wrapper,.leaflet-popup-tip{background:white;color:#333;box-shadow:0 3px 14px rgba(0,0,0,0.4);}.leaflet-container a.leaflet-popup-close-button{position:absolute;top:0;right:0;border:none;text-align:center;width:24px;height:24px;font:16px/24px Tahoma,Verdana,sans-serif;color:#757575;text-decoration:none;background:transparent;}.leaflet-container a.leaflet-popup-close-button:hover,.leaflet-container a.leaflet-popup-close-button:focus{color:#585858;}.leaflet-popup-scrolled{overflow:auto;}.leaflet-oldie .leaflet-popup-content-wrapper{-ms-zoom:1;}.leaflet-oldie .leaflet-popup-tip{width:24px;margin:0 auto;-ms-filter:&quot;progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678,M12=0.70710678,M21=-0.70710678,M22=0.70710678)&quot;;filter:progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678,M12=0.70710678,M21=-0.70710678,M22=0.70710678);}.leaflet-oldie .leaflet-control-zoom,.leaflet-oldie .leaflet-control-layers,.leaflet-oldie .leaflet-popup-content-wrapper,.leaflet-oldie .leaflet-popup-tip{border:1px solid #999;}.leaflet-div-icon{background:#fff;border:1px solid #666;}.leaflet-tooltip{position:absolute;padding:6px;background-color:#fff;border:1px solid #fff;border-radius:3px;color:#222;white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;pointer-events:none;box-shadow:0 1px 3px rgba(0,0,0,0.4);}.leaflet-tooltip.leaflet-interactive{cursor:pointer;pointer-events:auto;}.leaflet-tooltip-top:before,.leaflet-tooltip-bottom:before,.leaflet-tooltip-left:before,.leaflet-tooltip-right:before{position:absolute;pointer-events:none;border:6px solid transparent;background:transparent;content:&quot;&quot;;}.leaflet-tooltip-bottom{margin-top:6px;}.leaflet-tooltip-top{margin-top:-6px;}.leaflet-tooltip-bottom:before,.leaflet-tooltip-top:before{left:50%;margin-left:-6px;}.leaflet-tooltip-top:before{bottom:0;margin-bottom:-12px;border-top-color:#fff;}.leaflet-tooltip-bottom:before{top:0;margin-top:-12px;margin-left:-6px;border-bottom-color:#fff;}.leaflet-tooltip-left{margin-left:-6px;}.leaflet-tooltip-right{margin-left:6px;}.leaflet-tooltip-left:before,.leaflet-tooltip-right:before{top:50%;margin-top:-6px;}.leaflet-tooltip-left:before{right:0;margin-right:-12px;border-left-color:#fff;}.leaflet-tooltip-right:before{left:0;margin-left:-12px;border-right-color:#fff;}@media print{.leaflet-control{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}&lt;/style&gt;
+&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js&quot;&gt;&lt;/script&gt;
 &lt;!--
   PHOTOGRAPHY
   Every photo is loaded from img/&lt;name&gt;.jpg. Until a file exists, a tinted
@@ -113,6 +117,7 @@ select{height:38px;border:1px solid var(--line);border-radius:8px;background:var
   color-scheme:dark;
 }
 *,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 80px);-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--body);-webkit-font-smoothing:antialiased}
@@ -163,6 +168,15 @@ body::before{content:&quot;&quot;;position:fixed;inset:0 0 auto;height:env(safe-
 .btn-sm{height:36px;padding:0 14px;font-size:14px}
 .btn-block{width:100%}
 .hdr .btn-signin{height:38px}
+.guest-note{font-size:13px;color:var(--muted);text-align:center;margin:8px 0 0}
+.acct{position:relative}
+.acct-btn{display:flex;align-items:center;gap:8px;height:40px;padding:0 12px 0 4px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-weight:600;font-size:14px}
+.acct-btn:hover{background:var(--surface-2)}
+.acct-btn .av{width:30px;height:30px;font-size:12px}
+.acct-menu{position:absolute;right:0;top:calc(100% + 8px);min-width:220px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:6px;z-index:70}
+.acct-menu button{display:block;width:100%;text-align:left;border:0;background:none;padding:10px 12px;border-radius:var(--r-sm);font-size:15px}
+.acct-menu button:hover{background:var(--surface-2)}
+.acct-who{margin:0;padding:10px 12px 8px;font-size:13px;color:var(--muted);border-bottom:1px solid var(--line);margin-bottom:4px}
 
 /* ---------- hero ---------- */
 .hero{position:relative;min-height:clamp(540px,78vh,720px);display:flex;align-items:flex-end;color:#fff;--g1:#7FA7C2;--g2:#36533F}
@@ -364,8 +378,28 @@ body::before{content:&quot;&quot;;position:fixed;inset:0 0 auto;height:env(safe-
 .review header div{font-size:14px;color:var(--muted)}
 .review header b{display:block;color:var(--ink);font-size:15px}
 .review p{margin:8px 0 0;font-size:15px}
-.meet{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
-.meet .map{min-height:200px}
+.route-map{height:400px;border-radius:var(--r);border:1px solid var(--line);overflow:hidden;background:color-mix(in srgb,var(--blue) 8%,var(--surface-2));position:relative;z-index:0}
+.route-map.no-tiles{background-color:var(--surface-2);background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:40px 40px}
+.route-map.no-tiles .leaflet-tile-pane{display:none}
+.route-map .leaflet-container{font-family:var(--body)}
+.leaflet-container{background:transparent}
+.route-fallback{display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);padding:20px;text-align:center}
+.route-info{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:20px;margin-top:16px}
+.route-info h3{font:600 14px/1.3 var(--body);color:var(--muted);margin-bottom:4px}
+.route-info p{margin:0;font-size:15px}
+.route-info .big-n{font:600 22px/1.2 var(--display)}
+.legend-row{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:12px;font-size:14px;color:var(--ink-soft)}
+.legend-row span{display:inline-flex;align-items:center;gap:8px}
+.lg-line{width:22px;height:4px;border-radius:2px}
+.lg-dash{width:22px;height:0;border-top:3px dashed var(--slate)}
+.mk{display:flex;align-items:center;justify-content:center;border-radius:50%;color:#fff;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.35);font:700 12px/1 var(--body)}
+.mk svg{width:16px;height:16px}
+.mk-meet{width:34px;height:34px;background:var(--slate)}
+.mk-start{width:22px;height:22px;background:var(--green)}
+.mk-end{width:22px;height:22px;background:#C7362F}
+.leaflet-popup-content{font:14px/1.4 var(--body);margin:10px 14px}
+.leaflet-popup-content b{display:block;font-size:15px}
+:root[data-theme=&quot;dark&quot;] .leaflet-bar a{background:var(--surface);color:var(--ink);border-color:var(--line)}
 
 /* booking card */
 .book{position:sticky;top:92px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden}
@@ -411,6 +445,71 @@ body::before{content:&quot;&quot;;position:fixed;inset:0 0 auto;height:env(safe-
 .book-hint{font-size:13px;color:var(--danger);margin:-6px 0 12px;min-height:0}
 .mbar{display:none}
 .sheet-close{display:none}
+
+/* ---------- locations ---------- */
+.loc{display:grid;grid-template-columns:380px 1fr;height:calc(100vh - 69px - env(safe-area-inset-top,0px));min-height:560px}
+.loc-side{overflow:auto;background:var(--surface);border-right:1px solid var(--line);padding:24px 20px}
+.loc-side h1{font-size:30px}
+.loc-sub{margin:4px 0 0;color:var(--muted)}
+.loc-chips{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 18px}
+.chip.sm{height:36px;padding:0 12px 0 10px;font-size:14px;gap:6px}
+.chip.sm svg{width:17px;height:17px}
+.chip-n{font-size:12px;color:var(--muted);font-weight:600}
+.chip[aria-pressed=&quot;true&quot;] .chip-n{color:rgba(255,255,255,.75)}
+.loc-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.loc-item{display:grid;grid-template-columns:76px 1fr auto;gap:12px;align-items:center;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:12px 6px;border-radius:0}
+.loc-item:hover,.loc-item[aria-current=&quot;true&quot;]{background:var(--surface-2)}
+.loc-item[aria-current=&quot;true&quot;]{box-shadow:inset 3px 0 0 var(--blue)}
+.loc-thumb{width:76px;height:58px;border-radius:var(--r-sm)}
+.loc-thumb::before,.loc-thumb::after{opacity:.8}
+.loc-txt{display:flex;flex-direction:column;min-width:0;font-size:14px;color:var(--muted);line-height:1.35}
+.loc-txt b{color:var(--ink);font-size:15px;font-weight:600}
+.loc-meta{font-size:13px}
+.loc-price{font:600 17px/1 var(--display)}
+.loc-empty{padding:20px 4px;color:var(--muted)}
+.loc-map{position:relative;min-height:0}
+#loc-map{position:absolute;inset:0;background:color-mix(in srgb,var(--blue) 8%,var(--surface-2))}
+#loc-map.no-tiles{background-color:var(--surface-2);background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:40px 40px}
+#loc-map.no-tiles .leaflet-tile-pane{display:none}
+.lpin{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:var(--slate);color:#fff;border:3px solid #fff;box-shadow:0 3px 10px rgba(0,0,0,.35);transition:transform .12s,background .12s}
+.lpin svg{width:18px;height:18px}
+.lpin:hover{transform:scale(1.1)}
+.lpin.on{background:var(--blue);transform:scale(1.15)}
+.loc-pop .leaflet-popup-content-wrapper{padding:0;border-radius:var(--r);overflow:hidden;background:var(--surface);color:var(--ink);box-shadow:0 12px 32px rgba(0,0,0,.28)}
+.loc-pop .leaflet-popup-tip{background:var(--surface)}
+.loc-pop .leaflet-popup-content{margin:0;width:260px!important;font:14px/1.45 var(--body)}
+.loc-pop a.leaflet-popup-close-button{top:8px;right:8px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.92);color:var(--slate);font:20px/26px var(--body);text-align:center;z-index:5}
+.pop-media{position:relative;height:140px}
+.pop-media .ph{position:absolute;inset:0}
+.pop-media .price-tag{font-size:24px;padding:8px 11px 7px}
+.pop-body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:6px}
+.pop-body h3{font-size:18px;line-height:1.2}
+.pop-body .card-meta{font-size:13px;gap:10px}
+.pop-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:4px}
+.pop-foot .btn{padding:0 18px}
+
+/* ---------- map controls ---------- */
+.map-ctl{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.map-ctl .leaflet-bar{display:flex;flex-direction:column;background:var(--surface);overflow:hidden}
+.map-btn{width:36px;height:36px;border:0;background:var(--surface);color:var(--ink);display:flex;align-items:center;justify-content:center;padding:0}
+.map-btn+.map-btn{border-top:1px solid var(--line)}
+.map-btn:hover{background:var(--surface-2)}
+.map-btn svg{width:18px;height:18px}
+.map-types{background:var(--surface);border-radius:var(--r-sm);box-shadow:0 4px 16px rgba(0,0,0,.25);padding:6px;display:flex;flex-direction:column;gap:2px;min-width:150px}
+.map-types button{display:flex;align-items:center;gap:10px;border:0;background:none;padding:6px 8px;border-radius:6px;font:500 14px/1 var(--body);color:var(--ink);text-align:left}
+.map-types button:hover{background:var(--surface-2)}
+.map-types button[aria-pressed=&quot;true&quot;]{color:var(--blue-ink);font-weight:600}
+.map-types button[aria-pressed=&quot;true&quot;] .mt-sw{box-shadow:0 0 0 2px var(--blue)}
+.mt-sw{width:34px;height:26px;border-radius:4px;flex:none;border:1px solid rgba(0,0,0,.12)}
+.mt-map{background:linear-gradient(135deg,transparent 45%,#F6D98C 45% 52%,transparent 52%),linear-gradient(160deg,#EEF0EA 60%,#B9DDF0 60%)}
+.mt-terrain{background:radial-gradient(circle at 35% 40%,#D9C9A3 0 22%,transparent 23%),repeating-radial-gradient(circle at 35% 40%,#C5D8B0 0 3px,#B5CC9C 3px 6px)}
+.mt-satellite{background:radial-gradient(circle at 70% 30%,#5E7A4A 0 25%,transparent 26%),linear-gradient(135deg,#2F4A2C,#3D5C3A 55%,#1F3B52 56%)}
+.map-fs{position:fixed!important;inset:0!important;z-index:300!important;width:auto!important;height:auto!important;border-radius:0!important;border:0!important}
+body.map-fs-on{overflow:hidden}
+.map-fs .leaflet-top{top:env(safe-area-inset-top,0px)}
+.map-fs .leaflet-bottom{bottom:env(safe-area-inset-bottom,0px)}
+#route-map:fullscreen,#loc-map:fullscreen{width:100%;height:100%;border-radius:0}
+:-webkit-full-screen{width:100%;height:100%}
 
 /* ---------- checkout ---------- */
 .co{display:grid;grid-template-columns:1fr 400px;gap:40px;padding:32px 0 64px;align-items:start}
@@ -501,6 +600,14 @@ body::before{content:&quot;&quot;;position:fixed;inset:0 0 auto;height:env(safe-
   .mbar small{display:block;color:var(--muted);font-size:13px;margin-top:3px}
   .view-detail-pad{height:84px}
   .co{grid-template-columns:1fr}
+  .loc{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+  .loc-side{overflow:hidden;border-right:0;border-bottom:1px solid var(--line);padding:12px clamp(16px,4vw,32px)}
+  .loc-side h1{font-size:22px}
+  .loc-sub{display:none}
+  .loc-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:10px calc(-1 * clamp(16px,4vw,32px)) 0;padding:0 clamp(16px,4vw,32px) 2px}
+  .loc-chips::-webkit-scrollbar{display:none}
+  .chip.sm{flex:none}
+  .loc-list{display:none}
   .summary{position:static;order:-1}
   .ftr-grid{grid-template-columns:1fr 1fr}
   .scrim{position:fixed;inset:0;z-index:89;background:rgba(10,20,22,.5);display:none}
@@ -517,7 +624,7 @@ body::before{content:&quot;&quot;;position:fixed;inset:0 0 auto;height:env(safe-
   body{padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}
   .hdr-in{height:58px}
   .logo{font-size:24px}
-  .hdr .btn-signin{display:none}
+  .hdr .btn-signin,.hdr .acct{display:none}
   .hero{min-height:auto;padding-top:120px}
   .hero h1{font-size:54px}
   .search{grid-template-columns:1fr}
@@ -538,16 +645,20 @@ body::before{content:&quot;&quot;;position:fixed;inset:0 0 auto;height:env(safe-
   .incl{grid-template-columns:1fr}
   .reviews{grid-template-columns:1fr}
   .rev-sum{grid-template-columns:1fr;gap:16px}
-  .meet{grid-template-columns:1fr}
+  .route-map{height:300px}
+  .route-info{grid-template-columns:1fr 1fr}
+  .route-info&gt;div:first-child{grid-column:1/-1}
   .fields{grid-template-columns:1fr}
   .kv{grid-template-columns:110px 1fr}
   .ftr-grid{grid-template-columns:1fr 1fr}
   .ftr-grid&gt;div:first-child{grid-column:1/-1}
   .mbar{bottom:calc(64px + env(safe-area-inset-bottom,0px));padding-bottom:12px}
   .filters-foot{bottom:0}
-  .tabs{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:0;right:0;bottom:0;z-index:85;background:var(--pine);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
+  .tabs{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:85;background:var(--pine);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
   .tabs button{border:0;background:none;color:rgba(255,255,255,.72);display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:600;padding:6px 0;border-radius:var(--r-sm)}
   .tabs svg{width:22px;height:22px}
+  .loc{height:calc(100vh - 59px - 64px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));min-height:420px}
+  .v-loc-active .ftr{display:none}
   .tabs button[aria-current=&quot;page&quot;]{color:#fff;background:var(--green)}
   .toast{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
   .modal{align-items:flex-end;padding:0}
@@ -571,12 +682,22 @@ body::before{content:&quot;&quot;;position:fixed;inset:0 0 auto;height:env(safe-
     &lt;/a&gt;
     &lt;nav class=&quot;nav&quot; aria-label=&quot;Main&quot;&gt;
       &lt;a href=&quot;#search&quot; data-go=&quot;search&quot; data-nav=&quot;search&quot;&gt;Experiences&lt;/a&gt;
-      &lt;a href=&quot;#search&quot; data-go=&quot;search&quot; data-region=&quot;all&quot; data-nav=&quot;regions&quot;&gt;Locations&lt;/a&gt;
+      &lt;a href=&quot;#locations&quot; data-go=&quot;locations&quot; data-nav=&quot;locations&quot;&gt;Locations&lt;/a&gt;
       &lt;a href=&quot;#guides&quot; data-toast=&quot;Guide sign-up opens with the next release&quot;&gt;Become a guide&lt;/a&gt;
     &lt;/nav&gt;
     &lt;div class=&quot;hdr-right&quot;&gt;
       &lt;button class=&quot;icon-btn&quot; type=&quot;button&quot; data-go=&quot;saved&quot; aria-label=&quot;Saved experiences&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
       &lt;button class=&quot;btn btn-primary btn-sm btn-signin&quot; type=&quot;button&quot; data-modal=&quot;signin&quot;&gt;Sign in&lt;/button&gt;
+      &lt;div class=&quot;acct&quot; data-acct hidden&gt;
+        &lt;button class=&quot;acct-btn&quot; type=&quot;button&quot; data-acct-toggle aria-expanded=&quot;false&quot; aria-haspopup=&quot;true&quot;&gt;&lt;span class=&quot;av&quot; data-acct-av&gt;G&lt;/span&gt;&lt;span data-acct-name&gt;Guest&lt;/span&gt;&lt;/button&gt;
+        &lt;div class=&quot;acct-menu&quot; data-acct-menu hidden&gt;
+          &lt;p class=&quot;acct-who&quot; data-acct-who&gt;Browsing as a guest&lt;/p&gt;
+          &lt;button type=&quot;button&quot; data-toast=&quot;Your bookings will appear here&quot;&gt;My bookings&lt;/button&gt;
+          &lt;button type=&quot;button&quot; data-go=&quot;saved&quot;&gt;Saved experiences&lt;/button&gt;
+          &lt;button type=&quot;button&quot; data-guest-upgrade data-modal=&quot;signin&quot;&gt;Create an account&lt;/button&gt;
+          &lt;button type=&quot;button&quot; data-signout&gt;Sign out&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/header&gt;
@@ -711,6 +832,19 @@ body::before{content:&quot;&quot;;position:fixed;inset:0 0 auto;height:env(safe-
   &lt;div class=&quot;view-detail-pad&quot;&gt;&lt;/div&gt;
 &lt;/section&gt;
 
+&lt;!-- ======================= LOCATIONS ======================= --&gt;
+&lt;section class=&quot;view&quot; id=&quot;v-locations&quot; data-view=&quot;locations&quot;&gt;
+  &lt;div class=&quot;loc&quot;&gt;
+    &lt;aside class=&quot;loc-side&quot;&gt;
+      &lt;h1&gt;Locations&lt;/h1&gt;
+      &lt;p class=&quot;loc-sub&quot; data-loc-count&gt;&lt;/p&gt;
+      &lt;div class=&quot;loc-chips&quot; role=&quot;group&quot; aria-label=&quot;Filter by experience type&quot; data-loc-chips&gt;&lt;/div&gt;
+      &lt;ul class=&quot;loc-list&quot; data-loc-list&gt;&lt;/ul&gt;
+    &lt;/aside&gt;
+    &lt;div class=&quot;loc-map&quot;&gt;&lt;div id=&quot;loc-map&quot; role=&quot;region&quot; aria-label=&quot;Map of experiences across California&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+
 &lt;!-- ======================= CHECKOUT ======================= --&gt;
 &lt;section class=&quot;view&quot; id=&quot;v-checkout&quot; data-view=&quot;checkout&quot;&gt;
   &lt;div class=&quot;wrap&quot; data-checkout&gt;&lt;/div&gt;
@@ -729,7 +863,7 @@ body::before{content:&quot;&quot;;position:fixed;inset:0 0 auto;height:env(safe-
         &lt;a class=&quot;logo&quot; href=&quot;#home&quot; data-go=&quot;home&quot;&gt;&lt;svg viewBox=&quot;0 0 32 32&quot; fill=&quot;none&quot; aria-hidden=&quot;true&quot; style=&quot;color:#fff&quot;&gt;&lt;circle cx=&quot;16&quot; cy=&quot;16&quot; r=&quot;13&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;3.2&quot;/&gt;&lt;path d=&quot;M6 21l6.5-7 4 4.2 3-3L26 21&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;3&quot; stroke-linejoin=&quot;round&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;utdoorsie&lt;/a&gt;
         &lt;p style=&quot;margin:14px 0 0;max-width:30ch&quot;&gt;Guided outdoor experiences with local experts. Based in Sacramento, California.&lt;/p&gt;
       &lt;/div&gt;
-      &lt;div&gt;&lt;h4&gt;Explore&lt;/h4&gt;&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;#search&quot; data-go=&quot;search&quot;&gt;All experiences&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;#search&quot; data-go=&quot;search&quot; data-act=&quot;hiking&quot;&gt;Hiking&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;#search&quot; data-go=&quot;search&quot; data-act=&quot;surfing&quot;&gt;Surfing&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;#search&quot; data-go=&quot;search&quot; data-act=&quot;skiing&quot;&gt;Skiing&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;
+      &lt;div&gt;&lt;h4&gt;Explore&lt;/h4&gt;&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;#search&quot; data-go=&quot;search&quot;&gt;All experiences&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;#locations&quot; data-go=&quot;locations&quot;&gt;Locations map&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;#search&quot; data-go=&quot;search&quot; data-act=&quot;hiking&quot;&gt;Hiking&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;#search&quot; data-go=&quot;search&quot; data-act=&quot;surfing&quot;&gt;Surfing&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;#search&quot; data-go=&quot;search&quot; data-act=&quot;skiing&quot;&gt;Skiing&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;
       &lt;div&gt;&lt;h4&gt;Guides&lt;/h4&gt;&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;#guides&quot; data-go=&quot;home&quot;&gt;Become a guide&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;#safety&quot; data-toast=&quot;Safety standards page coming soon&quot;&gt;Safety standards&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;#insurance&quot; data-toast=&quot;Insurance page coming soon&quot;&gt;Insurance&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;
       &lt;div&gt;&lt;h4&gt;Support&lt;/h4&gt;&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;#help&quot; data-toast=&quot;Help centre coming soon&quot;&gt;Help centre&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;#cancel&quot; data-toast=&quot;Cancellation policy page coming soon&quot;&gt;Cancellation policy&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;#contact&quot; data-toast=&quot;Contact page coming soon&quot;&gt;Contact us&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;
     &lt;/div&gt;
@@ -739,6 +873,7 @@ body::before{content:&quot;&quot;;position:fixed;inset:0 0 auto;height:env(safe-
 
 &lt;nav class=&quot;tabs&quot; aria-label=&quot;App&quot;&gt;
   &lt;button type=&quot;button&quot; data-go=&quot;home&quot; data-tab=&quot;home&quot; aria-current=&quot;page&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z&quot;/&gt;&lt;/svg&gt;Explore&lt;/button&gt;
+  &lt;button type=&quot;button&quot; data-go=&quot;locations&quot; data-tab=&quot;locations&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14&quot;/&gt;&lt;/svg&gt;Map&lt;/button&gt;
   &lt;button type=&quot;button&quot; data-go=&quot;search&quot; data-tab=&quot;search&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;&gt;&lt;circle cx=&quot;11&quot; cy=&quot;11&quot; r=&quot;7&quot;/&gt;&lt;path d=&quot;M20 20l-3.5-3.5&quot;/&gt;&lt;/svg&gt;Search&lt;/button&gt;
   &lt;button type=&quot;button&quot; data-go=&quot;saved&quot; data-tab=&quot;saved&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z&quot;/&gt;&lt;/svg&gt;Saved&lt;/button&gt;
   &lt;button type=&quot;button&quot; data-modal=&quot;signin&quot; data-tab=&quot;account&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;&gt;&lt;circle cx=&quot;12&quot; cy=&quot;8&quot; r=&quot;4&quot;/&gt;&lt;path d=&quot;M4 21c0-4 3.6-7 8-7s8 3 8 7&quot;/&gt;&lt;/svg&gt;Account&lt;/button&gt;
@@ -758,7 +893,23 @@ body::before{content:&quot;&quot;;position:fixed;inset:0 0 auto;height:env(safe-
     &lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;si-email&quot;&gt;Email&lt;/label&gt;&lt;input id=&quot;si-email&quot; type=&quot;email&quot; autocomplete=&quot;email&quot;&gt;&lt;/div&gt;
     &lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;si-pass&quot;&gt;Password&lt;/label&gt;&lt;input id=&quot;si-pass&quot; type=&quot;password&quot; autocomplete=&quot;current-password&quot;&gt;&lt;/div&gt;
     &lt;button class=&quot;btn btn-primary btn-block&quot; type=&quot;button&quot; data-signin&gt;Sign in&lt;/button&gt;
+    &lt;div class=&quot;or&quot; style=&quot;margin:18px 0 14px&quot;&gt;or&lt;/div&gt;
+    &lt;button class=&quot;btn btn-ghost btn-block&quot; type=&quot;button&quot; data-guest&gt;Continue as guest&lt;/button&gt;
+    &lt;p class=&quot;guest-note&quot;&gt;Browse and book without an account. You can save your details after your first booking.&lt;/p&gt;
     &lt;p style=&quot;text-align:center;font-size:14px;margin:16px 0 0;color:var(--muted)&quot;&gt;New here? &lt;a href=&quot;#signup&quot; data-toast=&quot;Account creation coming soon&quot;&gt;Create an account&lt;/a&gt;&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;modal&quot; data-modal-box=&quot;account&quot; role=&quot;dialog&quot; aria-modal=&quot;true&quot; aria-labelledby=&quot;acct-title&quot;&gt;
+  &lt;div class=&quot;modal-card&quot;&gt;
+    &lt;button class=&quot;icon-btn&quot; type=&quot;button&quot; data-modal-close aria-label=&quot;Close&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;&gt;&lt;path d=&quot;M6 6l12 12M18 6L6 18&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
+    &lt;h2 id=&quot;acct-title&quot; data-acct-title&gt;Guest&lt;/h2&gt;
+    &lt;p data-acct-sub&gt;Browsing as a guest&lt;/p&gt;
+    &lt;div class=&quot;social&quot;&gt;
+      &lt;button class=&quot;btn btn-ghost btn-block&quot; type=&quot;button&quot; data-toast=&quot;Your bookings will appear here&quot;&gt;My bookings&lt;/button&gt;
+      &lt;button class=&quot;btn btn-ghost btn-block&quot; type=&quot;button&quot; data-go=&quot;saved&quot;&gt;Saved experiences&lt;/button&gt;
+      &lt;button class=&quot;btn btn-primary btn-block&quot; type=&quot;button&quot; data-modal=&quot;signin&quot; data-acct-create&gt;Create an account&lt;/button&gt;
+      &lt;button class=&quot;btn btn-ghost btn-block&quot; type=&quot;button&quot; data-signout&gt;Sign out&lt;/button&gt;
+    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&quot;toast&quot; role=&quot;status&quot; aria-live=&quot;polite&quot; data-toast-box&gt;&lt;/div&gt;
@@ -906,7 +1057,7 @@ function hydrate(root){
 }
 
 /* ---------------- state ---------------- */
-var S={view:&quot;home&quot;,id:null,f:{acts:[],regions:[],levels:[],durs:[],price:400,instant:false},sort:&quot;pop&quot;,layout:&quot;grid&quot;,saved:{},savedOnly:false,
+var S={locActs:[],locMarkers:{},view:&quot;home&quot;,id:null,f:{acts:[],regions:[],levels:[],durs:[],price:400,instant:false},sort:&quot;pop&quot;,layout:&quot;grid&quot;,saved:{},savedOnly:false,
   book:{id:null,date:null,time:null,guests:2,month:0},search:{region:&quot;all&quot;,act:&quot;all&quot;,date:&quot;&quot;,guests:&quot;2&quot;}};
 
 /* ---------------- cards ---------------- */
@@ -1068,7 +1219,7 @@ function renderDetail(){
           &#x27;&lt;div class=&quot;bars&quot;&gt;&#x27;+[[&quot;Guide&quot;,4.9],[&quot;Value&quot;,4.6],[&quot;Safety&quot;,5],[&quot;Scenery&quot;,4.8]].map(function(b){return &#x27;&lt;div class=&quot;bar&quot;&gt;&lt;span&gt;&#x27;+b[0]+&#x27;&lt;/span&gt;&lt;i&gt;&lt;b style=&quot;width:&#x27;+(b[1]/5*100)+&#x27;%&quot;&gt;&lt;/b&gt;&lt;/i&gt;&lt;span&gt;&#x27;+b[1].toFixed(1)+&#x27;&lt;/span&gt;&lt;/div&gt;&#x27;}).join(&quot;&quot;)+&#x27;&lt;/div&gt;&lt;/div&gt;&#x27;+
           &#x27;&lt;div class=&quot;reviews&quot;&gt;&#x27;+[[&quot;Priya N.&quot;,&quot;October 2026&quot;,&quot;The pace was perfect for our kids and &quot;+e.gd.split(&quot; &quot;)[0]+&quot; knew every plant and rock. Already planning the next one.&quot;],[&quot;Daniel K.&quot;,&quot;September 2026&quot;,&quot;Well organised from booking to the end. Gear was in great shape and the group felt small.&quot;],[&quot;Marisol T.&quot;,&quot;August 2026&quot;,&quot;Exactly as described. The meeting point was easy to find and the photos afterwards were a lovely touch.&quot;],[&quot;Ben W.&quot;,&quot;July 2026&quot;,&quot;Clear safety briefing, great stories, beautiful spot. Worth every dollar.&quot;]].map(function(r){return &#x27;&lt;article class=&quot;review&quot;&gt;&lt;header&gt;&lt;span class=&quot;av&quot;&gt;&#x27;+initials(r[0])+&#x27;&lt;/span&gt;&lt;div&gt;&lt;b&gt;&#x27;+r[0]+&#x27;&lt;/b&gt;&#x27;+r[1]+&#x27;&lt;/div&gt;&lt;/header&gt;&#x27;+stars(5)+&#x27;&lt;p&gt;&#x27;+r[2]+&#x27;&lt;/p&gt;&lt;/article&gt;&#x27;}).join(&quot;&quot;)+&#x27;&lt;/div&gt;&#x27;+
           &#x27;&lt;p style=&quot;margin-top:18px&quot;&gt;&lt;button class=&quot;btn btn-ghost&quot; type=&quot;button&quot; data-toast=&quot;All reviews open in a full list&quot;&gt;Show all &#x27;+e.rv+&#x27; reviews&lt;/button&gt;&lt;/p&gt;&lt;/section&gt;&#x27;+
-        &#x27;&lt;section class=&quot;d-sec&quot;&gt;&lt;h2&gt;Meeting point&lt;/h2&gt;&lt;div class=&quot;meet&quot;&gt;&lt;div&gt;&lt;p&gt;&lt;b&gt;&#x27;+esc(e.place)+&#x27;&lt;/b&gt;&lt;br&gt;Exact location and parking details are sent with your confirmation.&lt;/p&gt;&lt;p style=&quot;color:var(--muted)&quot;&gt;Plan to arrive 15 minutes early.&lt;/p&gt;&lt;/div&gt;&lt;div class=&quot;map&quot;&gt;&#x27;+renderMap([e]).replace(&#x27;class=&quot;pin&quot;&#x27;,&#x27;class=&quot;pin&quot; tabindex=&quot;-1&quot;&#x27;)+&#x27;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;&#x27;+
+        routeSection(e)+
         &#x27;&lt;section class=&quot;d-sec&quot;&gt;&lt;h2&gt;Cancellation policy&lt;/h2&gt;&lt;p&gt;Cancel up to 24 hours before the start time for a full refund. If weather makes the trip unsafe, your guide will reschedule or refund you in full.&lt;/p&gt;&lt;/section&gt;&#x27;+
       &#x27;&lt;/div&gt;&#x27;+
       &#x27;&lt;aside class=&quot;book&quot; data-book aria-label=&quot;Booking&quot;&gt;&#x27;+bookingHTML(e)+&#x27;&lt;/aside&gt;&#x27;+
@@ -1078,6 +1229,196 @@ function renderDetail(){
   $(&quot;[data-detail]&quot;).innerHTML=html;
   var g5=$(&quot;.g5&quot;);if(g5){g5.style.position=&quot;absolute&quot;;g5.style.inset=&quot;0&quot;}
   hydrate($(&quot;[data-detail]&quot;));
+}
+/* ---------------- meeting point &amp; route map (Leaflet) ----------------
+   meet: [lat,lng,name,directions]  start/end: optional [lat,lng,label]
+   kind: trail | water | road | area   back: true = out-and-back   loop: true = returns to start */
+var ROUTES={
+  &quot;yosemite-hike&quot;:{meet:[37.7456,-119.5874,&quot;Yosemite Village Store&quot;,&quot;Meet by the flagpole outside the store. Park in the Yosemite Village day-use lot.&quot;],kind:&quot;trail&quot;,loop:true,
+    path:[[37.7456,-119.5874],[37.7466,-119.5826],[37.7448,-119.5772],[37.7440,-119.5700],[37.7452,-119.5610],[37.7468,-119.5535],[37.7432,-119.5560],[37.7398,-119.5650],[37.7402,-119.5745],[37.7425,-119.5815],[37.7456,-119.5874]]},
+  &quot;tahoe-climb&quot;:{meet:[38.7948,-120.1458,&quot;Strawberry Lodge&quot;,&quot;Meet in the front lot off Highway 50. We walk to Lovers Leap together.&quot;],kind:&quot;trail&quot;,end:[38.8000,-120.1414,&quot;Lovers Leap crag&quot;],back:true,
+    path:[[38.7948,-120.1458],[38.7962,-120.1447],[38.7975,-120.1436],[38.7988,-120.1424],[38.8000,-120.1414]]},
+  &quot;santa-cruz-surf&quot;:{meet:[36.9631,-122.0243,&quot;Cowell’s Beach stairs&quot;,&quot;Meet at the top of the stairs on West Cliff Drive. Metered parking along the cliff.&quot;],kind:&quot;area&quot;,center:[36.9618,-122.0228],radius:140},
+  &quot;american-river-raft&quot;:{meet:[38.8001,-120.8906,&quot;Coloma outfitter base&quot;,&quot;Check in at the base in Coloma. A shuttle takes you to the Chili Bar put-in.&quot;],kind:&quot;water&quot;,shuttle:true,start:[38.7655,-120.8156,&quot;Chili Bar put-in&quot;],end:[38.8001,-120.8906,&quot;the Coloma take-out&quot;],
+    path:[[38.7655,-120.8156],[38.7690,-120.8260],[38.7720,-120.8360],[38.7790,-120.8450],[38.7850,-120.8560],[38.7905,-120.8660],[38.7955,-120.8760],[38.7985,-120.8840],[38.8001,-120.8906]]},
+  &quot;big-sur-cycle&quot;:{meet:[36.5205,-121.9395,&quot;Point Lobos entrance&quot;,&quot;Meet at the pull-out by the park entrance on Highway 1. Bikes are waiting there.&quot;],kind:&quot;road&quot;,back:true,end:[36.3715,-121.9017,&quot;Bixby Bridge&quot;],
+    path:[[36.5205,-121.9395],[36.5010,-121.9320],[36.4800,-121.9240],[36.4600,-121.9175],[36.4400,-121.9150],[36.4180,-121.9120],[36.3950,-121.9070],[36.3715,-121.9017]]},
+  &quot;tomales-kayak&quot;:{meet:[38.1340,-122.8915,&quot;Heart’s Desire Beach&quot;,&quot;Meet at the boat launch in Tomales Bay State Park. Bring a warm layer.&quot;],kind:&quot;water&quot;,loop:true,
+    path:[[38.1340,-122.8915],[38.1385,-122.8935],[38.1430,-122.8975],[38.1490,-122.9010],[38.1530,-122.8985],[38.1470,-122.8930],[38.1395,-122.8895],[38.1340,-122.8915]]},
+  &quot;mammoth-ski&quot;:{meet:[37.6085,-119.0190,&quot;Tamarack Lodge&quot;,&quot;Meet in the lodge lobby with your touring setup. Beacon check at 7:15.&quot;],kind:&quot;trail&quot;,back:true,end:[37.5835,-119.0045,&quot;Mammoth Crest&quot;],
+    path:[[37.6085,-119.0190],[37.6040,-119.0165],[37.5990,-119.0140],[37.5940,-119.0110],[37.5890,-119.0080],[37.5835,-119.0045]]},
+  &quot;russian-river-canoe&quot;:{meet:[38.6040,-122.8640,&quot;Healdsburg Memorial Beach&quot;,&quot;Meet by the beach parking lot. A van takes you upstream to launch.&quot;],kind:&quot;water&quot;,shuttle:true,start:[38.6590,-122.8230,&quot;Alexander Valley launch&quot;],end:[38.6040,-122.8640,&quot;Memorial Beach&quot;],
+    path:[[38.6590,-122.8230],[38.6520,-122.8280],[38.6440,-122.8330],[38.6370,-122.8400],[38.6300,-122.8450],[38.6220,-122.8510],[38.6150,-122.8560],[38.6090,-122.8610],[38.6040,-122.8640]]},
+  &quot;downieville-mtb&quot;:{meet:[39.5593,-120.8266,&quot;Downieville main street&quot;,&quot;Meet at the shuttle stop by the bridge. The shuttle drives to Packer Saddle.&quot;],kind:&quot;trail&quot;,shuttle:true,start:[39.6230,-120.6500,&quot;Packer Saddle&quot;],end:[39.5593,-120.8266,&quot;Downieville&quot;],
+    path:[[39.6230,-120.6500],[39.6170,-120.6700],[39.6100,-120.6900],[39.6020,-120.7150],[39.5950,-120.7400],[39.5870,-120.7600],[39.5800,-120.7800],[39.5720,-120.7960],[39.5650,-120.8100],[39.5593,-120.8266]]},
+  &quot;joshua-tree-climb&quot;:{meet:[34.0118,-116.1687,&quot;Hidden Valley trailhead&quot;,&quot;Meet at the Hidden Valley picnic area parking. National park entry fee applies.&quot;],kind:&quot;area&quot;,center:[34.0135,-116.1665],radius:220},
+  &quot;marin-run&quot;:{meet:[37.8320,-122.5380,&quot;Rodeo Beach parking&quot;,&quot;Meet at the restrooms by the beach lot. Layers recommended for fog.&quot;],kind:&quot;trail&quot;,loop:true,
+    path:[[37.8320,-122.5380],[37.8290,-122.5345],[37.8270,-122.5310],[37.8285,-122.5270],[37.8325,-122.5240],[37.8360,-122.5255],[37.8385,-122.5300],[37.8370,-122.5345],[37.8340,-122.5370],[37.8320,-122.5380]]},
+  &quot;wilderness-survival&quot;:{meet:[37.7320,-119.5580,&quot;Happy Isles trailhead&quot;,&quot;Meet at the Happy Isles shuttle stop (stop 16) with your pack packed.&quot;],kind:&quot;trail&quot;,back:true,end:[37.7325,-119.5150,&quot;Little Yosemite Valley camp&quot;],
+    path:[[37.7320,-119.5580],[37.7290,-119.5520],[37.7277,-119.5440],[37.7265,-119.5380],[37.7275,-119.5300],[37.7300,-119.5220],[37.7325,-119.5150]]}
+};
+var KIND={trail:{n:&quot;Trail&quot;,c:&quot;#2BAE5F&quot;},water:{n:&quot;Paddle route&quot;,c:&quot;#1A93D0&quot;},road:{n:&quot;Road route&quot;,c:&quot;#E58A2E&quot;},area:{n:&quot;Session area&quot;,c:&quot;#2BAE5F&quot;}};
+function miles(path){var d=0,R=3958.8;for(var i=1;i&lt;path.length;i++){var a=path[i-1],b=path[i],dl=(b[0]-a[0])*Math.PI/180,dn=(b[1]-a[1])*Math.PI/180,x=Math.sin(dl/2)*Math.sin(dl/2)+Math.cos(a[0]*Math.PI/180)*Math.cos(b[0]*Math.PI/180)*Math.sin(dn/2)*Math.sin(dn/2);d+=2*R*Math.atan2(Math.sqrt(x),Math.sqrt(1-x))}return d}
+function routeSection(e){
+  var R=ROUTES[e.id],K=KIND[R.kind],dist=&quot;&quot;;
+  if(R.kind===&quot;area&quot;)dist=&quot;An area about &quot;+Math.round(R.radius*2*3.28/50)*50+&quot; ft across, a short walk from the meeting point&quot;;
+  else{var m=miles(R.path)*(R.back?2:1);dist=m.toFixed(1)+&quot; mi &quot;+(R.loop?&quot;loop&quot;:R.back?&quot;out and back&quot;:&quot;one way&quot;);}
+  var start=R.start?R.start[2]:R.meet[2],end=R.end?R.end[2]:(R.loop?&quot;Back at the meeting point&quot;:R.meet[2]);
+  var gmaps=&quot;https://www.google.com/maps/dir/?api=1&amp;destination=&quot;+R.meet[0]+&quot;,&quot;+R.meet[1];
+  return &#x27;&lt;section class=&quot;d-sec&quot; id=&quot;meeting&quot;&gt;&lt;h2&gt;Meeting point and route&lt;/h2&gt;&#x27;+
+    &#x27;&lt;div class=&quot;route-map&quot; id=&quot;route-map&quot; role=&quot;region&quot; aria-label=&quot;Map of the meeting point and route for &#x27;+esc(e.t)+&#x27;&quot;&gt;&lt;div class=&quot;route-fallback&quot;&gt;Loading map…&lt;/div&gt;&lt;/div&gt;&#x27;+
+    &#x27;&lt;div class=&quot;legend-row&quot;&gt;&lt;span&gt;&lt;span class=&quot;mk mk-meet&quot; style=&quot;width:18px;height:18px;border-width:2px&quot;&gt;&lt;/span&gt;Meeting point&lt;/span&gt;&#x27;+
+      (R.kind===&quot;area&quot;?&#x27;&lt;span&gt;&lt;span class=&quot;lg-line&quot; style=&quot;background:&#x27;+K.c+&#x27;;opacity:.5&quot;&gt;&lt;/span&gt;Session area&lt;/span&gt;&#x27;:&#x27;&lt;span&gt;&lt;span class=&quot;lg-line&quot; style=&quot;background:&#x27;+K.c+&#x27;&quot;&gt;&lt;/span&gt;&#x27;+K.n+&#x27;&lt;/span&gt;&#x27;)+
+      (R.shuttle?&#x27;&lt;span&gt;&lt;span class=&quot;lg-dash&quot;&gt;&lt;/span&gt;Shuttle&lt;/span&gt;&lt;span&gt;&lt;span class=&quot;mk mk-start&quot; style=&quot;width:14px;height:14px;border-width:2px&quot;&gt;&lt;/span&gt;Start&lt;/span&gt;&#x27;:&#x27;&#x27;)+
+      (R.end&amp;&amp;!R.loop&amp;&amp;!(R.end[0]===R.meet[0]&amp;&amp;R.end[1]===R.meet[1])?&#x27;&lt;span&gt;&lt;span class=&quot;mk mk-end&quot; style=&quot;width:14px;height:14px;border-width:2px&quot;&gt;&lt;/span&gt;&#x27;+(R.back?&quot;Turnaround&quot;:&quot;Finish&quot;)+&#x27;&lt;/span&gt;&#x27;:&#x27;&#x27;)+&#x27;&lt;/div&gt;&#x27;+
+    &#x27;&lt;div class=&quot;route-info&quot;&gt;&#x27;+
+      &#x27;&lt;div&gt;&lt;h3&gt;Meeting point&lt;/h3&gt;&lt;p&gt;&lt;b&gt;&#x27;+R.meet[2]+&#x27;&lt;/b&gt;&lt;br&gt;&#x27;+R.meet[3]+&#x27;&lt;/p&gt;&lt;p style=&quot;margin-top:8px&quot;&gt;&lt;a href=&quot;&#x27;+gmaps+&#x27;&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Get directions&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;&#x27;+
+      &#x27;&lt;div&gt;&lt;h3&gt;&#x27;+(R.kind===&quot;area&quot;?&quot;Where you’ll be&quot;:&quot;Distance&quot;)+&#x27;&lt;/h3&gt;&lt;p class=&quot;big-n&quot;&gt;&#x27;+(R.kind===&quot;area&quot;?esc(e.place):dist.split(&quot; &quot;).slice(0,2).join(&quot; &quot;))+&#x27;&lt;/p&gt;&lt;p&gt;&#x27;+(R.kind===&quot;area&quot;?dist:dist.split(&quot; &quot;).slice(2).join(&quot; &quot;))+&#x27;&lt;/p&gt;&lt;/div&gt;&#x27;+
+      &#x27;&lt;div&gt;&lt;h3&gt;Route&lt;/h3&gt;&lt;p&gt;&#x27;+(R.shuttle?&quot;Shuttle to &quot;+start+&quot;, then finish at &quot;+end+&quot;, by the meeting point&quot;:R.kind===&quot;area&quot;?&quot;Lesson area next to the meeting point&quot;:&quot;Starts at the meeting point. &quot;+(R.loop?&quot;Loops back to the start.&quot;:&quot;Turns around at &quot;+end+&quot;.&quot;))+&#x27;&lt;/p&gt;&lt;/div&gt;&#x27;+
+    &#x27;&lt;/div&gt;&lt;p style=&quot;color:var(--muted);font-size:14px;margin-top:14px&quot;&gt;Arrive 15 minutes early. Exact parking details come with your confirmation.&lt;/p&gt;&lt;/section&gt;&#x27;;
+}
+function isDark(){var r=document.documentElement;return r.getAttribute(&quot;data-theme&quot;)===&quot;dark&quot;||(r.getAttribute(&quot;data-theme&quot;)!==&quot;light&quot;&amp;&amp;window.matchMedia&amp;&amp;matchMedia(&quot;(prefers-color-scheme: dark)&quot;).matches)}
+var OSM_ATTR=&#x27;&amp;copy; &lt;a href=&quot;https://www.openstreetmap.org/copyright&quot;&gt;OpenStreetMap&lt;/a&gt; contributors&#x27;;
+var MAPTYPES={
+  map:{n:&quot;Map&quot;,url:function(d){return &quot;https://{s}.basemaps.cartocdn.com/&quot;+(d?&quot;dark_all&quot;:&quot;rastertiles/voyager&quot;)+&quot;/{z}/{x}/{y}{r}.png&quot;},o:{subdomains:&quot;abcd&quot;,maxZoom:19,attribution:OSM_ATTR+&#x27; &amp;copy; &lt;a href=&quot;https://carto.com/attributions&quot;&gt;CARTO&lt;/a&gt;&#x27;}},
+  terrain:{n:&quot;Terrain&quot;,url:function(){return &quot;https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png&quot;},o:{subdomains:&quot;abc&quot;,maxZoom:17,attribution:OSM_ATTR+&#x27;, SRTM &amp;copy; &lt;a href=&quot;https://opentopomap.org&quot;&gt;OpenTopoMap&lt;/a&gt; (CC-BY-SA)&#x27;}},
+  satellite:{n:&quot;Satellite&quot;,url:function(){return &quot;https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}&quot;},o:{maxZoom:19,attribution:&#x27;Imagery &amp;copy; Esri, Maxar, Earthstar Geographics&#x27;}}
+};
+var FS_IN=&#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5&quot;/&gt;&lt;/svg&gt;&#x27;;
+var FS_OUT=&#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5&quot;/&gt;&lt;/svg&gt;&#x27;;
+var LAYERS_IC=&#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M12 3l9 5-9 5-9-5z&quot;/&gt;&lt;path d=&quot;M3 13l9 5 9-5&quot;/&gt;&lt;/svg&gt;&#x27;;
+function fsElement(){return document.fullscreenElement||document.webkitFullscreenElement||null}
+function exitMapFullscreen(){
+  if(fsElement()){(document.exitFullscreen||document.webkitExitFullscreen).call(document)}
+  $$(&quot;.map-fs&quot;).forEach(function(x){x.classList.remove(&quot;map-fs&quot;)});document.body.classList.remove(&quot;map-fs-on&quot;);
+}
+/* adds map-type switcher + fullscreen button to a Leaflet map */
+function setupMap(m,el){
+  var cur=null,ctl;
+  function setType(k){
+    if(cur)m.removeLayer(cur);
+    el.classList.remove(&quot;no-tiles&quot;);
+    var T=MAPTYPES[k];cur=L.tileLayer(T.url(isDark()),T.o).addTo(m);
+    cur.once(&quot;tileerror&quot;,function(){el.classList.add(&quot;no-tiles&quot;)});
+    S.mapType=k;el.dataset.maptype=k;
+    if(ctl)$$(&quot;[data-mt]&quot;,ctl).forEach(function(b){b.setAttribute(&quot;aria-pressed&quot;,b.dataset.mt===k)});
+  }
+  function isFs(){return fsElement()===el||el.classList.contains(&quot;map-fs&quot;)}
+  function syncFs(){
+    var on=isFs(),b=$(&quot;[data-fs]&quot;,ctl);
+    if(b){b.innerHTML=on?FS_OUT:FS_IN;b.title=b.ariaLabel=on?&quot;Exit full screen&quot;:&quot;View full screen&quot;;b.setAttribute(&quot;aria-label&quot;,b.title)}
+    setTimeout(function(){if(S.lmap===m||S.locmap===m)m.invalidateSize()},120);
+  }
+  function toggleFs(){
+    if(isFs()){exitMapFullscreen();syncFs();return}
+    var req=el.requestFullscreen||el.webkitRequestFullscreen,enabled=document.fullscreenEnabled||document.webkitFullscreenEnabled;
+    var cssFs=function(){el.classList.add(&quot;map-fs&quot;);document.body.classList.add(&quot;map-fs-on&quot;);syncFs()};
+    if(req&amp;&amp;enabled){try{var r=req.call(el);if(r&amp;&amp;r.catch)r.catch(cssFs)}catch(err){cssFs()}}else cssFs();
+  }
+  var Ctl=L.Control.extend({options:{position:&quot;topright&quot;},onAdd:function(){
+    var c=L.DomUtil.create(&quot;div&quot;,&quot;map-ctl&quot;);
+    c.innerHTML=&#x27;&lt;div class=&quot;leaflet-bar&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;map-btn&quot; data-fs title=&quot;View full screen&quot; aria-label=&quot;View full screen&quot;&gt;&#x27;+FS_IN+&#x27;&lt;/button&gt;&#x27;+
+      &#x27;&lt;button type=&quot;button&quot; class=&quot;map-btn&quot; data-mt-toggle title=&quot;Map type&quot; aria-label=&quot;Map type&quot; aria-expanded=&quot;false&quot;&gt;&#x27;+LAYERS_IC+&#x27;&lt;/button&gt;&lt;/div&gt;&#x27;+
+      &#x27;&lt;div class=&quot;map-types&quot; data-mt-menu hidden role=&quot;group&quot; aria-label=&quot;Map type&quot;&gt;&#x27;+Object.keys(MAPTYPES).map(function(k){
+        return &#x27;&lt;button type=&quot;button&quot; data-mt=&quot;&#x27;+k+&#x27;&quot; aria-pressed=&quot;false&quot;&gt;&lt;span class=&quot;mt-sw mt-&#x27;+k+&#x27;&quot;&gt;&lt;/span&gt;&#x27;+MAPTYPES[k].n+&#x27;&lt;/button&gt;&#x27;}).join(&quot;&quot;)+&#x27;&lt;/div&gt;&#x27;;
+    L.DomEvent.disableClickPropagation(c);L.DomEvent.disableScrollPropagation(c);
+    c.addEventListener(&quot;click&quot;,function(ev){
+      var b=ev.target.closest(&quot;button&quot;);if(!b)return;
+      if(b.hasAttribute(&quot;data-fs&quot;))toggleFs();
+      else if(b.hasAttribute(&quot;data-mt-toggle&quot;)){var mn=$(&quot;[data-mt-menu]&quot;,c);mn.hidden=!mn.hidden;b.setAttribute(&quot;aria-expanded&quot;,!mn.hidden)}
+      else if(b.dataset.mt){setType(b.dataset.mt);$(&quot;[data-mt-menu]&quot;,c).hidden=true;$(&quot;[data-mt-toggle]&quot;,c).setAttribute(&quot;aria-expanded&quot;,&quot;false&quot;)}
+    });
+    return c}});
+  ctl=new Ctl().addTo(m).getContainer();
+  m.on(&quot;click&quot;,function(){var mn=$(&quot;[data-mt-menu]&quot;,ctl);if(mn&amp;&amp;!mn.hidden){mn.hidden=true;$(&quot;[data-mt-toggle]&quot;,ctl).setAttribute(&quot;aria-expanded&quot;,&quot;false&quot;)}});
+  document.addEventListener(&quot;fullscreenchange&quot;,syncFs);document.addEventListener(&quot;webkitfullscreenchange&quot;,syncFs);
+  setType(S.mapType||&quot;map&quot;);
+}
+
+/* ---------------- locations page ---------------- */
+function locVisible(){return EXP.filter(function(e){return !S.locActs.length||S.locActs.indexOf(e.a)&gt;-1})}
+function locPopup(e){
+  return &#x27;&lt;div class=&quot;pop&quot;&gt;&#x27;+
+    &#x27;&lt;div class=&quot;pop-media&quot;&gt;&#x27;+photo(e.id,ACTS[e.a].g,e.t)+&#x27;&lt;span class=&quot;price-tag&quot;&gt;&lt;small&gt;from&lt;/small&gt;&lt;sup&gt;$&lt;/sup&gt;&#x27;+e.p+&#x27;&lt;/span&gt;&lt;/div&gt;&#x27;+
+    &#x27;&lt;div class=&quot;pop-body&quot;&gt;&lt;div class=&quot;card-meta&quot;&gt;&lt;span&gt;&#x27;+IC.pin+esc(e.place)+&#x27;&lt;/span&gt;&lt;span&gt;&#x27;+IC.clock+e.dur+&#x27;&lt;/span&gt;&lt;/div&gt;&#x27;+
+    &#x27;&lt;h3&gt;&#x27;+esc(e.t)+&#x27;&lt;/h3&gt;&lt;div class=&quot;rating&quot;&gt;&#x27;+stars(e.rt)+&#x27;&lt;b&gt;&#x27;+e.rt.toFixed(1)+&#x27;&lt;/b&gt;&lt;span&gt;(&#x27;+e.rv+&#x27;)&lt;/span&gt;&lt;/div&gt;&#x27;+
+    &#x27;&lt;div class=&quot;pop-foot&quot;&gt;&lt;span style=&quot;display:flex;gap:6px;flex-wrap:wrap&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&#x27;+ACTS[e.a].n+&#x27;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&#x27;+e.lv+&#x27;&lt;/span&gt;&lt;/span&gt;&#x27;+
+    &#x27;&lt;button class=&quot;btn btn-primary btn-sm&quot; type=&quot;button&quot; data-go=&quot;experience&quot; data-id=&quot;&#x27;+e.id+&#x27;&quot;&gt;View&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&#x27;;
+}
+function renderLocSide(){
+  var vis=locVisible();
+  var chips=&#x27;&lt;button class=&quot;chip sm&quot; type=&quot;button&quot; data-locf=&quot;all&quot; aria-pressed=&quot;&#x27;+!S.locActs.length+&#x27;&quot;&gt;All&lt;/button&gt;&#x27;+
+    Object.keys(ACTS).map(function(k){var n=EXP.filter(function(e){return e.a===k}).length;if(!n)return &quot;&quot;;
+      return &#x27;&lt;button class=&quot;chip sm&quot; type=&quot;button&quot; data-locf=&quot;&#x27;+k+&#x27;&quot; aria-pressed=&quot;&#x27;+(S.locActs.indexOf(k)&gt;-1)+&#x27;&quot;&gt;&#x27;+IC[k]+ACTS[k].n+&#x27;&lt;span class=&quot;chip-n&quot;&gt;&#x27;+n+&#x27;&lt;/span&gt;&lt;/button&gt;&#x27;}).join(&quot;&quot;);
+  $(&quot;[data-loc-chips]&quot;).innerHTML=chips;
+  $(&quot;[data-loc-count]&quot;).textContent=vis.length+&quot; experience&quot;+(vis.length===1?&quot;&quot;:&quot;s&quot;)+&quot; across California&quot;;
+  $(&quot;[data-loc-list]&quot;).innerHTML=vis.length?vis.map(function(e){
+    return &#x27;&lt;li&gt;&lt;button type=&quot;button&quot; class=&quot;loc-item&quot; data-loc-id=&quot;&#x27;+e.id+&#x27;&quot;&gt;&#x27;+photo(e.id,ACTS[e.a].g,&quot;&quot;,&quot;loc-thumb&quot;)+
+      &#x27;&lt;span class=&quot;loc-txt&quot;&gt;&lt;b&gt;&#x27;+esc(e.t)+&#x27;&lt;/b&gt;&lt;span&gt;&#x27;+esc(e.place)+&#x27;&lt;/span&gt;&lt;span class=&quot;loc-meta&quot;&gt;&#x27;+ACTS[e.a].n+&#x27; · &#x27;+e.dur+&#x27;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;loc-price&quot;&gt;&#x27;+money(e.p)+&#x27;&lt;/span&gt;&lt;/button&gt;&lt;/li&gt;&#x27;}).join(&quot;&quot;)
+    :&#x27;&lt;li class=&quot;loc-empty&quot;&gt;Choose an experience type to see it on the map.&lt;/li&gt;&#x27;;
+  hydrate($(&quot;[data-loc-list]&quot;));
+}
+function updateLoc(){
+  renderLocSide();
+  var m=S.locmap;if(!m)return;
+  S.locLayer.clearLayers();S.locMarkers={};
+  var vis=locVisible(),pts=[];
+  vis.forEach(function(e){
+    var R=ROUTES[e.id],ll=[R.meet[0],R.meet[1]];pts.push(ll);
+    var mk=L.marker(ll,{title:e.t,riseOnHover:true,icon:L.divIcon({className:&quot;&quot;,html:&#x27;&lt;span class=&quot;lpin&quot; data-pin=&quot;&#x27;+e.id+&#x27;&quot;&gt;&#x27;+IC[e.a]+&#x27;&lt;/span&gt;&#x27;,iconSize:[38,38],iconAnchor:[19,19],popupAnchor:[0,-16]})});
+    mk.bindPopup(locPopup(e),{className:&quot;loc-pop&quot;,maxWidth:280,minWidth:260,autoPanPaddingTopLeft:[20,80],autoPanPaddingBottomRight:[20,20]});
+    mk.on(&quot;popupopen&quot;,function(ev){hydrate(ev.popup.getElement());setLocActive(e.id)});
+    mk.on(&quot;popupclose&quot;,function(){setLocActive(null)});
+    mk.addTo(S.locLayer);S.locMarkers[e.id]=mk;
+  });
+  if(pts.length)m.fitBounds(L.latLngBounds(pts),{padding:[50,50],maxZoom:10});
+}
+function setLocActive(id){
+  $$(&quot;.lpin&quot;).forEach(function(p){p.classList.toggle(&quot;on&quot;,p.dataset.pin===id)});
+  $$(&quot;[data-loc-id]&quot;).forEach(function(b){if(b.dataset.locId===id)b.setAttribute(&quot;aria-current&quot;,&quot;true&quot;);else b.removeAttribute(&quot;aria-current&quot;)});
+}
+function drawLocations(){
+  if(S.locmap){S.locmap.remove();S.locmap=null}
+  renderLocSide();
+  var el=document.getElementById(&quot;loc-map&quot;);
+  if(!window.L){el.innerHTML=&#x27;&lt;div class=&quot;route-fallback&quot;&gt;The map couldn’t load. Try refreshing the page.&lt;/div&gt;&#x27;;return}
+  el.innerHTML=&quot;&quot;;el.classList.remove(&quot;no-tiles&quot;);
+  var m=L.map(el,{scrollWheelZoom:true,tap:false,zoomSnap:.5});S.locmap=m;
+  setupMap(m,el);
+  S.locLayer=L.layerGroup().addTo(m);
+  m.setView([37.2,-119.5],6);
+  updateLoc();
+  setTimeout(function(){if(S.locmap===m){m.invalidateSize();var v=locVisible();if(v.length)m.fitBounds(L.latLngBounds(v.map(function(e){return[ROUTES[e.id].meet[0],ROUTES[e.id].meet[1]]})),{padding:[50,50],maxZoom:10})}},80);
+}
+function drawRoute(e){
+  if(S.lmap){S.lmap.remove();S.lmap=null}
+  var el=document.getElementById(&quot;route-map&quot;);if(!el)return;
+  if(!window.L){el.innerHTML=&#x27;&lt;div class=&quot;route-fallback&quot;&gt;The map couldn’t load. Meeting point: &#x27;+ROUTES[e.id].meet[2]+&#x27;.&lt;/div&gt;&#x27;;return}
+  el.innerHTML=&quot;&quot;;
+  var R=ROUTES[e.id],K=KIND[R.kind],root=document.documentElement;
+  var dark=root.getAttribute(&quot;data-theme&quot;)===&quot;dark&quot;||(root.getAttribute(&quot;data-theme&quot;)!==&quot;light&quot;&amp;&amp;window.matchMedia&amp;&amp;matchMedia(&quot;(prefers-color-scheme: dark)&quot;).matches);
+  var m=L.map(el,{scrollWheelZoom:false,tap:false});S.lmap=m;
+  setupMap(m,el);
+  var layers=[];
+  var icon=function(cls,svg,size){return L.divIcon({className:&quot;&quot;,html:&#x27;&lt;span class=&quot;mk &#x27;+cls+&#x27;&quot;&gt;&#x27;+(svg||&quot;&quot;)+&#x27;&lt;/span&gt;&#x27;,iconSize:[size,size],iconAnchor:[size/2,size/2],popupAnchor:[0,-size/2]})};
+  if(R.kind===&quot;area&quot;){
+    layers.push(L.circle(R.center,{radius:R.radius,color:K.c,weight:2,fillColor:K.c,fillOpacity:.22}).addTo(m).bindPopup(&quot;&lt;b&gt;&quot;+K.n+&quot;&lt;/b&gt;&quot;+esc(e.place)));
+  }else{
+    layers.push(L.polyline(R.path,{color:&quot;#fff&quot;,weight:9,opacity:.85,lineJoin:&quot;round&quot;}).addTo(m));
+    layers.push(L.polyline(R.path,{color:K.c,weight:5,lineJoin:&quot;round&quot;}).addTo(m).bindPopup(&quot;&lt;b&gt;&quot;+K.n+&quot;&lt;/b&gt;&quot;+(R.loop?&quot;Loop&quot;:R.back?&quot;Out and back&quot;:&quot;One way&quot;)));
+  }
+  if(R.shuttle&amp;&amp;R.start){
+    layers.push(L.polyline([[R.meet[0],R.meet[1]],[R.start[0],R.start[1]]],{color:&quot;#2E3A44&quot;,weight:3,dashArray:&quot;6 8&quot;,opacity:.8}).addTo(m).bindPopup(&quot;&lt;b&gt;Shuttle&lt;/b&gt;From the meeting point to &quot;+R.start[2]));
+    L.marker([R.start[0],R.start[1]],{icon:icon(&quot;mk-start&quot;,&quot;&quot;,22),title:R.start[2]}).addTo(m).bindPopup(&quot;&lt;b&gt;Start&lt;/b&gt;&quot;+R.start[2]);
+  }
+  if(R.end&amp;&amp;!R.loop&amp;&amp;!(R.end[0]===R.meet[0]&amp;&amp;R.end[1]===R.meet[1]))L.marker([R.end[0],R.end[1]],{icon:icon(&quot;mk-end&quot;,&quot;&quot;,22),title:R.end[2]}).addTo(m).bindPopup(&quot;&lt;b&gt;&quot;+(R.back?&quot;Turnaround&quot;:&quot;Finish&quot;)+&quot;&lt;/b&gt;&quot;+R.end[2]);
+  var meet=L.marker([R.meet[0],R.meet[1]],{icon:icon(&quot;mk-meet&quot;,IC.pin,34),title:&quot;Meeting point&quot;,zIndexOffset:500}).addTo(m).bindPopup(&quot;&lt;b&gt;Meeting point&lt;/b&gt;&quot;+R.meet[2]);
+  layers.push(meet);
+  var bounds=L.latLngBounds([[R.meet[0],R.meet[1]]]);
+  if(R.kind===&quot;area&quot;)bounds.extend(L.latLng(R.center).toBounds(R.radius*3));else bounds.extend(R.path);
+  if(R.start)bounds.extend([R.start[0],R.start[1]]);
+  m.fitBounds(bounds,{padding:[36,36],maxZoom:16});
+  setTimeout(function(){if(S.lmap===m)m.invalidateSize()},60);
 }
 function rerenderBook(){var e=byId(S.id),b=$(&quot;[data-book]&quot;);if(b)b.innerHTML=bookingHTML(e)}
 
@@ -1135,9 +1476,13 @@ function go(view,opts){
   if(view===&quot;confirmed&quot;)renderConfirmed();
   S.view=view;
   $$(&quot;[data-view]&quot;).forEach(function(v){v.classList.toggle(&quot;on&quot;,v.dataset.view===view)});
-  var tab=S.savedOnly?&quot;saved&quot;:(view===&quot;home&quot;?&quot;home&quot;:view===&quot;search&quot;?&quot;search&quot;:&quot;&quot;);
+  if(view===&quot;experience&quot;)drawRoute(byId(S.id));else if(S.lmap){S.lmap.remove();S.lmap=null}
+  exitMapFullscreen();
+  document.body.classList.toggle(&quot;v-loc-active&quot;,view===&quot;locations&quot;);
+  if(view===&quot;locations&quot;)drawLocations();else if(S.locmap){S.locmap.remove();S.locmap=null}
+  var tab=S.savedOnly?&quot;saved&quot;:([&quot;home&quot;,&quot;search&quot;,&quot;locations&quot;].indexOf(view)&gt;-1?view:&quot;&quot;);
   $$(&quot;[data-tab]&quot;).forEach(function(t){if(t.dataset.tab===tab)t.setAttribute(&quot;aria-current&quot;,&quot;page&quot;);else t.removeAttribute(&quot;aria-current&quot;)});
-  $$(&quot;[data-nav]&quot;).forEach(function(a){if(view===&quot;search&quot;&amp;&amp;a.dataset.nav===&quot;search&quot;)a.setAttribute(&quot;aria-current&quot;,&quot;page&quot;);else a.removeAttribute(&quot;aria-current&quot;)});
+  $$(&quot;[data-nav]&quot;).forEach(function(a){if(a.dataset.nav===view&amp;&amp;!S.savedOnly)a.setAttribute(&quot;aria-current&quot;,&quot;page&quot;);else a.removeAttribute(&quot;aria-current&quot;)});
   closeSheets();
   if(!opts.noScroll)window.scrollTo(0,0);
   try{var h=(S.savedOnly?&quot;saved&quot;:view)+(view===&quot;experience&quot;?&quot;-&quot;+S.id:&quot;&quot;);if(location.hash.slice(1)!==h)history.replaceState(null,&quot;&quot;,&quot;#&quot;+h)}catch(err){}
@@ -1156,14 +1501,20 @@ document.addEventListener(&quot;click&quot;,function(ev){
   var d=t.dataset;
   if(d.save){ev.preventDefault();S.saved[d.save]=!S.saved[d.save];$$(&#x27;[data-save=&quot;&#x27;+d.save+&#x27;&quot;]&#x27;).forEach(function(b){b.setAttribute(&quot;aria-pressed&quot;,!!S.saved[d.save])});toast(S.saved[d.save]?&quot;Saved to your list&quot;:&quot;Removed from saved&quot;);if(S.savedOnly)renderResults();return}
   if(d.toast){ev.preventDefault();toast(d.toast);return}
-  if(d.modal){ev.preventDefault();var m=$(&#x27;[data-modal-box=&quot;&#x27;+d.modal+&#x27;&quot;]&#x27;);m.classList.add(&quot;on&quot;);setTimeout(function(){var i=$(&quot;input&quot;,m);if(i)i.focus()},30);return}
+  if(d.modal){ev.preventDefault();closeModal();var m=$(&#x27;[data-modal-box=&quot;&#x27;+d.modal+&#x27;&quot;]&#x27;);m.classList.add(&quot;on&quot;);setTimeout(function(){var i=$(&quot;input&quot;,m);if(i)i.focus()},30);return}
   if(d.modalClose!==undefined){closeModal();return}
-  if(d.signin!==undefined){closeModal();toast(&quot;Signed in as a guest for this preview&quot;);return}
+  if(d.signin!==undefined){var em=$(&quot;#si-email&quot;).value.trim();closeModal();setUser({name:em?em.split(&quot;@&quot;)[0]:&quot;Traveler&quot;,guest:false});toast(&quot;Signed in&quot;);return}
+  if(d.guest!==undefined){closeModal();setUser({name:&quot;Guest&quot;,guest:true});toast(&quot;You’re browsing as a guest&quot;);return}
+  if(d.acctToggle!==undefined){var mn=$(&quot;[data-acct-menu]&quot;),open=mn.hidden;mn.hidden=!open;t.setAttribute(&quot;aria-expanded&quot;,open);return}
+  if(d.signout!==undefined){closeModal();setUser(null);toast(&quot;Signed out&quot;);return}
+  if(d.acctTab!==undefined){$(&quot;[data-acct-title]&quot;).textContent=S.user.name;$(&quot;[data-acct-sub]&quot;).textContent=S.user.guest?&quot;Browsing as a guest&quot;:&quot;Signed in&quot;;$(&quot;[data-acct-create]&quot;).hidden=!S.user.guest;$(&#x27;[data-modal-box=&quot;account&quot;]&#x27;).classList.add(&quot;on&quot;);return}
   if(d.go){
-    ev.preventDefault();
+    ev.preventDefault();closeModal();
     if(d.act||d.region){S.f.acts=d.act?[d.act]:[];S.f.regions=d.region&amp;&amp;d.region!==&quot;all&quot;?[d.region]:[];syncSearchSelects()}
     go(d.go,{id:d.id});return;
   }
+  if(d.locf){if(d.locf===&quot;all&quot;)S.locActs=[];else{var li=S.locActs.indexOf(d.locf);if(li&gt;-1)S.locActs.splice(li,1);else S.locActs.push(d.locf)}if(S.locmap)S.locmap.closePopup();updateLoc();return}
+  if(d.locId){var mk=S.locMarkers&amp;&amp;S.locMarkers[d.locId];if(mk){S.locmap.setView(mk.getLatLng(),Math.max(S.locmap.getZoom(),9));mk.openPopup()}return}
   if(d.layout){S.layout=d.layout;renderResults();return}
   if(d.fClear!==undefined){S.f={acts:[],regions:[],levels:[],durs:[],price:400,instant:false};syncSearchSelects();renderFilters();renderResults();return}
   if(d.filtersOpen!==undefined){$(&quot;[data-filters]&quot;).classList.add(&quot;on&quot;);document.body.style.overflow=&quot;hidden&quot;;return}
@@ -1184,8 +1535,22 @@ document.addEventListener(&quot;click&quot;,function(ev){
   if(d.bookClose!==undefined){closeSheets();return}
   if(d.pay!==undefined){$$(&quot;[data-pay]&quot;).forEach(function(b){b.setAttribute(&quot;aria-pressed&quot;,b===t)});return}
 });
+document.addEventListener(&quot;click&quot;,function(ev){var a=$(&quot;[data-acct]&quot;);if(a&amp;&amp;!a.contains(ev.target)||ev.target.closest(&quot;.acct-menu button&quot;)){var mn=$(&quot;[data-acct-menu]&quot;);if(mn&amp;&amp;!mn.hidden){mn.hidden=true;$(&quot;[data-acct-toggle]&quot;).setAttribute(&quot;aria-expanded&quot;,&quot;false&quot;)}}});
 document.addEventListener(&quot;click&quot;,function(ev){if(ev.target.classList.contains(&quot;scrim&quot;))closeSheets();if(ev.target.classList.contains(&quot;modal&quot;))closeModal()});
-document.addEventListener(&quot;keydown&quot;,function(ev){if(ev.key===&quot;Escape&quot;){closeModal();closeSheets()}});
+document.addEventListener(&quot;keydown&quot;,function(ev){if(ev.key===&quot;Escape&quot;){if($(&quot;.map-fs&quot;)){exitMapFullscreen();if(S.lmap)S.lmap.invalidateSize();if(S.locmap)S.locmap.invalidateSize();return}closeModal();closeSheets()}});
+function setUser(u){
+  S.user=u;
+  $(&quot;.hdr .btn-signin&quot;).hidden=!!u;$(&quot;[data-acct]&quot;).hidden=!u;
+  var tab=$(&#x27;[data-tab=&quot;account&quot;]&#x27;);
+  if(u){
+    $(&quot;[data-acct-name]&quot;).textContent=u.name;$(&quot;[data-acct-av]&quot;).textContent=u.name.charAt(0).toUpperCase();
+    $(&quot;[data-acct-who]&quot;).textContent=u.guest?&quot;Browsing as a guest&quot;:&quot;Signed in as &quot;+u.name;
+    $(&quot;[data-guest-upgrade]&quot;).hidden=!u.guest;
+    tab.removeAttribute(&quot;data-modal&quot;);tab.setAttribute(&quot;data-acct-tab&quot;,&quot;&quot;);tab.lastChild.textContent=u.guest?&quot;Guest&quot;:&quot;Account&quot;;
+  }else{
+    tab.setAttribute(&quot;data-modal&quot;,&quot;signin&quot;);tab.removeAttribute(&quot;data-acct-tab&quot;);tab.lastChild.textContent=&quot;Account&quot;;
+  }
+}
 function closeModal(){$$(&quot;.modal&quot;).forEach(function(m){m.classList.remove(&quot;on&quot;)})}
 document.addEventListener(&quot;change&quot;,function(ev){
   var t=ev.target;
@@ -1234,7 +1599,7 @@ fillSelects();renderHome();
 (function(){
   var h=(location.hash||&quot;&quot;).slice(1);
   if(h.indexOf(&quot;experience-&quot;)===0)go(&quot;experience&quot;,{id:h.slice(11)});
-  else if([&quot;search&quot;,&quot;saved&quot;,&quot;checkout&quot;].indexOf(h)&gt;-1)go(h);
+  else if([&quot;search&quot;,&quot;saved&quot;,&quot;checkout&quot;,&quot;locations&quot;].indexOf(h)&gt;-1)go(h);
 })();
 })();
 &lt;/script&gt;
