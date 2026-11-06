@@ -4,6 +4,7 @@ Responsive booking prototype for outdoorsie.com.
 
 - `index.html` is the site.
 - `preview.html` shows the site in desktop, tablet and mobile frames.
+- `vendor/` holds a backup copy of Leaflet (the map library), used if the CDN can’t be reached.
 - `img/` is for photos. `IMAGES.md` lists every file name the site expects.
 
 ## Publish on GitHub Pages
