@@ -38,3 +38,15 @@ Every experience page uses the same four gallery photos for now. Save them as `<
 | `-5` | [photo-1519681393784-d120267933ba](https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=80) |
 
 Unsplash photos are free to use under the Unsplash License. Crediting photographers is appreciated.
+
+## Guide portraits
+
+Shown in the “Your guide” section of experience pages. Guides without a portrait show their initials.
+
+| Save as | Guide | Unsplash image |
+| --- | --- | --- |
+| `img/guide-mike-scott.jpg` | Mike Scott (Yosemite hike, Big Sur ride, Marin run, survival weekend) | [photo-1500648767791-00dcc994a43e](https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&crop=faces&w=480&h=480&q=80) |
+| `img/guide-ana-ruiz.jpg` | Ana Ruiz (Tahoe climbing, Joshua Tree bouldering) | [photo-1494790108377-be9c29b29330](https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&crop=faces&w=480&h=480&q=80) |
+| `img/guide-kai-morales.jpg` | Kai Morales (Santa Cruz surf) | [photo-1507003211169-0a1dd7228f2d](https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&crop=faces&w=480&h=480&q=80) |
+
+Save portraits square, about 480 × 480 px. To give another guide a photo, add `photo:"photo-…"` to their entry in `GUIDES` in `app.html`.

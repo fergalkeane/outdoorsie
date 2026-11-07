@@ -2,10 +2,11 @@
 
 Responsive booking prototype for outdoorsie.com.
 
-- `index.html` is the device preview: switch between desktop, tablet and mobile frames and jump to any page.
-- `app.html` is the prototype on its own, without the preview frame. Link straight to pages with `app.html#search`, `#locations`, `#saved`, `#checkout` or `#experience-yosemite-hike`.
+- `index.html` is the site. Link straight to pages with `#search`, `#locations`, `#saved`, `#profile`, `#checkout` or `#experience-yosemite-hike`.
 - `vendor/` holds a backup copy of Leaflet (the map library), used if the CDN can’t be reached.
 - `img/` is for photos. `IMAGES.md` lists every file name the site expects.
+
+Demo login: username `seamus`, password `seamus`.
 
 ## Publish on GitHub Pages
 
