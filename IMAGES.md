@@ -6,7 +6,7 @@ To swap a photo, change its ID in the `UNSPLASH` list near the top of the script
 
 | Save as | Used for | Unsplash image |
 | --- | --- | --- |
-| `img/hero-home.jpg` | Home hero | [photo-1464822759023-fed622ff2c3b](https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2400&q=80) |
+| `img/hero-home.jpg` ✅ added (El Capitan, photo by Adam Kool on Unsplash) | Home hero | [photo-1464822759023-fed622ff2c3b](https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2400&q=80) |
 | `img/guide-band.jpg` | Become-a-guide banner | [photo-1522163182402-834f871fd851](https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=2400&q=80) |
 | `img/region-sierra.jpg` | Region: Yosemite & the Sierra | [photo-1426604966848-d7adac402bff](https://images.unsplash.com/photo-1426604966848-d7adac402bff?auto=format&fit=crop&w=1200&q=80) |
 | `img/region-tahoe.jpg` | Region: Lake Tahoe | [photo-1501785888041-af3ef285b470](https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80) |
